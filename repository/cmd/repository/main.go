@@ -1,8 +1,7 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -29,16 +28,16 @@ func main() {
 	userServer := user.NewUserServer(db)
 
 	// Echo instance
-	e := echo.New()
-
-	// Middleware
-	e.Use(middleware.Recover())
+	r := gin.Default()
 
 	log.Printf("Binding routes db")
 
 	// Routes
-	userServer.BindUserServer(e)
+	userServer.BindUserServer(r)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
+	err = r.Run(":8080")
+	if err != nil {
+		log.Printf("Error while starting server: %v", err)
+	}
 }

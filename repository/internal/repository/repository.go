@@ -5,6 +5,14 @@ import (
 	"gorm.io/gorm"
 )
 
+type GormDatabase interface {
+	Find(dest interface{}, conds ...interface{}) (tx *gorm.DB)
+	First(dest interface{}, conds ...interface{}) (tx *gorm.DB)
+	Create(value interface{}) (tx *gorm.DB)
+	Updates(values interface{}) (tx *gorm.DB)
+	Delete(value interface{}, conds ...interface{}) (tx *gorm.DB)
+}
+
 type Model interface {
 	GetID() string
 	SetID(string)
@@ -27,7 +35,7 @@ type Repository[T Model] interface {
 }
 
 type BaseRepository[T Model] struct {
-	Database *gorm.DB
+	Database GormDatabase
 }
 
 func (r *BaseRepository[T]) Get() ([]T, error) {
@@ -65,12 +73,6 @@ func (r *BaseRepository[T]) Create(entity T) (T, error) {
 }
 
 func (r *BaseRepository[T]) Update(entity T) error {
-	_, err := r.GetById(entity.GetID())
-
-	if err != nil {
-		return err
-	}
-
 	result := r.Database.Updates(entity)
 	if result.Error != nil {
 		log.Printf("Error while updating columns: %v", result.Error)

@@ -1,21 +1,21 @@
 package user
 
 import (
-	"github.com/labstack/echo/v4"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"repository/internal/server"
 )
 
 type Server struct {
-	server.Server[*User]
+	server.BaseServer[*User]
 }
 
-func (s *Server) BindUserServer(e *echo.Echo) {
-	e.POST("/users/", s.Create)
-	e.GET("/users/", s.Get)
-	e.GET("/users/:id", s.GetByID)
-	e.PUT("/users/:id", s.Update)
-	e.DELETE("/users/:id", s.Delete)
+func (s *Server) BindUserServer(r *gin.Engine) {
+	r.POST("/users/", s.Create)
+	r.GET("/users/", s.Get)
+	r.GET("/users/:id", s.GetByID)
+	r.PUT("/users/:id", s.Update)
+	r.DELETE("/users/:id", s.Delete)
 }
 
 func NewUserServer(db *gorm.DB) *Server {
