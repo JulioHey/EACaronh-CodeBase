@@ -14,7 +14,7 @@ const MyInput = ({hide, value, onInputChange, invalid}) => {
                 fontSize: theme.font.size.xl,
                 lineHeight: theme.font.lineHeight.xl,
                 borderColor: invalid ? theme.color.invalid : "",
-                borderWidth: invalid ? theme.borderWidth : "",
+                borderWidth: invalid ? theme.borderWidth : 0,
                 width: "100%",
             }
             }

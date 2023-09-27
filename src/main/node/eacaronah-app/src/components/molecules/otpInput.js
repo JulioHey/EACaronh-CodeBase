@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {View} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -8,25 +8,27 @@ import TextButton from "../atoms/textButton"
 import theme from "../../theme/theme";
 
 const OTPInput = ({title, value, onChange, invalid}) => {
+    const [code, setCode] = useState(['', '', '', '']);
+    const inputs = [];
 
+    const handleCode = (value, index) => {
+      const newCode = [...code];
+      newCode[index] = value;
+      setCode(newCode);
+      onChange(newCode.join(""));
 
-    const [code1, setCode1] = useState("");
-    const [code2, setCode2] = useState("");
-    const [code3, setCode3] = useState("");
-    const [code4, setCode4] = useState("");
-
-  const handleCodes = (value, n) => {
-    switch (n){
-      case 1:
-        setCode1(value);
-      case 2:
-        setCode2(value);
-      case 3:
-        setCode3(value);
-      case 4:
-        setCode4(value);
+      if (value && index < newCode.length - 1) {
+        inputs[index + 1].focus();
+      }
     }
-  }
+
+    const handleBackspace = (e) => {
+      console.log(e)
+      if(e.keyCode === 8){
+        setCode(['', '', '', '']);
+        inputs[0].focus();
+      }
+    }
 
     return (<View
         style={{
@@ -35,10 +37,17 @@ const OTPInput = ({title, value, onChange, invalid}) => {
     >
         <Label text={title} invalid={invalid}/>
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <UniqueInput invalid={invalid} value={value} onInputChange={ (e) => handleCodes(e.target.value, 1) }/>
-          <UniqueInput invalid={invalid} value={value} onInputChange={ (e) => handleCodes(e.target.value, 2) }/>
-          <UniqueInput invalid={invalid} value={value} onInputChange={ (e) => handleCodes(e.target.value, 3) }/>
-          <UniqueInput invalid={invalid} value={value} onInputChange={ (e) => handleCodes(e.target.value, 4) }/>
+          { code.map((digit, index) => (
+            <UniqueInput
+              key={index}
+              invalid={invalid}
+              value={digit}
+              keyboardType="numeric"
+              onInputChange={ (e) => handleCode(e.target.value, index) }
+              onKeyDown={handleBackspace}
+              ref={(input) => inputs[index] = input}
+            />
+          )) }
         </View>
 
     </View>)

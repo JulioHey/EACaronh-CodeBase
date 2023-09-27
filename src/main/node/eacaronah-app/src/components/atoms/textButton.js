@@ -1,4 +1,4 @@
-import {BaseButton} from "react-native-gesture-handler";
+import {BaseButton} from "react-native";
 import {Text} from "react-native";
 import theme from "../../theme/theme";
 
