@@ -20,6 +20,10 @@ func (u *User) SetID(id string) {
 	u.ID = id
 }
 
+func (u *User) Columns() []string {
+	return []string{"id", "name", "email", "created"}
+}
+
 func AutoMigrateUser(db *gorm.DB) {
 	migrator := db.Migrator()
 	user := &User{}

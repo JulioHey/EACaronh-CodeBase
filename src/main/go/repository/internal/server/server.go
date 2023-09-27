@@ -9,6 +9,10 @@ import (
 	"repository/internal/repository"
 )
 
+type GetRequest struct {
+	Queries []repository.Query `json:"queries"`
+}
+
 type BaseServer[T repository.Model] struct {
 	Name    string
 	Service repository.Service[T]
@@ -67,12 +71,29 @@ func (s *BaseServer[T]) GetByID(c *gin.Context) {
 }
 
 func (s *BaseServer[T]) Get(c *gin.Context) {
-	entities, err := s.Service.Get()
+	var entities []T
+	req := new(GetRequest)
+
+	err := c.Bind(&req)
+	if err != nil {
+		log.Printf("Error while binding queries: %v", err)
+		c.JSON(http.StatusUnprocessableEntity,
+			map[string]string{"message": "Query is invalid"})
+		return
+	}
+
+	entities, err = s.Service.Get(req.Queries)
 
 	if err != nil {
 		log.Printf("Error while getting entities: %v", err)
-		c.JSON(http.StatusBadRequest,
-			map[string]string{"message": "Unexpected error"})
+		var er repository.ColumnNotFoundErr
+		if errors.As(err, &er) {
+			c.JSON(http.StatusBadRequest,
+				map[string]string{"message": er.Error()})
+		} else {
+			c.JSON(http.StatusBadRequest,
+				map[string]string{"message": "Unexpected error"})
+		}
 		return
 	}
 	c.JSON(http.StatusOK, entities)

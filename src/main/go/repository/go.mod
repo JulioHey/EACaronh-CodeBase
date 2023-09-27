@@ -8,7 +8,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.12.0
 	github.com/onsi/gomega v1.27.10
 	github.com/rs/zerolog v1.30.0
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	gorm.io/driver/sqlite v1.5.3
 	gorm.io/gorm v1.25.4
 )

@@ -12,7 +12,7 @@ type Server struct {
 
 func (s *Server) BindUserServer(r *gin.Engine) {
 	r.POST("/users/", s.Create)
-	r.GET("/users/", s.Get)
+	r.PUT("/users/", s.Get)
 	r.GET("/users/:id", s.GetByID)
 	r.PUT("/users/:id", s.Update)
 	r.DELETE("/users/:id", s.Delete)
