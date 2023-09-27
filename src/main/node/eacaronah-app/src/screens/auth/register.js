@@ -67,7 +67,9 @@ const UserRegister = ({navigation}) => {
                     }
                 ]}
             />
-            <IconButton style={{
+              <IconButton
+              //onClick={}
+              style={{
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,
             }}>

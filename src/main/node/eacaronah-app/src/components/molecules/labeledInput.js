@@ -8,6 +8,15 @@ import theme from "../../theme/theme";
 
 const LabeledInput = ({title, value, onChange}) => {
     const [hide, setHide] = useState(title == "Password");
+    const style = useState({
+                backgroundColor: theme.color.lightBackground,
+                paddingHorizontal: theme.spacing.m,
+                paddingVertical: theme.spacing.s,
+                borderRadius: theme.borderRadius.s,
+                fontSize: theme.font.size.xl,
+                lineHeight: theme.font.lineHeight.xl,
+                width: "100%",
+            })
 
     return (<View
         style={{
@@ -32,9 +41,9 @@ const LabeledInput = ({title, value, onChange}) => {
                                             top: theme.spacing.m,
                                             cursor: "pointer",
                                         }}/>
-                <Input hide={hide} value={value} onInputChange={onChange}/>
+                <Input hide={hide} value={value} onInputChange={onChange} style={style}/>
             </View>
-            : <Input value={value} onInputChange={onChange}/>
+            : <Input value={value} onInputChange={onChange} style={style}/>
         }
     </View>)
 }
