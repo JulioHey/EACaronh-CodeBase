@@ -6,7 +6,7 @@ import Label from "../atoms/label";
 import Input from "../atoms/input";
 import theme from "../../theme/theme";
 
-const LabeledInput = ({title, value, onChange}) => {
+const LabeledInput = ({title, value, onChange, invalid}) => {
     const [hide, setHide] = useState(title == "Password");
 
     return (<View
@@ -14,7 +14,7 @@ const LabeledInput = ({title, value, onChange}) => {
             alignItems: "flex-start", gap: theme.spacing.m, width: "100%",
         }}
     >
-        <Label text={title}/>
+        <Label text={title} invalid={invalid}/>
         {title == "Password" ?
             <View style={{
                 position: "relative",
@@ -32,9 +32,9 @@ const LabeledInput = ({title, value, onChange}) => {
                                             top: theme.spacing.m,
                                             cursor: "pointer",
                                         }}/>
-                <Input hide={hide} value={value} onInputChange={onChange}/>
+                <Input invalid={invalid} hide={hide} value={value} onInputChange={onChange}/>
             </View>
-            : <Input value={value} onInputChange={onChange}/>
+            : <Input invalid={invalid} value={value} onInputChange={onChange}/>
         }
     </View>)
 }

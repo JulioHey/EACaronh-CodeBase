@@ -6,9 +6,10 @@ import {AuthContext} from "../store/context/auth";
 
 import Home from "../screens/home";
 import LoginScreen from "../screens/auth/login";
-import UserRegister from "../screens/auth/register";
-import InstitutionRegister from "../screens/auth/institutionRegister";
-import {RegisterProvider} from "../store/context/registerContext";
+import UserRegister from "../screens/register/register";
+import OTPVerification from "../screens/register/otp";
+import InstitutionRegister from "../screens/register/institutionRegister";
+import {RegisterProvider} from "../store/context/register";
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export const AppNavigation = () => {
                 }}>
                     <Stack.Screen name="login" component={LoginScreen}/>
                     <Stack.Screen name="userRegister" component={UserRegister}/>
+                    <Stack.Screen name="otp" component={OTPVerification}/>
                     <Stack.Screen name="institutionRegister" component={InstitutionRegister}/>
                 </Stack.Navigator>
             ): (

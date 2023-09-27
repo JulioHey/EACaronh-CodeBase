@@ -3,7 +3,7 @@ import React from 'react';
 import {TextInput} from 'react-native';
 import theme from "../../theme/theme";
 
-const MyInput = ({hide, value, onInputChange, invalid}) => {
+const UniqueInput = ({hide, value, onInputChange, invalid}) => {
     return (
         <TextInput
             style={{
@@ -15,9 +15,10 @@ const MyInput = ({hide, value, onInputChange, invalid}) => {
                 lineHeight: theme.font.lineHeight.xl,
                 borderColor: invalid ? theme.color.invalid : "",
                 borderWidth: invalid ? theme.borderWidth : "",
-                width: "100%",
+                width: "15%",
             }
             }
+            maxLength="1"
             value={value}
             secureTextEntry={hide}
             onChange={onInputChange}
@@ -27,4 +28,4 @@ const MyInput = ({hide, value, onInputChange, invalid}) => {
 }
 
 
-export default MyInput;
+export default UniqueInput;

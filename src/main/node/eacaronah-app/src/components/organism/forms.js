@@ -14,7 +14,7 @@ const Forms = ({formsOptions}) => {
         >
             {formsOptions.map((value, index) => {
                 if (value.type == "input") {
-                    return <LabeledInput key={index} {...value} />
+                    return <LabeledInput invalid={value.invalid} key={index} {...value} />
                 } else if (value.type == "elevetedButton") {
                     return <ElevatedButton key={index} {...value} />
                 } else if (value.type == "spanTextButton") {

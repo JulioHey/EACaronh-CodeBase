@@ -1,7 +1,8 @@
 const theme = {
     color: {
-        darkBackground: "#fa9e0d",
-        lightBackground: "#fbf1d9",
+      darkBackground: "#fa9e0d",
+      lightBackground: "#fbf1d9",
+      invalid: "#ff0000"
     },
     spacing: {
         s: 8,
@@ -13,6 +14,7 @@ const theme = {
         s: 8,
         xll: 100,
     },
+    borderWidth: 2,
     font: {
         lineHeight: {
             xs: 16,
@@ -29,6 +31,12 @@ const theme = {
             l: 18,
             xl: 20,
             xxl: 24
+        },
+        weight: {
+          n: 400,
+          m: 500,
+          sb: 600,
+          b: 700
         }
     },
     size: {

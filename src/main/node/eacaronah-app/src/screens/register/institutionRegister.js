@@ -5,7 +5,7 @@ import IconButton from "../../components/atoms/iconButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {View} from "react-native";
 import Forms from "../../components/organism/forms";
-import {RegisterContext} from "../../store/context/registerContext";
+import {RegisterContext} from "../../store/context/register";
 
 const InstitutionRegister = ({navigation}) => {
     const {registerForm} = useContext(RegisterContext);

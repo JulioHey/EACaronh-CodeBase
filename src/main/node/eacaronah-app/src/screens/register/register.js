@@ -9,7 +9,7 @@ import Header from "../../components/molecules/header";
 import {
     RegisterContext,
     RegisterProvider
-} from "../../store/context/registerContext";
+} from "../../store/context/register";
 
 const UserRegister = ({navigation}) => {
     const {setUserInfo} = useContext(RegisterContext);
@@ -83,7 +83,8 @@ const UserRegister = ({navigation}) => {
                     phone,
                     documentNumber,
                     birthDate
-                })
+                });
+              navigation.navigate("otp");
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

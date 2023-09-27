@@ -13,6 +13,21 @@ const LoginScreen = ({navigation}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [invalidEmail, setInvalidEmail] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(false);
+
+    const isValidEmail = (email) => {
+      return /\S+@\S+\.\S+/.test(email);
+    }
+
+    const validateAndLogin = () => {
+      if(!isValidEmail(email))
+        setInvalidEmail(true);
+      else if(password.trim() === "")
+        setInvalidPassword(true);
+      else
+        login()
+    }
 
     return (
         <PageContainer>
@@ -28,18 +43,20 @@ const LoginScreen = ({navigation}) => {
                         type: "input",
                         title: "Email",
                         value: email,
-                        onChange: (e) => setEmail(e.target.value)
+                        onChange: (e) => setEmail(e.target.value),
+                        invalid: invalidEmail
                     },
                     {
                         type: "input",
                         title: "Senha",
                         value: password,
-                        onChange: (e) => setPassword(e.target.value)
+                        onChange: (e) => setPassword(e.target.value),
+                        invalid: invalidPassword
                     },
                     {
                         type: "elevetedButton",
                         title: "Entrar",
-                        onClick: () => login()
+                        onClick: () => validateAndLogin()
                     },
                     {
                         type: "elevetedButton",
