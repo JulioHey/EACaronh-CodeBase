@@ -1,13 +1,19 @@
 import {Text, View} from "react-native";
 import Forms from "../../components/organism/forms";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import IconButton from "../../components/atoms/iconButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import theme from "../../theme/theme";
 import PageContainer from "../../containers/pageContainer";
 import Header from "../../components/molecules/header";
+import {
+    RegisterContext,
+    RegisterProvider
+} from "../../store/context/registerContext";
 
 const UserRegister = ({navigation}) => {
+    const {setUserInfo} = useContext(RegisterContext);
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [birthDate, setBirthDate] = useState("");
@@ -70,6 +76,14 @@ const UserRegister = ({navigation}) => {
             <IconButton style={{
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,
+            }} onClick={() => {
+                setUserInfo(navigation, {
+                    name,
+                    email,
+                    phone,
+                    documentNumber,
+                    birthDate
+                })
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>
