@@ -4,9 +4,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Label from "../atoms/label";
 import Input from "../atoms/input";
+import MaskedInput from "../atoms/maskedInput";
 import theme from "../../theme/theme";
 
-const LabeledInput = ({title, value, onChange, invalid}) => {
+import { isEmpty } from "../../utils/validation";
+
+const LabeledInput = ({title, value, onChange, invalid, mask}) => {
     const [hide, setHide] = useState(title == "Password");
 
     return (<View
@@ -34,6 +37,7 @@ const LabeledInput = ({title, value, onChange, invalid}) => {
                                         }}/>
                 <Input invalid={invalid} hide={hide} value={value} onInputChange={onChange}/>
             </View>
+            : mask ? <MaskedInput mask={mask} invalid={invalid} value={value} onInputChange={onChange}/>
             : <Input invalid={invalid} value={value} onInputChange={onChange}/>
         }
     </View>)

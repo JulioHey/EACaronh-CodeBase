@@ -2,6 +2,7 @@ import theme from "../../theme/theme";
 import LabeledInput from "../molecules/labeledInput";
 import ElevatedButton from "../atoms/elevatedButton";
 import {Text, View} from "react-native";
+import { isEmpty } from "../../utils/validation";
 
 
 const Forms = ({formsOptions}) => {
@@ -14,7 +15,7 @@ const Forms = ({formsOptions}) => {
         >
             {formsOptions.map((value, index) => {
                 if (value.type == "input") {
-                    return <LabeledInput invalid={value.invalid} key={index} {...value} />
+                    return <LabeledInput mask={value.mask} invalid={value.invalid} key={index} {...value} />
                 } else if (value.type == "elevetedButton") {
                     return <ElevatedButton key={index} {...value} />
                 } else if (value.type == "spanTextButton") {

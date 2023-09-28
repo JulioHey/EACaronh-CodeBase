@@ -23,7 +23,6 @@ const OTPInput = ({title, value, onChange, invalid}) => {
     }
 
     const handleBackspace = (e) => {
-      console.log(e)
       if(e.keyCode === 8){
         setCode(['', '', '', '']);
         inputs[0].focus();

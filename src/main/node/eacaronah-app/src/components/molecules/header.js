@@ -1,4 +1,4 @@
-import {View} from "react-native";
+import {View, Text} from "react-native";
 import theme from "../../theme/theme";
 
 const Header = ({pageTitle, heading, trailling}) => {
@@ -8,6 +8,7 @@ const Header = ({pageTitle, heading, trailling}) => {
           paddingTop: theme.spacing.l,
           paddingBottom: theme.spacing.xl,
           paddingRight: theme.spacing.s,
+          marginBottom: theme.spacing.xl,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
@@ -21,7 +22,12 @@ const Header = ({pageTitle, heading, trailling}) => {
           }}>
               {heading}
           </View>
-          {pageTitle}
+          <Text style={{
+            fontSize: theme.font.size.xxl,
+            fontWeight: theme.font.weight.b
+          }}>
+            {pageTitle}
+          </Text>
           <View style={{
               position: "absolute",
               right: theme.spacing.s,

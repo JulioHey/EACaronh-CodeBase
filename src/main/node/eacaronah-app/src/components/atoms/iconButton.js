@@ -3,7 +3,7 @@ import MaterialCommunityIcons
     from "react-native-vector-icons/MaterialCommunityIcons";
 import theme from "../../theme/theme";
 import {View} from "react-native";
-import {BaseButton} from "react-native";
+import {BaseButton} from "react-native-gesture-handler";
 
 const IconButton = ({children, style, onClick}) => {
     return (

@@ -7,6 +7,7 @@ import logo from "../../assets/images/logo.png";
 import Forms from "../../components/organism/forms";
 import theme from "../../theme/theme";
 import PageContainer from "../../containers/pageContainer";
+import { isValidEmail, isEmpty } from "../../utils/validation";
 
 const LoginScreen = ({navigation}) => {
     const {login} = useContext(AuthContext);
@@ -16,14 +17,11 @@ const LoginScreen = ({navigation}) => {
     const [invalidEmail, setInvalidEmail] = useState(false);
     const [invalidPassword, setInvalidPassword] = useState(false);
 
-    const isValidEmail = (email) => {
-      return /\S+@\S+\.\S+/.test(email);
-    }
 
     const validateAndLogin = () => {
       if(!isValidEmail(email))
         setInvalidEmail(true);
-      else if(password.trim() === "")
+      else if(isEmpty(password))
         setInvalidPassword(true);
       else
         login()

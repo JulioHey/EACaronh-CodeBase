@@ -40,7 +40,7 @@ const OTPVerification = ({navigation}) => {
 
                     </IconButton>
                 )}
-                pageTitle={<Text>Cadastro</Text>}
+                pageTitle={"Cadastro"}
             />
 
             <BackgroundText value={"Verificar número de telefone"}/>
@@ -56,8 +56,13 @@ const OTPVerification = ({navigation}) => {
             </Text>
 
             <OTPInput onChange={setCode} invalid={invalid} title="Código de verificação:"/>
-            <TextButton title="Enviar um novo código." />
-            <TextButton title="Trocar de telefone." />
+            <View style={{
+              marginVertical: theme.spacing.xl,
+              justifyContent: "space-between"
+            }}>
+              <TextButton title="Enviar um novo código." />
+              <TextButton title="Trocar de telefone." />
+            </View>
 
             <IconButton style={{
                 marginLeft: "auto",
