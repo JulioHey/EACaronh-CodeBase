@@ -1,8 +1,10 @@
 import theme from "../../theme/theme";
 import LabeledInput from "../molecules/labeledInput";
 import ElevatedButton from "../atoms/elevatedButton";
+import Label from "../atoms/label";
 import {Text, View} from "react-native";
 import { isEmpty } from "../../utils/validation";
+import Dropdown from "../../components/atoms/dropdown";
 
 
 const Forms = ({formsOptions}) => {
@@ -29,6 +31,22 @@ const Forms = ({formsOptions}) => {
                             {value.callToAction}
                         </Text>
                     </Text>)
+                } else if (value.type == "selectDropdown") {
+                  return (
+                    <View>
+                      <Label text={value.title} invalid={value.invalid}/>
+                      <Dropdown data={value.options} onSelect={value.onSelect} label="Select..."/>
+                    </View>
+                  )
+                          //style={{
+                          //backgroundColor: theme.color.lightBackground,
+                          //paddingHorizontal: theme.spacing.m,
+                          //paddingVertical: theme.spacing.s,
+                          //borderRadius: theme.borderRadius.s,
+                          //fontSize: theme.font.size.xl,
+                          //lineHeight: theme.font.lineHeight.xl,
+                          //width: "100%",
+                      //}}
                 }
             })}
         </View>

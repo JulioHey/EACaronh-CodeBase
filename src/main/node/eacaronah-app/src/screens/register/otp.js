@@ -76,6 +76,7 @@ const OTPVerification = ({navigation}) => {
                     //birthDate
                 //})
                 console.log(code);
+                navigation.navigate("institutionRegister");
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>
