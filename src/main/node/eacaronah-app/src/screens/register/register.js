@@ -77,8 +77,16 @@ const UserRegister = ({navigation}) => {
         setInvalid(newInvalid);
       }
 
-      if(proceed)
+      if(proceed){
+        setUserInfo(navigation, {
+            name,
+            email,
+            phone,
+            documentNumber,
+            birthDate
+        });
         navigation.navigate("otp");
+      }
     }
 
     return (
@@ -146,15 +154,7 @@ const UserRegister = ({navigation}) => {
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,
             }} onClick={() => {
-                setUserInfo(navigation, {
-                    name,
-                    email,
-                    phone,
-                    documentNumber,
-                    birthDate
-                });
-                //validateAndProceed();
-                navigation.navigate("otp");
+                validateAndProceed();
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

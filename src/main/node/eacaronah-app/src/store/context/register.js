@@ -19,7 +19,18 @@ export const RegisterProvider = ({children}) => {
         });
     }, [registerForm]);
 
-    return (<RegisterContext.Provider value={{setUserInfo, registerForm}}>
+    const setInstitutionInfo = useCallback((institutionData) => {
+        setRegisterForm({
+            ...registerForm,
+            institution: {...institutionData}
+        });
+    }, [registerForm]);
+
+  const checkOTPCode = useCallback((code) => {
+    // Vai mandar solicitacao para o Auth Service
+  });
+
+    return (<RegisterContext.Provider value={{setUserInfo, registerForm, setInstitutionInfo, checkOTPCode}}>
         {children}
     </RegisterContext.Provider>)
 }

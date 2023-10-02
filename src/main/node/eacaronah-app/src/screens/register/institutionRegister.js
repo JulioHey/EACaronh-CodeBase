@@ -7,27 +7,52 @@ import {View} from "react-native";
 import Forms from "../../components/organism/forms";
 import {RegisterContext} from "../../store/context/register";
 import theme from "../../theme/theme";
+import { isEmpty } from "../../utils/validation";
 
 const InstitutionRegister = ({navigation}) => {
-    const {registerForm} = useContext(RegisterContext);
+    const {setInstitutionInfo} = useContext(RegisterContext);
     const [institutionName, setInstitutionName] = useState("");
     const [institutionNumber, setInstitutionNumber] = useState("");
     const [position, setPosition] = useState("");
     const [invalid, setInvalid] = useState({institutionName: false, institutionNumber: false})
 
-    //return (<PageContainer>
-        //{registerForm.name}
-        //{registerForm.email}
-        //{registerForm.phone}
-        //{registerForm.birthDate}
-        //{registerForm.documentNumber}
-    //</PageContainer>);
+    const validateAndProceed = () => {
+      const newInvalid = {...invalid};
+      let proceed = true;
+
+      if(isEmpty(institutionName)){
+        newInvalid.institutionName = true;
+        setInvalid(newInvalid);
+        proceed = false;
+      } else {
+        newInvalid.institutionName = false;
+        setInvalid(newInvalid);
+      }
+
+      if(isEmpty(institutionNumber)){
+        newInvalid.institutionNumber = true;
+        setInvalid(newInvalid);
+        proceed = false;
+      } else {
+        newInvalid.institutionNumber = false;
+        setInvalid(newInvalid);
+      }
+
+      if(proceed){
+        setInstitutionInfo(navigation, {
+          name: institutionName,
+          number: institutionNumber,
+          position: position,
+        });
+      }
+    }
+
     return (
         <PageContainer>
             <Header
                 heading={(
                     <IconButton
-                        onClick={() => navigation.navigate("login")}
+                        onClick={() => navigation.navigate("userRegister")}
                     >
                         <View style={{
                             position: "absolute",
@@ -70,16 +95,7 @@ const InstitutionRegister = ({navigation}) => {
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,
             }} onClick={() => {
-                console.log(position);
-                //setUserInfo(navigation, {
-                    //name,
-                    //email,
-                    //phone,
-                    //documentNumber,
-                    //birthDate
-                //});
-                //validateAndProceed();
-                //navigation.navigate("otp");
+                validateAndProceed();
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

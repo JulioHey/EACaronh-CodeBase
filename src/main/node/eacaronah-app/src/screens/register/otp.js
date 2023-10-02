@@ -15,12 +15,17 @@ import {
 } from "../../store/context/register";
 
 const OTPVerification = ({navigation}) => {
-    const {registerForm, setUserInfo} = useContext(RegisterContext);
+    const {registerForm, checkOTPCode} = useContext(RegisterContext);
     const [code, setCode] = useState("");
     const [invalid, setInvalid] = useState(false);
 
-  const validateAndNext = () => {
-    //if(code.trim() === "")
+  const validateAndProceed = () => {
+    // Verificar se o input ta vazio
+
+
+    checkOTPCode(code);
+    console.log(code);
+    navigation.navigate("institutionRegister");
   }
 
     return (
@@ -68,15 +73,7 @@ const OTPVerification = ({navigation}) => {
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,
             }} onClick={() => {
-                //setUserInfo(navigation, {
-                    //name,
-                    //email,
-                    //phone,
-                    //documentNumber,
-                    //birthDate
-                //})
-                console.log(code);
-                navigation.navigate("institutionRegister");
+              validateAndProceed();
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

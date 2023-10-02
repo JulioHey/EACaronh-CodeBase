@@ -24,7 +24,7 @@ const LoginScreen = ({navigation}) => {
       else if(isEmpty(password))
         setInvalidPassword(true);
       else
-        login()
+        login();
     }
 
     return (
