@@ -123,4 +123,4 @@ var _ = Describe("Repository", func() {
 			Expect(err).ToNot(HaveOccurred())
 		})
 	})
-})
+}))

@@ -38,7 +38,6 @@ type GormDatabase interface {
 	Create(value interface{}) (tx *gorm.DB)
 	Updates(values interface{}) (tx *gorm.DB)
 	Delete(value interface{}, conds ...interface{}) (tx *gorm.DB)
-
 	Where(query interface{}, args ...interface{}) (tx *gorm.DB)
 }
 
@@ -89,6 +88,21 @@ func constructQuery(queries []Query) string {
 				q.Targets[0], q.Targets[1])
 		} else if q.Operation == EQUAL {
 			query = fmt.Sprintf("%s = '%s'", q.Field, q.Targets[0])
+		} else if q.Operation == IN {
+			in := ""
+			for index, t := range q.Targets {
+				if index != 0 {
+					in += ", "
+				}
+				in += fmt.Sprintf("'%s'", t)
+			}
+			query = fmt.Sprintf("%s IN (%s)", q.Field, in)
+		} else if q.Operation == GREATER_THAN {
+			query = fmt.Sprintf("%s > '%s'", q.Field, q.Targets[0])
+		} else if q.Operation == LESS_THAN {
+			query = fmt.Sprintf("%s < '%s'", q.Field, q.Targets[0])
+		} else if q.Operation == LIKE {
+			query = fmt.Sprintf("%s LIKE '%s'", q.Field, q.Targets[0])
 		}
 		queriesOutput = append(queriesOutput, query)
 	}
@@ -99,7 +113,11 @@ func constructQuery(queries []Query) string {
 func (r *BaseRepository[T]) Get(queries []Query) ([]T, error) {
 	var entities []T
 
-	result := r.Database.Where(constructQuery(queries)).Find(&entities)
+	query := constructQuery(queries)
+
+	log.Printf("Query: %s", query)
+
+	result := r.Database.Where(query).Find(&entities)
 	if result.Error != nil {
 		log.Printf("Error while finding rows: %v", result.Error)
 		return nil, result.Error

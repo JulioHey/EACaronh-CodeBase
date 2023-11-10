@@ -26,7 +26,7 @@ func (s *BaseServer[T]) Create(c *gin.Context) {
 	if err != nil {
 		log.Printf("Error while binding entity model: %v", err)
 		c.JSON(http.StatusUnprocessableEntity,
-			map[string]string{"message": "Missing id param"})
+			map[string]string{"message": "Invalid entity model"})
 		return
 	}
 
@@ -96,6 +96,11 @@ func (s *BaseServer[T]) Get(c *gin.Context) {
 		}
 		return
 	}
+	if len(entities) == 0 {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
 	c.JSON(http.StatusOK, entities)
 }
 
