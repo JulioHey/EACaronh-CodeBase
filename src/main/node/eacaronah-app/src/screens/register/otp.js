@@ -20,9 +20,8 @@ const OTPVerification = ({navigation}) => {
     const [invalid, setInvalid] = useState(false);
 
   const validateAndProceed = () => {
-    // Verificar se o input ta vazio
-
-
+    setInvalid(false);
+    console.log(registerForm);
     checkOTPCode(code);
     console.log(code);
     navigation.navigate("institutionRegister");

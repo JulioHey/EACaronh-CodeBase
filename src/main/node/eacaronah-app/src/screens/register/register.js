@@ -8,7 +8,6 @@ import PageContainer from "../../containers/pageContainer";
 import Header from "../../components/molecules/header";
 import {
     RegisterContext,
-    RegisterProvider
 } from "../../store/context/register";
 import { isValidEmail, isEmpty } from "../../utils/validation";
 
@@ -78,7 +77,7 @@ const UserRegister = ({navigation}) => {
       }
 
       if(proceed){
-        setUserInfo(navigation, {
+        setUserInfo({
             name,
             email,
             phone,

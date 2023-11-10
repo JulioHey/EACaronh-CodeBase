@@ -33,7 +33,11 @@ const Forms = ({formsOptions}) => {
                     </Text>)
                 } else if (value.type == "selectDropdown") {
                   return (
-                    <View>
+                    <View
+                        style={{
+                            width: "100%",
+                        }}
+                    >
                       <Label text={value.title} invalid={value.invalid}/>
                       <Dropdown data={value.options} onSelect={value.onSelect} label="Select..."/>
                     </View>

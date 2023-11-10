@@ -6,7 +6,11 @@ import MaskInput from 'react-native-mask-input';
 
 const MaskedInput = ({hide, value, onInputChange, invalid, mask}) => {
   return (
-    <View>
+    <View
+        style={{
+            width: "100%",
+        }}
+    >
     <MaskInput
         style={{
             backgroundColor: theme.color.lightBackground,

@@ -3,7 +3,7 @@ import React from 'react';
 import {TextInput} from 'react-native';
 import theme from "../../theme/theme";
 
-const UniqueInput = React.forwardRef(({hide, value, onInputChange, onKeyDown, invalid}, ref) => {
+const UniqueInput = React.forwardRef(({hide, value, onInputChange, onKeyPress, invalid}, ref) => {
     return (
         <TextInput
             style={{
@@ -22,7 +22,7 @@ const UniqueInput = React.forwardRef(({hide, value, onInputChange, onKeyDown, in
             value={value}
             secureTextEntry={hide}
             onChange={onInputChange}
-            onKeyDown={onKeyDown}
+            onKeyPress={onKeyPress}
             ref={ref}
         />
     )
