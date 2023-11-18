@@ -18,7 +18,7 @@ export const AppNavigation = () => {
         <NavigationContainer>
             {!isLoggedIn ? (
                 <Stack.Navigator
-                    initialRouteName="userRegister"
+                    initialRouteName="login"
                     screenOptions={{
                     headerShown: false,
 

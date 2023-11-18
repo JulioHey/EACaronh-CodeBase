@@ -9,6 +9,7 @@ const PageContainer = ({children}) => {
                 paddingHorizontal: theme.spacing.l,
                 height: "100%",
                 backgroundColor: "white",
+                flex: 1
             }}
         >
             {children}

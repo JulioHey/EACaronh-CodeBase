@@ -11,6 +11,9 @@ const theme = {
     },
     borderRadius: {
         s: 8,
+        m: 20,
+        l: 40,
+        xl: 60,
         xll: 100,
     },
     font: {

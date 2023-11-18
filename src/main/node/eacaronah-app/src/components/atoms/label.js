@@ -5,6 +5,7 @@ const Label = ({text, style}) => {
     return (
         <Text style={
             style ?? {
+                color: "#FFFFFF",
                 fontSize: theme.font.size.m,
                 fontWeight: "600",
             }
