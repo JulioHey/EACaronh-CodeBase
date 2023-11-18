@@ -46,7 +46,7 @@ const LoginScreen = ({navigation}) => {
                     },
                     {
                         type: "input",
-                        title: "Senha",
+                        title: "Password",
                         value: password,
                         onChange: (e) => setPassword(e.target.value),
                         invalid: invalidPassword

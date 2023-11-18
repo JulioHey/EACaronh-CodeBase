@@ -56,6 +56,7 @@ const InstitutionRegister = ({navigation}) => {
           periodo,
           departamento
         });
+        navigation.navigate("success");
       }
     }
 
