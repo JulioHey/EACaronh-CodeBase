@@ -15,12 +15,8 @@ type User struct {
 	Created        int64  `json:"created" gorm:"autoCreateTime"`
 }
 
-func (u *User) GetID() string {
-	return u.ID
-}
-
-func (u *User) SetID(id string) {
-	u.ID = id
+func (u *User) SetID(id ...string) {
+	u.ID = id[0]
 }
 
 func (u *User) Columns() []string {
@@ -30,7 +26,7 @@ func (u *User) Columns() []string {
 func AutoMigrateUser(db *gorm.DB) {
 	migrator := db.Migrator()
 	user := &User{}
-	if true {
+	if false {
 		err := migrator.DropTable(user)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)

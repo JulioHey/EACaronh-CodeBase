@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"repository/internal/institution"
+	"repository/internal/student"
 	"repository/internal/user"
 )
 
@@ -22,6 +23,7 @@ func main() {
 	// Create DB
 	user.AutoMigrateUser(db)
 	institution.AutoMigrateInstitution(db)
+	student.AutoMigrateStudent(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -30,6 +32,7 @@ func main() {
 	// Create server
 	userServer := user.NewUserServer(db)
 	institutionServer := institution.NewInstitutionServer(db)
+	studentServer := student.NewStudentServer(db)
 
 	// Echo instance
 	r := gin.Default()
@@ -39,6 +42,7 @@ func main() {
 	// Routes
 	userServer.BindUserServer(r)
 	institutionServer.BindInstitutionServer(r)
+	studentServer.BindStudentServer(r)
 
 	// Start server
 	err = r.Run(":8080")

@@ -42,8 +42,7 @@ type GormDatabase interface {
 }
 
 type Model interface {
-	GetID() string
-	SetID(string)
+	SetID(...string)
 	Columns() []string
 }
 
