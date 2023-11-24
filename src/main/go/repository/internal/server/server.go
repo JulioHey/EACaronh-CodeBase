@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"repository/internal/repository"
+	"repository/internal/service"
 )
 
 type GetRequest struct {
@@ -15,7 +16,7 @@ type GetRequest struct {
 
 type BaseServer[T repository.Model] struct {
 	Name    string
-	Service repository.Service[T]
+	Service service.Service[T]
 }
 
 func (s *BaseServer[T]) Create(c *gin.Context) {

@@ -46,14 +46,6 @@ type Model interface {
 	Columns() []string
 }
 
-type Service[T Model] interface {
-	Create(Model T) (T, error)
-	GetById(id string) (T, error)
-	Get(queries []Query) ([]T, error)
-	Update(Model T) error
-	Delete(id string) error
-}
-
 type Repository[T Model] interface {
 	Get() ([]T, error)
 	GetById(Model T) (*T, error)
