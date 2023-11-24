@@ -1,8 +1,10 @@
 package student
 
 import (
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"repository/internal/repository"
+	"strconv"
 )
 
 type service struct {
@@ -28,6 +30,8 @@ func (u *service) Get(queries []repository.Query) ([]*Student, error) {
 }
 
 func (u *service) Create(newStudent *Student) (*Student, error) {
+	newStudent.ID = strconv.Itoa(int(uuid.New().ID()))
+
 	return u.repo.Create(newStudent)
 }
 

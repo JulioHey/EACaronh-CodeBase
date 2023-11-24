@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"repository/internal/institution"
 	"repository/internal/student"
@@ -13,7 +14,10 @@ import (
 func main() {
 	log.Printf("Connectiong to db")
 	// Connect DB
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		"localhost", "5432", "postgres", "admin", "postgres", "disable")
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")

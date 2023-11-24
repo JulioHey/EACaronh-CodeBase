@@ -8,17 +8,16 @@ import (
 )
 
 type Student struct {
-	User               user.User               `json:"user_id" gorm:"primarykey;foreignKey:ID"`
-	Institution        institution.Institution `json:"institituion_id" gorm:"primarykey;foreignKey:ID"`
-	Course             string                  `json:"course"`
-	IngressYear        string                  `json:"ingress_year"`
-	Period             string                  `json:"period"`
+	ID                 string                  `json:"id" param:"id" gorm:"primarykey"`
+	UserID             string                  `json:"user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	User               user.User               `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	InstitutionID      string                  `json:"institution_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	Institution        institution.Institution `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	RegistrationNumber string                  `json:"registration_number"`
 }
 
 func (s *Student) SetID(id ...string) {
-	s.User.SetID(id[0])
-	s.Institution.SetID(id[0])
+	s.SetID(id[0])
 }
 
 func (s *Student) Columns() []string {
@@ -33,5 +32,10 @@ func AutoMigrateStudent(db *gorm.DB) {
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)
 		}
+	}
+
+	err := migrator.AutoMigrate(student)
+	if err != nil {
+		log.Printf("Error while migrating table: %v", err)
 	}
 }
