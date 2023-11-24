@@ -9,6 +9,7 @@ import (
 	"repository/internal/employee"
 	"repository/internal/institution"
 	"repository/internal/institutionuser"
+	"repository/internal/student"
 	"repository/internal/user"
 )
 
@@ -30,6 +31,7 @@ func main() {
 	institution.AutoMigrateInstitution(db)
 	institutionuser.AutoMigrateInstitutionUser(db)
 	employee.AutoMigrateEmployee(db)
+	student.AutoMigrateStudent(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -38,9 +40,9 @@ func main() {
 	// Create server
 	userServer := user.NewUserServer(db)
 	institutionServer := institution.NewInstitutionServer(db)
-	studentServer := institutionuser.NewInstitutionUserServer(db)
+	institutionUserServer := institutionuser.NewInstitutionUserServer(db)
 	employeeServer := employee.NewEmployeeServer(db)
-
+	studentServer := student.NewStudentServer(db)
 	// Echo instance
 	r := gin.Default()
 
@@ -49,8 +51,9 @@ func main() {
 	// Routes
 	userServer.BindUserServer(r)
 	institutionServer.BindInstitutionServer(r)
-	studentServer.BindInstitutionUserServer(r)
+	institutionUserServer.BindInstitutionUserServer(r)
 	employeeServer.BindEmployeeServer(r)
+	studentServer.BindStudentServer(r)
 
 	// Start server
 	err = r.Run(":8080")

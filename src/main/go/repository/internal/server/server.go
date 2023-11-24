@@ -121,7 +121,6 @@ func (s *BaseServer[T]) Update(c *gin.Context) {
 		return
 	}
 	newEntityT := *newEntity
-	log.Printf("PORRA: %+v", newEntityT)
 	newEntityT.SetID(id)
 
 	log.Printf("Updating entity: %+v", newEntityT)
