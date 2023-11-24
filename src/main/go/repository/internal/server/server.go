@@ -91,13 +91,10 @@ func (s *BaseServer[T]) Get(c *gin.Context) {
 			c.JSON(http.StatusBadRequest,
 				map[string]string{"message": er.Error()})
 		} else {
+			log.Printf("Error while getting entities: %v", err)
 			c.JSON(http.StatusBadRequest,
 				map[string]string{"message": "Unexpected error"})
 		}
-		return
-	}
-	if len(entities) == 0 {
-		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
@@ -124,6 +121,7 @@ func (s *BaseServer[T]) Update(c *gin.Context) {
 		return
 	}
 	newEntityT := *newEntity
+	log.Printf("PORRA: %+v", newEntityT)
 	newEntityT.SetID(id)
 
 	log.Printf("Updating entity: %+v", newEntityT)

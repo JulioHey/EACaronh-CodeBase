@@ -6,8 +6,9 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"repository/internal/employee"
 	"repository/internal/institution"
-	"repository/internal/student"
+	"repository/internal/institutionuser"
 	"repository/internal/user"
 )
 
@@ -27,7 +28,8 @@ func main() {
 	// Create DB
 	user.AutoMigrateUser(db)
 	institution.AutoMigrateInstitution(db)
-	student.AutoMigrateStudent(db)
+	institutionuser.AutoMigrateInstitutionUser(db)
+	employee.AutoMigrateEmployee(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -36,7 +38,8 @@ func main() {
 	// Create server
 	userServer := user.NewUserServer(db)
 	institutionServer := institution.NewInstitutionServer(db)
-	studentServer := student.NewStudentServer(db)
+	studentServer := institutionuser.NewInstitutionUserServer(db)
+	employeeServer := employee.NewEmployeeServer(db)
 
 	// Echo instance
 	r := gin.Default()
@@ -46,7 +49,8 @@ func main() {
 	// Routes
 	userServer.BindUserServer(r)
 	institutionServer.BindInstitutionServer(r)
-	studentServer.BindStudentServer(r)
+	studentServer.BindInstitutionUserServer(r)
+	employeeServer.BindEmployeeServer(r)
 
 	// Start server
 	err = r.Run(":8080")

@@ -11,8 +11,8 @@ type Institution struct {
 	Domain string `json:"domain" gorm:"not null; uniqueIndex"`
 }
 
-func (i *Institution) SetID(id ...string) {
-	i.ID = id[0]
+func (i *Institution) SetID(id string) {
+	i.ID = id
 }
 
 func (i *Institution) Columns() []string {

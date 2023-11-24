@@ -15,8 +15,8 @@ type User struct {
 	Created        int64  `json:"created" gorm:"autoCreateTime"`
 }
 
-func (u *User) SetID(id ...string) {
-	u.ID = id[0]
+func (u *User) SetID(id string) {
+	u.ID = id
 }
 
 func (u *User) Columns() []string {
