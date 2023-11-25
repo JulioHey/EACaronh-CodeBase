@@ -50,7 +50,7 @@ type Base struct {
 	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
 }
 
-var Reset_Data = true
+var ResetData = false
 
 func (base *Base) BeforeCreate(tx *gorm.DB) (err error) {
 	base.ID = uuid.New().String()

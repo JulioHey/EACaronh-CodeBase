@@ -19,7 +19,7 @@ func (i *Institution) Columns() []string {
 func AutoMigrateInstitution(db *gorm.DB) {
 	migrator := db.Migrator()
 	institution := &Institution{}
-	if repository.Reset_Data {
+	if repository.ResetData {
 		err := migrator.DropTable(institution)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)

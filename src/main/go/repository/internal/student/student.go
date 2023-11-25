@@ -40,7 +40,7 @@ func (s *Student) Columns() []string {
 func AutoMigrateStudent(db *gorm.DB) {
 	migrator := db.Migrator()
 	student := &Student{}
-	if repository.Reset_Data {
+	if repository.ResetData {
 		err := migrator.DropTable(student)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)

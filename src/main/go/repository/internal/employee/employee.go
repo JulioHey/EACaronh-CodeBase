@@ -25,7 +25,7 @@ func (e *Employee) Columns() []string {
 func AutoMigrateEmployee(db *gorm.DB) {
 	migrator := db.Migrator()
 	employee := &Employee{}
-	if repository.Reset_Data {
+	if repository.ResetData {
 		err := migrator.DropTable(employee)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)

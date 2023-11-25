@@ -23,7 +23,7 @@ func (u *User) Columns() []string {
 func AutoMigrateUser(db *gorm.DB) {
 	migrator := db.Migrator()
 	user := &User{}
-	if repository.Reset_Data {
+	if repository.ResetData {
 		err := migrator.DropTable(user)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)
