@@ -1,9 +1,7 @@
 package service
 
 import (
-	"github.com/google/uuid"
 	"repository/internal/repository"
-	"strconv"
 )
 
 type Service[T repository.Model] interface {
@@ -40,8 +38,6 @@ func (s *BaseService[T]) Get(queries []repository.Query) ([]T, error) {
 func (s *BaseService[T]) Create(newStudent T) (
 	T,
 	error) {
-	newStudent.SetID(strconv.Itoa(int(uuid.New().ID())))
-
 	return s.Repo.Create(newStudent)
 }
 

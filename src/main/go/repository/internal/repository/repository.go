@@ -2,8 +2,10 @@ package repository
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
+	"time"
 )
 
 // Operation represents the operation that the query will do in database
@@ -41,9 +43,27 @@ type GormDatabase interface {
 	Where(query interface{}, args ...interface{}) (tx *gorm.DB)
 }
 
+type Base struct {
+	ID        string     `json:"id" param:"id" gorm:"primary_key"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `sql:"index" json:"deleted_at"`
+}
+
+var Reset_Data = true
+
+func (base *Base) BeforeCreate(tx *gorm.DB) (err error) {
+	base.ID = uuid.New().String()
+	return
+}
+
 type Model interface {
 	SetID(string)
 	Columns() []string
+}
+
+func (base *Base) SetID(id string) {
+	base.ID = id
 }
 
 type Repository[T Model] interface {
@@ -120,7 +140,7 @@ func (r *BaseRepository[T]) Get(queries []Query) ([]T, error) {
 
 func (r *BaseRepository[T]) GetById(id string) (T, error) {
 	entity := new(T)
-	result := r.Database.First(entity, id)
+	result := r.Database.First(&entity, "id = ?", id)
 	if result.Error != nil {
 		log.Printf("Error: %v", result.Error)
 		return *entity, result.Error

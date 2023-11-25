@@ -4,6 +4,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 	"repository/internal/institutionuser"
+	"repository/internal/repository"
 )
 
 type ProgramType string
@@ -21,7 +22,7 @@ const (
 )
 
 type Student struct {
-	ID                string `json:"id" param:"id" gorm:"primarykey"`
+	repository.Base
 	InstitutionUserID string `json:"institution_user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
 	InstitutionUser   institutionuser.
 				InstitutionUser `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
@@ -29,10 +30,6 @@ type Student struct {
 	Course      string      `json:"course"`
 	IngressYear string      `json:"ingress_year"`
 	Period      Period      `json:"period"`
-}
-
-func (s *Student) SetID(id string) {
-	s.ID = id
 }
 
 func (s *Student) Columns() []string {
@@ -43,7 +40,7 @@ func (s *Student) Columns() []string {
 func AutoMigrateStudent(db *gorm.DB) {
 	migrator := db.Migrator()
 	student := &Student{}
-	if false {
+	if repository.Reset_Data {
 		err := migrator.DropTable(student)
 		if err != nil {
 			log.Printf("Error while dropping table: %v", err)
