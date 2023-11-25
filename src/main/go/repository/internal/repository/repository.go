@@ -44,7 +44,7 @@ type GormDatabase interface {
 }
 
 type Base struct {
-	ID        string     `json:"id" param:"id" gorm:"primary_key"`
+	ID        string     `json:"id" param:"id" gorm:"primaryKey"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `sql:"index" json:"deleted_at"`

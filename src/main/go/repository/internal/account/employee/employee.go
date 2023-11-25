@@ -3,18 +3,17 @@ package employee
 import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
-	"repository/internal/institutionuser"
+	"repository/internal/account/institutionuser"
 	"repository/internal/repository"
 )
 
 type Employee struct {
 	repository.Base
-	InstitutionUserID string `json:"institution_user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
-	InstitutionUser   institutionuser.
-				InstitutionUser `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Role        string `json:"role"`
-	Department  string `json:"department"`
-	IngressYear string `json:"ingress_year"`
+	InstitutionUserID string                          `json:"institution_user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	InstitutionUser   institutionuser.InstitutionUser `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Role              string                          `json:"role"`
+	Department        string                          `json:"department"`
+	IngressYear       string                          `json:"ingress_year"`
 }
 
 func (e *Employee) Columns() []string {

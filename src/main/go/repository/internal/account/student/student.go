@@ -3,7 +3,7 @@ package student
 import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
-	"repository/internal/institutionuser"
+	"repository/internal/account/institutionuser"
 	"repository/internal/repository"
 )
 
@@ -23,13 +23,12 @@ const (
 
 type Student struct {
 	repository.Base
-	InstitutionUserID string `json:"institution_user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
-	InstitutionUser   institutionuser.
-				InstitutionUser `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	ProgramType ProgramType `json:"program_type"`
-	Course      string      `json:"course"`
-	IngressYear string      `json:"ingress_year"`
-	Period      Period      `json:"period"`
+	InstitutionUserID string                          `json:"institution_user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	InstitutionUser   institutionuser.InstitutionUser `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ProgramType       ProgramType                     `json:"program_type"`
+	Course            string                          `json:"course"`
+	IngressYear       string                          `json:"ingress_year"`
+	Period            Period                          `json:"period"`
 }
 
 func (s *Student) Columns() []string {

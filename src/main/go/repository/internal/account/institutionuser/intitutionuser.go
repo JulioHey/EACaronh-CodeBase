@@ -3,19 +3,18 @@ package institutionuser
 import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
-	"repository/internal/institution"
+	"repository/internal/account/institution"
+	"repository/internal/account/user"
 	"repository/internal/repository"
-	"repository/internal/user"
 )
 
 type InstitutionUser struct {
 	repository.Base
-	UserID        string    `json:"user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
-	User          user.User `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	InstitutionID string    `json:"institution_id" gorm:"uniqueIndex:compositeindex;index;not null"`
-	Institution   institution.
-			Institution `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	RegistrationNumber string `json:"registration_number"`
+	UserID             string                  `json:"user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	User               user.User               `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	InstitutionID      string                  `json:"institution_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	Institution        institution.Institution `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	RegistrationNumber string                  `json:"registration_number"`
 }
 
 func (s *InstitutionUser) Columns() []string {
