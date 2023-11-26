@@ -68,12 +68,18 @@ func (s *server) UserRegister(c *gin.Context) {
 func (s *server) UpdatePassword(c *gin.Context) {
 	var req account.UpdatePasswordRequest
 
-	c.BindJSON(&req)
-
-	log.Printf("request body: %v", req)
-
-	s.service.UpdatePassword(req)
-
+	err := c.BindJSON(&req)
+	if err != nil {
+		log.Printf("failed to bind json: %v", err)
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+	err = s.service.UpdatePassword(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Internal service error": err.
+			Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 

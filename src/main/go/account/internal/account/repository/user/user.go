@@ -1,6 +1,7 @@
 package user
 
 import (
+	"account/internal/account/repository/institution"
 	"github.com/go-playground/validator/v10"
 	"time"
 )
@@ -8,27 +9,55 @@ import (
 type InstitutionRole string
 
 const (
-	Student  InstitutionRole = "STUDENT"
-	Employee InstitutionRole = "EMPLOYEE"
+	StudentROLE  InstitutionRole = "STUDENT"
+	EmployeeROLE InstitutionRole = "EMPLOYEE"
 )
 
 type RegisterRequest struct {
-	User            User            `json:"user"`
-	InstitutionUser InstitutionUser `json:"institution_user"`
+	User            *User               `json:"user"`
+	InstitutionUser *InstitutionUserReq `json:"institution_user"`
+	Institution     *institution.Institution
 }
 
 type InstitutionUser struct {
-	InstitutionName string          `json:"institution_name"`
-	InstitutionCode string          `json:"institution_code"`
-	Role            InstitutionRole `json:"role" validate:"is-role-valid"`
-	StudentUser     *StudentUser    `json:"student_user"`
-	EmployeeUser    *EmployeeUser   `json:"employee_user"`
+	ID                 string `json:"id"`
+	InstitutionID      string `json:"institution_id"`
+	UserID             string `json:"user_id"`
+	RegistrationNumber string `json:"registration_number"`
 }
 
-type StudentUser struct {
-	Course    string `json:"course"`
-	EntryYear string `json:"entry_year"`
-	Period    string `json:"period"`
+func (i *InstitutionUser) GetPath() string {
+	return "institutionuser"
+}
+
+type UserPassword struct {
+	ID       string `json:"id"`
+	UserID   string `json:"user_id"`
+	Password string `json:"password"`
+}
+
+func (u *UserPassword) GetPath() string {
+	return "userpassword"
+}
+
+type InstitutionUserReq struct {
+	InstitutionName    string          `json:"institution_name"`
+	RegistrationNumber string          `json:"registration_number"`
+	Role               InstitutionRole `json:"role" validate:"is-role-valid"`
+	StudentUser        *Student        `json:"student_user"`
+	EmployeeUser       *EmployeeUser   `json:"employee_user"`
+}
+
+type Student struct {
+	InstitutionUserID string `json:"institution_user_id"`
+	Course            string `json:"course"`
+	IngressYear       string `json:"ingress_year"`
+	Period            string `json:"period"`
+	ProgramType       string `json:"program_type"`
+}
+
+func (s *Student) GetPath() string {
+	return "student"
 }
 
 type EmployeeUser struct {
@@ -42,6 +71,10 @@ type User struct {
 	PhoneNumber    string `json:"phone_number"`
 	DocumentNumber string `json:"document_number"`
 	Email          string `json:"email" validate:"email"`
+}
+
+func (u *User) GetPath() string {
+	return "users"
 }
 
 type ValidationError struct {
@@ -75,10 +108,10 @@ func ValidDate(fl validator.FieldLevel) bool {
 // IsRoleValid implements validator.Func
 func IsRoleValid(fl validator.FieldLevel) bool {
 	role := InstitutionRole(fl.Field().String())
-	if role == Student {
+	if role == StudentROLE {
 		studentUser := fl.Parent().FieldByName("StudentUser").Interface()
 		return !(studentUser == nil)
-	} else if role == Employee {
+	} else if role == EmployeeROLE {
 		employeeUser := fl.Parent().FieldByName("EmployeeUser").Interface()
 		return !(employeeUser == nil)
 	}

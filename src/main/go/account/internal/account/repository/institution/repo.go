@@ -48,6 +48,9 @@ func (r *repo) GetInstitutionByName(name string) (*Institution, error) {
 		return nil, err
 	}
 
+	if len(institutions) == 0 {
+		return nil, repository.NewNotFoundError("institution")
+	}
 	return &institutions[0], nil
 }
 

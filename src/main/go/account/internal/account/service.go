@@ -15,6 +15,7 @@ type Service interface {
 
 type service struct {
 	institutionClient institution.Client
+	userClient        user.Client
 }
 
 func (s *service) Login(req LoginRequest) (*LoginResponse, error) {
@@ -27,10 +28,21 @@ func (s *service) UserRegister(req user.RegisterRequest) error {
 		return user.NewValidationError(err)
 	}
 
-	err = s.institutionClient.CheckInstitution(institution.CheckInstitutionRequest{
+	institutionID, err := s.institutionClient.CheckInstitution(institution.
+	CheckInstitutionRequest{
 		InstitutionName: req.InstitutionUser.InstitutionName,
 		Email:           req.User.Email,
 	})
+
+	if err != nil {
+		return err
+	}
+	req.Institution = &institution.Institution{
+		ID:   institutionID,
+		Name: req.InstitutionUser.InstitutionName,
+	}
+
+	err = s.userClient.CreateUser(req)
 
 	if err != nil {
 		return err
@@ -40,6 +52,14 @@ func (s *service) UserRegister(req user.RegisterRequest) error {
 }
 
 func (s *service) UpdatePassword(req UpdatePasswordRequest) error {
+	err := s.userClient.UpdatePassword(user.UserPassword{
+		UserID:   req.UserID,
+		Password: req.Password,
+	})
+
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -53,10 +73,12 @@ func (s *service) CheckOTP(req CheckOTPRequest) error {
 
 type NewServiceRequest struct {
 	InstitutionClient institution.Client
+	UserClient        user.Client
 }
 
 func NewService(req NewServiceRequest) Service {
 	return &service{
 		institutionClient: req.InstitutionClient,
+		userClient:        req.UserClient,
 	}
 }
