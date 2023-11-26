@@ -5,12 +5,20 @@ import (
 	"account/internal/account/repository"
 	"account/internal/account/repository/base"
 	"errors"
+	"fmt"
 	"log"
+	"math/rand"
+	"time"
 )
 
 type Client interface {
 	CreateUser(req RegisterRequest) error
 	UpdatePassword(req UserPassword) error
+	SendOTP(req SendOTPRequest) (*OTPCode, error)
+
+	GetUserByEmail(email string) (*User, error)
+	TryDeleteOTP(ID string) error
+	CheckOTP(userID, code string) error
 }
 
 type clientImpl struct {
@@ -18,6 +26,7 @@ type clientImpl struct {
 	institutionUserRepo *base.Repository[*InstitutionUser]
 	studentRepo         *base.Repository[*Student]
 	userPassword        *base.Repository[*UserPassword]
+	otpCode             *base.Repository[*OTPCode]
 }
 
 func (c *clientImpl) CreateUser(req RegisterRequest) error {
@@ -83,6 +92,103 @@ func (c *clientImpl) UpdatePassword(req UserPassword) error {
 	}
 }
 
+func (c *clientImpl) SendOTP(req SendOTPRequest) (*OTPCode, error) {
+	codes, err := c.otpCode.Get([]repository.Query{
+		{
+			Field:     "user_id",
+			Operation: repository.EQUAL,
+			Targets:   []string{req.UserID},
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	var otpCode *OTPCode
+
+	if len(codes) == 0 {
+		otpCode = &OTPCode{
+			UserID: req.UserID,
+		}
+		otpCode.Code = generateCode()
+		newCode, err := c.otpCode.Create(otpCode)
+		if err != nil {
+			return nil, err
+		}
+		otpCode = *newCode
+	} else {
+		otpCode = codes[0]
+		otpCode.Code = generateCode()
+		_, err = c.otpCode.Update(otpCode.ID, otpCode)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return otpCode, nil
+}
+
+func (c *clientImpl) GetUserByEmail(email string) (*User, error) {
+	users, err := c.userRepo.Get([]repository.Query{
+		{
+			Field:     "email",
+			Operation: repository.EQUAL,
+			Targets:   []string{email},
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	if len(users) == 0 {
+		return nil, errors.New("user not found")
+	}
+	return users[0], nil
+}
+
+func (c *clientImpl) TryDeleteOTP(ID string) error {
+	otpCode, err := c.otpCode.GetByID(ID)
+	if err != nil {
+		return err
+	}
+	err = c.otpCode.Delete((*otpCode).ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *clientImpl) CheckOTP(userID, code string) error {
+	otpCodes, err := c.otpCode.Get([]repository.Query{
+		{
+			Field:     "user_id",
+			Operation: repository.EQUAL,
+			Targets:   []string{userID},
+		},
+	})
+	if err != nil {
+		return err
+	}
+	if len(otpCodes) == 0 {
+		return errors.New("code not found")
+	}
+	otpCode := otpCodes[0]
+	log.Printf("PORRA")
+	if otpCode.Code != code {
+		return errors.New("wrong code")
+	}
+	return nil
+}
+
+func generateCode() string {
+	code := ""
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 4; i++ {
+		code += fmt.Sprintf("%d", rand.Intn(9-0+1))
+	}
+	return code
+}
+
 func (c *clientImpl) checkRepo() error {
 	if c.userRepo == nil {
 		return errors.New("user repo is nil")
@@ -117,6 +223,11 @@ func NewUserClient(repoURL string) Client {
 			Url:    repoURL,
 			Client: api.NewHTTPClient(),
 			Entity: &UserPassword{},
+		},
+		otpCode: &base.Repository[*OTPCode]{
+			Url:    repoURL,
+			Client: api.NewHTTPClient(),
+			Entity: &OTPCode{},
 		},
 	}
 }

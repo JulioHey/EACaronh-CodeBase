@@ -76,6 +76,28 @@ func (r *Repository[T]) GetByID(id string) (*T, error) {
 	return &resEntity, nil
 }
 
+func (r *Repository[T]) Delete(id string) error {
+	if r.Url == "" || r.Client == nil {
+		return repository.NewCreationError("user",
+			errors.New("url or client is empty"))
+	}
+
+	fullURL := fmt.Sprintf("%s/%s/%s", r.Url, r.Entity.GetPath(), id)
+
+	res, err := r.Client.Delete(fullURL, map[string]string{})
+
+	if err != nil {
+		return repository.NewCreationError("user", err)
+	}
+
+	if res.StatusCode != 200 {
+		return repository.NewCreationError("user",
+			errors.New("status code not correct"))
+	}
+
+	return nil
+}
+
 func (r *Repository[T]) Update(id string, entity T) (*T, error) {
 	if r.Url == "" || r.Client == nil {
 		return nil, repository.NewCreationError("user",

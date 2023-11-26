@@ -172,5 +172,5 @@ func (r *BaseRepository[T]) Update(entity T) error {
 }
 
 func (r *BaseRepository[T]) Delete(id string) error {
-	return r.Database.Delete(new(T), id).Error
+	return r.Database.Delete(new(T), "id = ?", id).Error
 }

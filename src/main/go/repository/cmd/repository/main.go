@@ -9,6 +9,7 @@ import (
 	"repository/internal/account/employee"
 	"repository/internal/account/institution"
 	"repository/internal/account/institutionuser"
+	"repository/internal/account/otpcode"
 	"repository/internal/account/student"
 	"repository/internal/account/user"
 	"repository/internal/account/userpassword"
@@ -34,6 +35,7 @@ func main() {
 	employee.AutoMigrateEmployee(db)
 	student.AutoMigrateStudent(db)
 	userpassword.AutoMigrateUserPassword(db)
+	otpcode.AutoMigrateOTPCode(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -46,6 +48,7 @@ func main() {
 	employeeServer := employee.NewEmployeeServer(db)
 	studentServer := student.NewStudentServer(db)
 	userPasswordServer := userpassword.NewUserPasswordServer(db)
+	otpCodeServer := otpcode.NewOTPCodeServer(db)
 	// Echo instance
 	r := gin.Default()
 
@@ -57,6 +60,7 @@ func main() {
 	institutionUserServer.BindInstitutionUserServer(r)
 	employeeServer.BindEmployeeServer(r)
 	studentServer.BindStudentServer(r)
+	otpCodeServer.BindOTPCodeServer(r)
 	userPasswordServer.BindUserPasswordServer(r)
 
 	// Start server

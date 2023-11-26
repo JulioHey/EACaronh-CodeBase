@@ -117,3 +117,18 @@ func IsRoleValid(fl validator.FieldLevel) bool {
 	}
 	return false
 }
+
+type SendOTPRequest struct {
+	UserID string `json:"user_id"`
+	Email  string `json:"email"`
+}
+
+type OTPCode struct {
+	ID     string `json:"id"`
+	UserID string `json:"user_id"`
+	Code   string `json:"code"`
+}
+
+func (otp *OTPCode) GetPath() string {
+	return "otpcode"
+}

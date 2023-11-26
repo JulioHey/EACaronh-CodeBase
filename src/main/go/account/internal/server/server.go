@@ -86,16 +86,20 @@ func (s *server) UpdatePassword(c *gin.Context) {
 func (s *server) SendOTP(c *gin.Context) {
 	var req account.SendOTPRequest
 
-	if err := c.ShouldBindJSON(&req); err != nil {
+	err := c.BindJSON(&req)
+	if err != nil {
+		log.Printf("failed to bind json: %v", err)
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.BindJSON(&req)
-
 	log.Printf("request body: %v", req)
 
-	s.service.SendOTP(req)
+	err = s.service.SendOTP(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Internal service error": err.
+			Error()})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
@@ -103,16 +107,21 @@ func (s *server) SendOTP(c *gin.Context) {
 func (s *server) CheckOTP(c *gin.Context) {
 	var req account.CheckOTPRequest
 
-	if err := c.ShouldBindJSON(&req); err != nil {
+	err := c.BindJSON(&req)
+	if err != nil {
+		log.Printf("failed to bind json: %v", err)
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.BindJSON(&req)
-
 	log.Printf("request body: %v", req)
 
-	s.service.CheckOTP(req)
+	err = s.service.CheckOTP(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Internal service error": err.
+			Error()})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }

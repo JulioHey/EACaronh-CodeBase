@@ -15,9 +15,10 @@ type UpdatePasswordRequest struct {
 }
 
 type SendOTPRequest struct {
-	PhoneNumber string `json:"phone_number"`
+	Email string `json:"email"`
 }
 
 type CheckOTPRequest struct {
-	Code string `json:"code"`
+	UserID string `json:"user_id"`
+	Code   string `json:"code"`
 }

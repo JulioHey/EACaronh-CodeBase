@@ -19,6 +19,7 @@ type HttpClientInterface interface {
 	Post(fullURL string, body interface{}) (*Response, error)
 	Get(fullURL string, body interface{}) (*Response, error)
 	Put(fullURL string, body interface{}) (*Response, error)
+	Delete(fullURL string, body interface{}) (*Response, error)
 }
 
 type HTTPClient struct {
@@ -101,6 +102,16 @@ func (c *HTTPClient) Get(fullURL string, body interface{}) (*Response, error) {
 // Put makes a PUT request
 func (c *HTTPClient) Put(fullURL string, body interface{}) (*Response, error) {
 	response, err := c.makeRequest("PUT", fullURL, body)
+	if err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+// Delete makes a DELETE request
+func (c *HTTPClient) Delete(fullURL string, body interface{}) (*Response,
+	error) {
+	response, err := c.makeRequest("DELETE", fullURL, body)
 	if err != nil {
 		return nil, err
 	}
