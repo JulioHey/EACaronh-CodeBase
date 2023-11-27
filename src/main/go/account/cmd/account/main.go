@@ -2,9 +2,6 @@ package main
 
 import (
 	"account/internal/account"
-	"account/internal/account/api"
-	"account/internal/account/repository/institution"
-	"account/internal/account/repository/user"
 	"account/internal/server"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -12,9 +9,7 @@ import (
 
 func main() {
 	req := account.NewServiceRequest{
-		InstitutionClient: institution.NewClient(institution.NewRepo(
-			"http://127.0.0.0:8080", api.NewHTTPClient())),
-		UserClient: user.NewUserClient("http://127.0.0.0:8080"),
+		RepoURL: "http://localhost:8080",
 	}
 
 	accountService := account.NewService(req)

@@ -12,9 +12,9 @@ type InstitutionUser struct {
 	repository.Base
 	UserID             string                  `json:"user_id" gorm:"uniqueIndex:compositeindex;index;not null"`
 	User               user.User               `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	InstitutionID      string                  `json:"institution_id" gorm:"uniqueIndex:compositeindex;index;not null"`
+	InstitutionID      string                  `json:"institution_id" gorm:"uniqueIndex:institutionNumber;uniqueIndex:compositeindex;index;not null"`
 	Institution        institution.Institution `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	RegistrationNumber string                  `json:"registration_number"`
+	RegistrationNumber string                  `json:"registration_number" gorm:"uniqueIndex:institutionNumber;"`
 }
 
 func (s *InstitutionUser) Columns() []string {

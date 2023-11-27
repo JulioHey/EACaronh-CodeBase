@@ -2,7 +2,6 @@ package server
 
 import (
 	"account/internal/account"
-	"account/internal/account/repository/user"
 	"account/internal/middlewares"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -46,7 +45,7 @@ func (s *server) Login(c *gin.Context) {
 }
 
 func (s *server) UserRegister(c *gin.Context) {
-	var req user.RegisterRequest
+	var req account.RegisterRequest
 
 	err := c.BindJSON(&req)
 	if err != nil {
@@ -60,7 +59,7 @@ func (s *server) UserRegister(c *gin.Context) {
 	err = s.service.UserRegister(req)
 
 	if err != nil {
-		var validationError *user.ValidationError
+		var validationError *account.ValidationError
 		if errors.As(err, &validationError) {
 			log.Printf("validation error: %v", err.Error())
 			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "validation error"})
