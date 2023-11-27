@@ -29,13 +29,13 @@ func (i *InstitutionUser) GetPath() string {
 	return "institutionuser"
 }
 
-type UserPassword struct {
+type UpdatePasswordRequest struct {
 	ID       string `json:"id"`
 	UserID   string `json:"user_id"`
 	Password string `json:"password"`
 }
 
-func (u *UserPassword) GetPath() string {
+func (u *UpdatePasswordRequest) GetPath() string {
 	return "userpassword"
 }
 
@@ -134,11 +134,6 @@ type LoginRequest struct {
 
 type LoginResponse struct {
 	Token string `json:"token"`
-}
-
-type UpdatePasswordRequest struct {
-	UserID   string `json:"user_id"`
-	Password string `json:"password"`
 }
 
 type SendOTPRequest struct {

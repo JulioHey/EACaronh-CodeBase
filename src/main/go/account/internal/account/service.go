@@ -27,7 +27,7 @@ type service struct {
 	userRepo            *base.Repository[*User]
 	institutionUserRepo *base.Repository[*InstitutionUser]
 	studentRepo         *base.Repository[*Student]
-	userPassword        *base.Repository[*UserPassword]
+	userPassword        *base.Repository[*UpdatePasswordRequest]
 	otpCode             *base.Repository[*OTPCode]
 }
 
@@ -37,36 +37,17 @@ func (s *service) Login(req LoginRequest) (*LoginResponse, error) {
 		return nil, err
 	}
 
-	passowrd, err := s.userPassword.Get([]repository.Query{
-		{
-			Field:     "user_id",
-			Operation: repository.EQUAL,
-			Targets:   []string{user.ID},
-		},
-	})
+	err = s.checkPassword(user.ID, req.Password)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(passowrd) == 0 {
-		return nil, errors.New("password not found")
-	}
-
-	if passowrd[0].Password != req.Password {
-		return nil, errors.New("wrong password")
-	}
-
-	claims := jwt.MapClaims{}
-	claims["authorized"] = true
-	claims["user_id"] = user.ID
-	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString([]byte("secret"))
+	token, err := generateTokenFromUser(*user)
 	if err != nil {
 		return nil, err
 	}
 	return &LoginResponse{
-		Token: tokenString,
+		Token: token,
 	}, nil
 }
 
@@ -76,41 +57,10 @@ func (s *service) UserRegister(req RegisterRequest) error {
 		return NewValidationError(err)
 	}
 
-	institutions, err := s.institutionRepo.Get([]repository.Query{
-		{
-			Field:     "name",
-			Operation: repository.EQUAL,
-			Targets:   []string{req.InstitutionUser.InstitutionName},
-		},
-	})
-
+	institution, err := s.checkInstitution(req.InstitutionUser.
+		InstitutionName, req.User.Email)
 	if err != nil {
 		return err
-	}
-
-	if len(institutions) == 0 {
-		return errors.New("institution not found")
-	}
-	institution := institutions[0]
-
-	if err != nil {
-		return err
-	}
-
-	splittedEmail := strings.Split(req.User.Email, "@")[1]
-
-	if splittedEmail != institution.Domain {
-		log.Printf("email %s is not valid for institution %s", req.User.Email,
-			institution.Domain)
-		return errors.New("email is not valid")
-	}
-
-	if err != nil {
-		return err
-	}
-	req.Institution = &Institution{
-		ID:   institution.ID,
-		Name: req.InstitutionUser.InstitutionName,
 	}
 
 	user, err := s.userRepo.Create(req.User)
@@ -156,7 +106,7 @@ func (s *service) UpdatePassword(req UpdatePasswordRequest) error {
 	}
 	if len(userPasswords) == 0 {
 		log.Printf("DALE DELE")
-		_, err = s.userPassword.Create(&UserPassword{
+		_, err = s.userPassword.Create(&UpdatePasswordRequest{
 			UserID:   req.UserID,
 			Password: req.Password,
 		})
@@ -307,10 +257,10 @@ func NewService(req NewServiceRequest) Service {
 			Client: api.NewHTTPClient(),
 			Entity: &Student{},
 		},
-		userPassword: &base.Repository[*UserPassword]{
+		userPassword: &base.Repository[*UpdatePasswordRequest]{
 			Url:    req.RepoURL,
 			Client: api.NewHTTPClient(),
-			Entity: &UserPassword{},
+			Entity: &UpdatePasswordRequest{},
 		},
 		otpCode: &base.Repository[*OTPCode]{
 			Url:    req.RepoURL,
@@ -318,4 +268,74 @@ func NewService(req NewServiceRequest) Service {
 			Entity: &OTPCode{},
 		},
 	}
+}
+
+func (s *service) checkPassword(userID, password string) error {
+	passowrd, err := s.userPassword.Get([]repository.Query{
+		{
+			Field:     "user_id",
+			Operation: repository.EQUAL,
+			Targets:   []string{userID},
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	if len(passowrd) == 0 {
+		return errors.New("password not found")
+	}
+
+	if passowrd[0].Password != password {
+		return errors.New("wrong password")
+	}
+	return nil
+}
+
+func (s *service) checkInstitution(institutionName,
+	email string) (*Institution, error) {
+	institutions, err := s.institutionRepo.Get([]repository.Query{
+		{
+			Field:     "name",
+			Operation: repository.EQUAL,
+			Targets:   []string{institutionName},
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if len(institutions) == 0 {
+		return nil, errors.New("institution not found")
+	}
+	institution := institutions[0]
+
+	splittedEmail := strings.Split(email, "@")[1]
+
+	if splittedEmail != institution.Domain {
+		log.Printf("email %s is not valid for institution %s", email,
+			institution.Domain)
+		return nil, errors.New("email is not valid")
+	}
+
+	return institution, nil
+}
+
+func generateTokenFromUser(user User) (string, error) {
+	claims := jwt.MapClaims{}
+	claims["authorized"] = true
+	claims["user_id"] = user.ID
+	claims["name"] = user.Name
+	claims["email"] = user.Email
+	claims["phone_number"] = user.PhoneNumber
+	claims["document_number"] = user.DocumentNumber
+	claims["security_level"] = "silver"
+	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte("secret"))
+	if err != nil {
+		return "", err
+	}
+	return tokenString, nil
 }
