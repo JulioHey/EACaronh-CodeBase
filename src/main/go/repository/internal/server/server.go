@@ -74,8 +74,8 @@ func (s *BaseServer[T]) GetByID(c *gin.Context) {
 func (s *BaseServer[T]) Get(c *gin.Context) {
 	var entities []T
 	req := new(GetRequest)
-
 	err := c.Bind(&req)
+
 	if err != nil {
 		log.Printf("Error while binding queries: %v", err)
 		c.JSON(http.StatusUnprocessableEntity,
