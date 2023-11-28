@@ -136,6 +136,9 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
+type RegisterResponse struct {
+	Token string `json:"token"`
+}
 type SendOTPRequest struct {
 	Email string `json:"email"`
 }

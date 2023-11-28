@@ -56,7 +56,7 @@ func (s *server) UserRegister(c *gin.Context) {
 
 	log.Printf("Received user register request: %v", req)
 
-	err = s.service.UserRegister(req)
+	res, err := s.service.UserRegister(req)
 
 	if err != nil {
 		var validationError *account.ValidationError
@@ -71,7 +71,7 @@ func (s *server) UserRegister(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "success"})
+	c.JSON(http.StatusOK, res)
 	return
 }
 

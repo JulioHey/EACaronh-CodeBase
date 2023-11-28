@@ -16,7 +16,7 @@ import (
 
 type Service interface {
 	Login(req LoginRequest) (*LoginResponse, error)
-	UserRegister(req RegisterRequest) error
+	UserRegister(req RegisterRequest) (*RegisterResponse, error)
 	UpdatePassword(req UpdatePasswordRequest) error
 	SendOTP(req SendOTPRequest) error
 	CheckOTP(req CheckOTPRequest) error
@@ -51,21 +51,21 @@ func (s *service) Login(req LoginRequest) (*LoginResponse, error) {
 	}, nil
 }
 
-func (s *service) UserRegister(req RegisterRequest) error {
+func (s *service) UserRegister(req RegisterRequest) (*RegisterResponse, error) {
 	err := req.Validate()
 	if err != nil {
-		return NewValidationError(err)
+		return nil, NewValidationError(err)
 	}
 
 	institution, err := s.checkInstitution(req.InstitutionUser.
 		InstitutionName, req.User.Email)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	user, err := s.userRepo.Create(req.User)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	institutionUser := &InstitutionUser{
 		InstitutionID:      institution.ID,
@@ -74,22 +74,21 @@ func (s *service) UserRegister(req RegisterRequest) error {
 	}
 	institutionUserPointer, err := s.institutionUserRepo.Create(institutionUser)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	student := req.InstitutionUser.StudentUser
 	student.InstitutionUserID = (*institutionUserPointer).ID
 	_, err = s.studentRepo.Create(student)
 	if err != nil {
-		return err
+		return nil, err
 	}
-
-	return nil
-
+	token, err := generateTokenFromUser(**user)
 	if err != nil {
-		return err
+		return nil, err
 	}
-
-	return nil
+	return &RegisterResponse{
+		Token: token,
+	}, nil
 }
 
 func (s *service) UpdatePassword(req UpdatePasswordRequest) error {
