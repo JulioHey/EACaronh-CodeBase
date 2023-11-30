@@ -14,6 +14,11 @@ type service struct {
 }
 
 func (s *service) CreateCar(car *Car) error {
+	validationErr := car.Validate()
+	if validationErr != nil {
+		return NewValidationError(validationErr)
+	}
+
 	_, err := s.carRepo.Create(*car)
 	if err != nil {
 		return err

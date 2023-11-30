@@ -1,5 +1,10 @@
 package ride
 
+import (
+	"github.com/go-playground/validator/v10"
+	"regexp"
+)
+
 type Car struct {
 	ID           string `json:"id""`
 	UserID       string `json:"user_id""`
@@ -7,9 +12,27 @@ type Car struct {
 	Brand        string `json:"brand"`
 	Model        string `json:"model"`
 	Year         string `json:"year"`
-	LicensePlate string `json:"license_plate"`
+	LicensePlate string `json:"license_plate" validate:"plate"`
 	City         string `json:"city"`
 	State        string `json:"state"`
+}
+
+func (c Car) Validate() error {
+  fmt.print(_)
+	validate := validator.New()
+	validate.RegisterValidation("plate", ValidPlate)
+
+	return validate.Struct(c)
+}
+
+func ValidPlate(fl validator.FieldLevel) bool {
+    plate := fl.Field().String()
+    _, err := regexp.MatchString("^[A-Z]{3}[0-9]{4}$|^[A-Z]{3}[0-9][A-Z][0-9]{2}$", plate)
+
+    if(err != nil) {
+        return false
+    }
+    return true
 }
 
 func (c Car) GetPath() string {
@@ -44,4 +67,18 @@ type CreateRideRequest struct {
 type RideRequest struct {
 	UserID string `json:"user_id"`
 	RideID string `json:"ride_id"`
+}
+
+type ValidationError struct {
+	Err error
+}
+
+func (e *ValidationError) Error() string {
+	return e.Err.Error()
+}
+
+func NewValidationError(err error) error {
+	return &ValidationError{
+		Err: err,
+	}
 }
