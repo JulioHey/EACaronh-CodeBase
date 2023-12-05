@@ -69,6 +69,7 @@ type Address struct {
 	Street   string `json:"street"`
 	Number   int    `json:"number"`
 	PostCode string `json:"post_code"`
+	District string `json:"district"`
 }
 
 func (a Address) GetPath() string {
@@ -109,10 +110,40 @@ func (r RideRequest) GetPath() string {
 	return "riderequest"
 }
 
+type RidePath struct {
+	ID        string `json:"id"`
+	RideID    string `json:"ride_id"`
+	ToAddress string `json:"to_address"`
+	From      string `json:"from"`
+	RideDate  string `json:"ride_date"`
+}
+
+func (r RidePath) GetPath() string {
+	return "ridepath"
+}
+
 type RideResponse struct {
 	ID      string `json:"id"`
 	UserID  string `json:"user_id"`
 	OwnerID string `json:"owner_id"`
+}
+
+type GetRideRequest struct {
+	To   string `json:"to"`
+	Date string `json:"date"`
+}
+
+type GetRideResponse struct {
+	Rides []Ride `json:"rides"`
+}
+
+type GetRideRequestRequest struct {
+	UserID string
+	RideID string
+}
+
+type GetRideRequestResponse struct {
+	RideRequests []RideRequest `json:"ride_requests"`
 }
 
 type ValidationError struct {

@@ -14,6 +14,8 @@ type Server interface {
 	RenounceRideRequest(c *gin.Context)
 	AcceptRideRequest(c *gin.Context)
 	DeclineRideRequest(c *gin.Context)
+	GetRides(c *gin.Context)
+	GetRideRequests(c *gin.Context)
 	Bind(r *gin.Engine)
 }
 
@@ -149,6 +151,34 @@ func (s *server) DeclineRideRequest(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
+func (s *server) GetRides(c *gin.Context) {
+	getRideReq := &ride.GetRideRequest{}
+	getRideReq.Date = c.Query("date")
+	getRideReq.To = c.Query("to")
+
+	rides, err := s.service.GetRides(*getRideReq)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, rides)
+}
+
+func (s *server) GetRideRequests(c *gin.Context) {
+	getRideRequestReq := &ride.GetRideRequestRequest{}
+	getRideRequestReq.RideID = c.Param("id")
+	getRideRequestReq.UserID = c.Query("user_id")
+
+	rideRequests, err := s.service.GetRideRequests(*getRideRequestReq)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, rideRequests)
+}
+
 func NewServer() Server {
 	return &server{
 		service: ride.NewService(),
@@ -158,6 +188,8 @@ func NewServer() Server {
 func (s *server) Bind(r *gin.Engine) {
 	r.POST("/car", middlewares.TokenHandler(), s.CreateCar)
 	r.POST("/ride", middlewares.TokenHandler(), s.CreateRide)
+	r.GET("/ride", middlewares.TokenHandler(), s.GetRides)
+	r.GET("/ride/:id", middlewares.TokenHandler(), s.GetRideRequests)
 	r.POST("/ride/:id", middlewares.TokenHandler(), s.CreateRideRequest)
 	r.PUT("/riderequest/:id/renounce", middlewares.TokenHandler(), s.RenounceRideRequest)
 	r.PUT("/riderequest/:id/accept", middlewares.TokenHandler(), s.AcceptRideRequest)

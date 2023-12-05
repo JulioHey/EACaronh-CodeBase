@@ -2,6 +2,7 @@ package ride
 
 import (
 	"errors"
+	"log"
 	"ride/internal/ride/api"
 	"ride/internal/ride/repository"
 	"ride/internal/ride/repository/base"
@@ -14,6 +15,8 @@ type Service interface {
 	RenounceRideRequest(userID, rideRequestID string) error
 	AcceptRideRequest(userID, rideRequestID string) error
 	DeclineRideRequest(userID, rideRequestID string) error
+	GetRides(request GetRideRequest) (*GetRideResponse, error)
+	GetRideRequests(req GetRideRequestRequest) (*GetRideRequestResponse, error)
 }
 
 type service struct {
@@ -21,6 +24,7 @@ type service struct {
 	rideRepo        *base.Repository[Ride]
 	addressRepo     *base.Repository[Address]
 	rideRequestRepo *base.Repository[RideRequest]
+	ridePathRepo    *base.Repository[RidePath]
 }
 
 func (s *service) CreateCar(car *Car) (*Car, error) {
@@ -75,6 +79,16 @@ func (s *service) CreateRide(ride CreateRideRequest) (*Ride, error) {
 	ride.Ride.FromAddressID = fromAddress.ID
 
 	newRide, err := s.rideRepo.Create(ride.Ride)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s.ridePathRepo.Create(RidePath{
+		RideID:    newRide.ID,
+		ToAddress: toAddress.District,
+		From:      fromAddress.District,
+		RideDate:  ride.Ride.Date,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -240,6 +254,86 @@ func (s *service) DeclineRideRequest(userID, rideRequestID string) error {
 	return nil
 }
 
+func (s *service) GetRides(request GetRideRequest) (*GetRideResponse, error) {
+	if request.Date == "" || request.To == "" {
+		return nil, NewValidationError(errors.New(
+			"date and to params are required"))
+	}
+
+	ridePaths, err := s.ridePathRepo.Get([]repository.Query{
+		{
+			Field:     "ride_date",
+			Operation: repository.EQUAL,
+			Targets:   []string{request.Date},
+		},
+		{
+			Field:     "to_address",
+			Operation: repository.EQUAL,
+			Targets:   []string{request.To},
+		},
+	})
+
+	if err != nil {
+		log.Printf("Error getting ride paths: %v", err)
+		return nil, err
+	}
+
+	if len(ridePaths) == 0 {
+		return nil, errors.New("ride path not found")
+	}
+
+	var rideIds []string
+
+	for _, ridePath := range ridePaths {
+		rideIds = append(rideIds, ridePath.RideID)
+	}
+
+	rides, err := s.rideRepo.Get([]repository.Query{
+		{
+			Field:     "id",
+			Operation: repository.IN,
+			Targets:   rideIds,
+		},
+	})
+
+	if err != nil {
+		log.Printf("Error getting rides: %v", err)
+		return nil, err
+	}
+
+	return &GetRideResponse{
+		Rides: rides,
+	}, nil
+}
+
+func (s *service) GetRideRequests(req GetRideRequestRequest) (*GetRideRequestResponse, error) {
+	if req.RideID == "" || req.UserID == "" {
+		return nil, NewValidationError(errors.New(
+			"ride_id and user_id params are required"))
+	}
+
+	rideRequests, err := s.rideRequestRepo.Get([]repository.Query{
+		{
+			Field:     "ride_id",
+			Operation: repository.EQUAL,
+			Targets:   []string{req.RideID},
+		},
+		{
+			Field:     "user_id",
+			Operation: repository.EQUAL,
+			Targets:   []string{req.UserID},
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &GetRideRequestResponse{
+		RideRequests: rideRequests,
+	}, nil
+}
+
 func NewService() Service {
 	return &service{
 		carRepo: &base.Repository[Car]{
@@ -261,6 +355,11 @@ func NewService() Service {
 			Url:    "http://localhost:8080",
 			Client: api.NewHTTPClient(),
 			Entity: RideRequest{},
+		},
+		ridePathRepo: &base.Repository[RidePath]{
+			Url:    "http://localhost:8080",
+			Client: api.NewHTTPClient(),
+			Entity: RidePath{},
 		},
 	}
 }
