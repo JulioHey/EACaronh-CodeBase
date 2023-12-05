@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c39522df-4e47-4586-874b-2f603277164d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/sizedBox.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/iconInput.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/forms.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/forms.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/navigation/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/navigation/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/home.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Yp88MJ2I9PSPj9XEpkiQPklzLX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dmcard/usp/2023-2/EACaronh-CodeBase/src/main/go/ride/internal/ride&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/go/ride/internal/ride" />
+      <recent name="$PROJECT_DIR$/src/main/go/ride/internal" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/go/ride" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c39522df-4e47-4586-874b-2f603277164d" name="Changes" comment="" />
+      <created>1701211002884</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701211002884</updated>
+      <workItem from="1701211004997" duration="8379000" />
+      <workItem from="1701464170420" duration="8817000" />
+      <workItem from="1701693535429" duration="19000" />
+      <workItem from="1701731144029" duration="9574000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

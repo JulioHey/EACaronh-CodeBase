@@ -31,7 +31,7 @@ const UserRegister = ({navigation}) => {
 
                     </IconButton>
                 )}
-                pageTitle={<Text>Cadastro</Text>}
+                pageTitle="Cadastro"
             />
             <Forms
                 formsOptions={[

@@ -4,12 +4,13 @@ import ElevatedButton from "../atoms/elevatedButton";
 import {Text, View} from "react-native";
 
 
-const Forms = ({formsOptions}) => {
+const Forms = ({formsOptions, justifyContent, spacing}) => {
     return (
         <View
             style={{
-                gap: theme.spacing.xl,
+                gap: spacing ? spacing : theme.spacing.xl,
                 alignItems: "center",
+                justifyContent: justifyContent,
             }}
         >
             {formsOptions.map((value, index) => {
