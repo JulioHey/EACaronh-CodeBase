@@ -139,7 +139,7 @@ func (r *Repository[T]) Get(queries []repository.Query) ([]T, error) {
 
 	fullURL := fmt.Sprintf("%s/%s/", r.Url, r.Entity.GetPath())
 
-	res, err := r.Client.Put(fullURL, req)
+	res, err := r.Client.Get(fullURL, req)
 
 	if err != nil {
 		return nil, repository.NewCreationError("user", err)

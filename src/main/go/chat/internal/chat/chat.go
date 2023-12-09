@@ -13,7 +13,7 @@ type Message struct {
 }
 
 func (m Message) GetPath() string {
-	return "chat"
+	return "message"
 }
 
 type ValidationError struct {
