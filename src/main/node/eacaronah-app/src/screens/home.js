@@ -1,57 +1,24 @@
-import {Text, View} from "react-native";
-import ElevatedButton from "../components/atoms/elevatedButton";
-import theme from "../theme/theme";
+import { View} from "react-native";
 import {AuthContext} from "../store/context/auth";
-import {useContext, useState} from "react";
-import Header from "../components/molecules/header";
-import IconInput from "../components/molecules/iconInput";
-import IconButton from "../components/atoms/iconButton";
-import MaterialIcons from "react-native-vector-icons/AntDesign";
-import RideCard from "../components/molecules/rideCard";
-import RideList from "../components/organism/rideList";
+import {useContext, useEffect, useState} from "react";
+import Footer from "../components/molecules/footer";
+import {AppContext, RIDE} from "../store/context/app";
+import RideHome from "./ride/home";
+import CarHome from "./car/home";
+import HeaderApp from "../components/organism/headerApp";
+import PageContainer from "../containers/pageContainer";
 
-const Home = () => {
+const Home = ({navigation}) => {
     const {logout} = useContext(AuthContext);
+    const {ride, setNavigation} = useContext(AppContext);
 
-    const [rides, setRides] = useState([
-        // {
-        //     title: "Titulo",
-        //     time: "Tempo",
-        //     date: "Data"
-        // }
-    ]);
-
+    useEffect(() => {
+        setNavigation(navigation)
+    }, [])
     return (
-        <View
-            style={{
-                paddingHorizontal: theme.spacing.m
-            }}
-        >
-            <Header
-                pageTitle={"Home"}
-            />
-            <IconInput
-                placeholder={"Escolha seu destino"}
-                trailling={<IconButton
-                    style={{
-                        flexDirection: "row",
-                        width: 120,
-                        gap: 10,
-                        color: "white",
-                        fontSize: 20,
-                    }}
-                >
-                    Data
-                    <MaterialIcons
-                        name="calendar"
-                        size={25}
-                        color="white"
-                    />
-                </IconButton>}
-            />
-            <RideList rides={rides}/>
-            <ElevatedButton title={"Logout"} color={theme.color.darkBackground} onClick={logout}/>
-        </View>
+        <PageContainer hasHeader={true} >
+            {ride == RIDE ? <RideHome/> : <CarHome />}
+        </PageContainer>
     )
 }
 

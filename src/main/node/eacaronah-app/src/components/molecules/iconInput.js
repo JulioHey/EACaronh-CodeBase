@@ -33,6 +33,9 @@ const IconInput = ({placeholder, trailling}) => {
             <Input
                 placeholder={placeholder}
                 paddingLeft={"40px"}
+                style={{
+                    borderRadius: "30px",
+                }}
             />
         </View>
     )

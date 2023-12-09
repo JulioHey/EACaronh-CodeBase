@@ -3,12 +3,26 @@ import RideCard from "../molecules/rideCard";
 import SizedBox from "../atoms/sizedBox";
 import theme from "../../theme/theme";
 import MaterialIcons from "react-native-vector-icons/FontAwesome5";
+import {useContext, useState} from "react";
+import {AppContext} from "../../store/context/app";
+import {ThemeContext} from "../../store/context/theme";
 
-const RideList = ({rides}) => {
+const RideList = () => {
+    const [rides, setRides] = useState([
+        {
+            "title": "Carona",
+            "local": "São Paulo",
+            "time": "12:00",
+            "date": "12/12/2022"
+        }
+    ]);
+    const {appTheme} = useContext(ThemeContext)
+
     return (
         <View
             style={{
-                paddingVertical: theme.spacing.m,
+                paddingVertical: appTheme.spacing.m,
+                paddingHorizontal: appTheme.spacing.l,
             }}
         >
             {rides.length == 0 ?
@@ -18,14 +32,14 @@ const RideList = ({rides}) => {
                             flexDirection: "row",
                             gap: 10,
                             alignItems: "center",
-                            paddingHorizontal: theme.spacing.m,
+                            paddingHorizontal: appTheme.spacing.m,
                         }}
                     >
                         <View
                             style={{
-                                backgroundColor: theme.color.darkBackground,
+                                backgroundColor: appTheme.color.darkBackground,
                                 borderRadius: "50%",
-                                padding: theme.spacing.s
+                                padding: appTheme.spacing.s
                             }}
                         >
                             <MaterialIcons
@@ -55,7 +69,7 @@ const RideList = ({rides}) => {
                 <>
                     <Text
                         style={{
-                            fontSize: 25,
+                            fontSize: 20,
                         }}
                     >
                         Caronas Encontradas
@@ -64,7 +78,9 @@ const RideList = ({rides}) => {
                     {rides.length == 0 ?
                         "Tem nada aqui :sad" :
                         rides.map((sugestion) => {
-                            return <RideCard ride={sugestion}/>
+                            return <RideCard
+                                key={sugestion.title}
+                                ride={sugestion}/>
                         })
                     }
                 </>

@@ -3,12 +3,9 @@ import {Dimensions, Image, View} from "react-native";
 
 import {AuthContext} from "../../store/context/auth";
 
-import logo from "../../assets/images/logo.png";
 import Forms from "../../components/organism/forms";
-import theme from "../../theme/theme";
 import PageContainer from "../../containers/pageContainer";
 import Header from "../../components/molecules/header";
-import SizedBox from "../../components/atoms/sizedBox";
 
 const LoginScreen = ({navigation}) => {
     const {login} = useContext(AuthContext);

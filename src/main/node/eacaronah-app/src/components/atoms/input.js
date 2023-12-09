@@ -1,22 +1,25 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {TextInput} from 'react-native';
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
-const MyInput = ({placeholder, hide, value, onInputChange, paddingLeft}) => {
+const MyInput = ({placeholder, hide, value, onInputChange, paddingLeft, style}) => {
+    const {appTheme} = useContext(ThemeContext)
+
     return (
         <TextInput
             style={{
-                paddingHorizontal: theme.spacing.m,
-                paddingVertical: theme.spacing.s,
-                borderRadius: theme.borderRadius.s,
-                fontSize: theme.font.size.xl,
-                lineHeight: theme.font.lineHeight.xl,
-                borderColor: theme.color.darkBackground,
+                paddingHorizontal: appTheme.spacing.m,
+                paddingVertical: appTheme.spacing.s,
+                borderRadius: appTheme.borderRadius.s,
+                fontSize: appTheme.font.size.xl,
+                lineHeight: appTheme.font.lineHeight.xl,
+                borderColor: appTheme.color.darkBackground,
                 borderStyle: "solid",
                 borderWidth: 1,
                 width: "100%",
-                paddingLeft: paddingLeft ? paddingLeft : theme.spacing.s
+                paddingLeft: paddingLeft ? paddingLeft : appTheme.spacing.s,
+                ...style
             }
             }
             placeholder={placeholder}

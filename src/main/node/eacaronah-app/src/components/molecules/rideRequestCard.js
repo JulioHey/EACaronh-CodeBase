@@ -1,13 +1,11 @@
-import MaterialIcons from "react-native-vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Text, View} from "react-native";
-import theme from "../../theme/theme";
 import {useCallback, useContext} from "react";
 import {BaseButton} from "react-native-gesture-handler";
-import {useNavigation} from "react-router-native";
 import {AppContext} from "../../store/context/app";
 import {ThemeContext} from "../../store/context/theme";
 
-const RideCard = ({ride}) => {
+const RideRequestCard = ({rideReq}) => {
     const {navigation} = useContext(AppContext)
     const {appTheme} = useContext(ThemeContext)
 
@@ -20,10 +18,11 @@ const RideCard = ({ride}) => {
             {key}: {value}
         </Text>);
     }, [])
+
     return (
         <BaseButton
-            onPress={() => navigation.navigate("rideDetail", {
-                ride: ride
+            onPress={() => navigation.navigate("rideRequestDetail", {
+                rideReq: rideReq
             })}
         >
             <View
@@ -51,8 +50,8 @@ const RideCard = ({ride}) => {
                         padding: appTheme.spacing.s
                     }}
                 >
-                    <MaterialIcons
-                        name="car"
+                    <MaterialCommunityIcons
+                        name="human-handsup"
                         size={50}
                         color="white"
                     />
@@ -65,16 +64,16 @@ const RideCard = ({ride}) => {
                             fontWeight: "bold",
                         }}
                     >
-                        {ride.title}
+                        {rideReq.riderName}
                     </Text>
-                    {rideSubtitle("Local", ride.local)}
-                    {rideSubtitle("Horário", ride.time)}
-                    {rideSubtitle("Data", ride.date)}
+                    {rideSubtitle("Local", rideReq.local)}
+                    {rideSubtitle("Horário", rideReq.time)}
+                    {rideSubtitle("Data", rideReq.date)}
+                    {rideSubtitle("Status", rideReq.status)}
                 </View>
             </View>
         </BaseButton>
-
     )
 }
 
-export default RideCard;
+export default RideRequestCard;
