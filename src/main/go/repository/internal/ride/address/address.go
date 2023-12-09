@@ -10,6 +10,7 @@ type Address struct {
 	repository.Base
 	City     string `json:"city"`
 	Street   string `json:"street"`
+	District string `json:"district"`
 	Number   int    `json:"number"`
 	PostCode string `json:"post_code"`
 }

@@ -16,6 +16,7 @@ import (
 	"repository/internal/ride/address"
 	"repository/internal/ride/car"
 	"repository/internal/ride/ride"
+	"repository/internal/ride/ridepath"
 	"repository/internal/ride/riderequest"
 )
 
@@ -44,6 +45,7 @@ func main() {
 	riderequest.AutoMigrateRideRequest(db)
 	address.AutoMigrateAddress(db)
 	car.AutoMigrateCar(db)
+	ridepath.AutoMigrateRidePath(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -61,6 +63,7 @@ func main() {
 	rideRequestServer := riderequest.NewRideRequestServer(db)
 	carServer := car.NewCarServer(db)
 	addressServer := address.NewAddressServer(db)
+	ridepathServer := ridepath.NewRidePathServer(db)
 	// Echo instance
 	r := gin.Default()
 
@@ -78,6 +81,7 @@ func main() {
 	rideRequestServer.BindRideRequestServer(r)
 	carServer.BindCarServer(r)
 	addressServer.BindAddressServer(r)
+	ridepathServer.BindRidePathServer(r)
 
 	// Start server
 	err = r.Run(":8080")
