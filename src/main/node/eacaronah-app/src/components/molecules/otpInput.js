@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useState, useRef, useContext} from "react";
 import {View} from "react-native";
 import MaterialCommunityIcons
     from "react-native-vector-icons/MaterialCommunityIcons";
@@ -6,11 +6,12 @@ import MaterialCommunityIcons
 import Label from "../atoms/label";
 import UniqueInput from "../atoms/uniqueInput";
 import TextButton from "../atoms/textButton"
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
 const OTPInput = ({title, value, onChange, invalid}) => {
     const [code, setCode] = useState(['', '', '', '']);
     const inputs = [];
+    const {appTheme} = useContext(ThemeContext);
 
     const handleCode = (value, index) => {
         const newCode = [...code];
@@ -32,7 +33,7 @@ const OTPInput = ({title, value, onChange, invalid}) => {
 
     return (<View
         style={{
-            alignItems: "center", gap: theme.spacing.m, width: "100%",
+            alignItems: "center", gap: appTheme.spacing.m, width: "100%",
         }}
     >
         <Label text={title} invalid={invalid}/>

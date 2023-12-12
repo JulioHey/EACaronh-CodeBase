@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {View, TextInput} from 'react-native';
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 import MaskInput from 'react-native-mask-input';
 
 const MaskedInput = ({hide, value, onInputChange, invalid, mask}) => {
+  const {appTheme} = useContext(ThemeContext);
   return (
     <View
         style={{
@@ -13,14 +14,14 @@ const MaskedInput = ({hide, value, onInputChange, invalid, mask}) => {
     >
     <MaskInput
         style={{
-            backgroundColor: theme.color.lightBackground,
-            paddingHorizontal: theme.spacing.m,
-            paddingVertical: theme.spacing.s,
-            borderRadius: theme.borderRadius.s,
-            fontSize: theme.font.size.xl,
-            lineHeight: theme.font.lineHeight.xl,
-            borderColor: invalid ? theme.color.invalid : "",
-            borderWidth: invalid ? theme.borderWidth : 0,
+            backgroundColor: appTheme.color.lightBackground,
+            paddingHorizontal: appTheme.spacing.m,
+            paddingVertical: appTheme.spacing.s,
+            borderRadius: appTheme.borderRadius.s,
+            fontSize: appTheme.font.size.xl,
+            lineHeight: appTheme.font.lineHeight.xl,
+            borderColor: invalid ? appTheme.color.invalid : "",
+            borderWidth: invalid ? appTheme.borderWidth : 0,
             width: "100%",
         }}
         value={value}

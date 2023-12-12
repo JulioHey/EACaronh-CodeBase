@@ -5,15 +5,19 @@ import Label from "../atoms/label";
 import {Text, View} from "react-native";
 import { isEmpty } from "../../utils/validation";
 import Dropdown from "../../components/atoms/dropdown";
+import {useContext} from "react";
+import {ThemeContext} from "../../store/context/theme";
 
 
-const Forms = ({formsOptions}) => {
+const Forms = ({formsOptions, justifyContent, spacing}) => {
+    const {appTheme} = useContext(ThemeContext)
     return (
         <View
             style={{
-                gap: theme.spacing.xl,
-              alignItems: "center",
-              marginTop: theme.spacing.xl
+                gap: spacing ? spacing : appTheme.spacing.xl,
+                alignItems: "center",
+                justifyContent: justifyContent,
+                marginHorizontal: appTheme.spacing.xl,
             }}
         >
             {formsOptions.map((value, index) => {
@@ -28,13 +32,14 @@ const Forms = ({formsOptions}) => {
                             style={{
                                 fontWeight: "800",
                             }}
-                            onPress={value.onClick}>
+                            onPress={value.onClick}
+                        >
                             {value.callToAction}
                         </Text>
                     </Text>)
                 } else if (value.type == "selectDropdown") {
                   return (
-                    <View
+                    <View key={index}
                         style={{
                             width: "100%",
                         }}

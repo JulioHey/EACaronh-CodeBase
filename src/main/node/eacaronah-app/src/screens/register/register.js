@@ -10,9 +10,11 @@ import {
     RegisterContext,
 } from "../../store/context/register";
 import { isValidEmail, isEmpty } from "../../utils/validation";
+import {ThemeContext} from "../../store/context/theme";
 
 const UserRegister = ({navigation}) => {
     const {setUserInfo} = useContext(RegisterContext);
+    const {appTheme} = useContext(ThemeContext);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -151,7 +153,7 @@ const UserRegister = ({navigation}) => {
             />
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }} onClick={() => {
                 validateAndProceed();
             }}>

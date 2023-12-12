@@ -6,10 +6,12 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {View} from "react-native";
 import Forms from "../../components/organism/forms";
 import {RegisterContext} from "../../store/context/register";
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 import { isEmpty } from "../../utils/validation";
 
 const InstitutionRegister = ({navigation}) => {
+    const {appTheme} = useContext(ThemeContext);
+
     const {setInstitutionInfo} = useContext(RegisterContext);
 
     const [institutionName, setInstitutionName] = useState("");
@@ -144,7 +146,7 @@ const InstitutionRegister = ({navigation}) => {
 
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }} onClick={() => {
                 validateAndProceed();
             }}>

@@ -3,7 +3,6 @@ import Forms from "../../components/organism/forms";
 import {useContext, useState} from "react";
 import IconButton from "../../components/atoms/iconButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import theme from "../../theme/theme";
 import PageContainer from "../../containers/pageContainer";
 import Header from "../../components/molecules/header";
 import BackgroundText from "../../components/atoms/backgroundText";
@@ -13,11 +12,13 @@ import {
     RegisterContext,
     RegisterProvider
 } from "../../store/context/register";
+import {ThemeContext} from "../../store/context/theme";
 
 const OTPVerification = ({navigation}) => {
     const {registerForm, checkOTPCode} = useContext(RegisterContext);
     const [code, setCode] = useState("");
     const [invalid, setInvalid] = useState(false);
+    const {appTheme} = useContext(ThemeContext);
 
   const validateAndProceed = () => {
     setInvalid(false);
@@ -50,10 +51,10 @@ const OTPVerification = ({navigation}) => {
             <BackgroundText value={"Verificar número de telefone"}/>
 
             <Text style={{
-              fontSize: theme.font.size.l,
-              fontWeight: theme.font.weight.m,
+              fontSize: appTheme.font.size.l,
+              fontWeight: appTheme.font.weight.m,
               textAlign: "center",
-              margin: theme.spacing.xl
+              margin: appTheme.spacing.xl
             }}>
               Enviamos um código de verificação temporária para {registerForm.phone}.
               Insira o código para verificar esse número de telefone.
@@ -61,7 +62,7 @@ const OTPVerification = ({navigation}) => {
 
             <OTPInput onChange={setCode} invalid={invalid} title="Código de verificação:"/>
             <View style={{
-              marginVertical: theme.spacing.xl,
+              marginVertical: appTheme.spacing.xl,
               justifyContent: "space-between"
             }}>
               <TextButton title="Enviar um novo código." />
@@ -70,7 +71,7 @@ const OTPVerification = ({navigation}) => {
 
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }} onClick={() => {
               validateAndProceed();
             }}>

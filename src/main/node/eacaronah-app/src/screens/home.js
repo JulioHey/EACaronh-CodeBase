@@ -1,16 +1,24 @@
-import {Text, View} from "react-native";
-import ElevatedButton from "../components/atoms/elevatedButton";
-import theme from "../theme/theme";
+import { View} from "react-native";
 import {AuthContext} from "../store/context/auth";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
+import Footer from "../components/molecules/footer";
+import {AppContext, RIDE} from "../store/context/app";
+import RideHome from "./ride/home";
+import CarHome from "./car/home";
+import HeaderApp from "../components/organism/headerApp";
+import PageContainer from "../containers/pageContainer";
 
-const Home = () => {
+const Home = ({navigation}) => {
     const {logout} = useContext(AuthContext);
+    const {isRide, setNavigation} = useContext(AppContext);
+
+    useEffect(() => {
+        setNavigation(navigation)
+    }, [])
     return (
-        <View>
-            <Text>Home</Text>
-            <ElevatedButton title={"Logout"} color={theme.color.darkBackground} onClick={logout}/>
-        </View>
+        <PageContainer hasHeader={true} >
+            {isRide == RIDE ? <RideHome/> : <CarHome />}
+        </PageContainer>
     )
 }
 

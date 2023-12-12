@@ -1,28 +1,33 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {TextInput} from 'react-native';
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
-const MyInput = ({hide, value, onInputChange, invalid}) => {
-  return (
-    <TextInput
-      style={{
-          backgroundColor: theme.color.lightBackground,
-          paddingHorizontal: theme.spacing.m,
-          paddingVertical: theme.spacing.s,
-          borderRadius: theme.borderRadius.s,
-          fontSize: theme.font.size.xl,
-          lineHeight: theme.font.lineHeight.xl,
-          borderColor: invalid ? theme.color.invalid : "",
-          borderWidth: invalid ? theme.borderWidth : 0,
-          width: "100%",
-      }
-      }
-      value={value}
-      secureTextEntry={hide}
-      onChange={onInputChange}
-    />
-  )
+const MyInput = ({placeholder, hide, value, onInputChange, invalid, paddingLeft, style}) => {
+    const {appTheme} = useContext(ThemeContext)
+
+    return (
+        <TextInput
+            style={{
+                paddingHorizontal: appTheme.spacing.m,
+                paddingVertical: appTheme.spacing.s,
+                borderRadius: appTheme.borderRadius.s,
+                fontSize: appTheme.font.size.xl,
+                lineHeight: appTheme.font.lineHeight.xl,
+                borderColor: invalid ? appTheme.color.invalid : appTheme.color.darkBackground,
+                borderStyle: "solid",
+                borderWidth: 1,
+                width: "100%",
+                paddingLeft: paddingLeft ? paddingLeft : appTheme.spacing.s,
+                ...style
+            }
+            }
+            placeholder={placeholder}
+            value={value}
+            secureTextEntry={hide}
+            onChange={onInputChange}
+        />
+    )
 
 }
 

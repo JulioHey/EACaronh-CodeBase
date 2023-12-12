@@ -1,13 +1,16 @@
 import {Text} from "react-native";
 import theme from "../../theme/theme";
+import {useContext} from "react";
+import {ThemeContext} from "../../store/context/theme";
 
 const Label = ({text, style, invalid}) => {
+    const {appTheme} = useContext(ThemeContext);
     return (
         <Text style={
             style ?? {
-                fontSize: theme.font.size.m,
+                fontSize: appTheme.font.size.m,
                 fontWeight: "600",
-                color: invalid ? theme.color.invalid : ""
+                color: invalid ? appTheme.color.invalid : ""
             }
         }>{text}</Text>
     )
