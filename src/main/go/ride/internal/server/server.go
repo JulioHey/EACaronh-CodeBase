@@ -36,6 +36,9 @@ func (s *server) CreateCar(c *gin.Context) {
 		return
 	}
 
+	userID := c.Query("user_id")
+  car.UserID = userID
+
 	newCar, err := s.service.CreateCar(&car)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -123,6 +126,7 @@ func (s *server) AcceptRideRequest(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user id is required"})
 		return
 	}
+
 
 	err := s.service.AcceptRideRequest(userId, rideRequestID)
 	if err != nil {

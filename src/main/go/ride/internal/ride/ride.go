@@ -76,6 +76,10 @@ func (a Address) GetPath() string {
 	return "address"
 }
 
+func (a Address) GetPath() string {
+	return "address"
+}
+
 type CreateRideRequest struct {
 	Ride Ride `json:"ride" validate:"required"`
 }
@@ -108,6 +112,7 @@ func (r RideRequest) GetPath() string {
 	return "riderequest"
 }
 
+
 type RidePath struct {
 	ID        string `json:"id"`
 	RideID    string `json:"ride_id"`
@@ -120,11 +125,13 @@ func (r RidePath) GetPath() string {
 	return "ridepath"
 }
 
+
 type RideResponse struct {
 	ID      string `json:"id"`
 	UserID  string `json:"user_id"`
 	OwnerID string `json:"owner_id"`
 }
+
 
 type GetRideRequest struct {
 	To   string `json:"to"`
