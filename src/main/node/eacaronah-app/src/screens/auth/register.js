@@ -31,7 +31,7 @@ const UserRegister = ({navigation}) => {
 
                     </IconButton>
                 )}
-                pageTitle={<Text>Cadastro</Text>}
+                pageTitle="Cadastro"
             />
             <Forms
                 formsOptions={[
@@ -69,7 +69,7 @@ const UserRegister = ({navigation}) => {
             />
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

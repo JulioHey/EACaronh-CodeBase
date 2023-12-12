@@ -1,31 +1,41 @@
-import {View} from "react-native";
-import theme from "../../theme/theme";
+import {Text, View} from "react-native";
+import {useContext} from "react";
+import {ThemeContext} from "../../store/context/theme";
 
-const Header = ({pageTitle, heading, trailling}) => {
+const HeaderTitle = ({pageTitle, heading, trailling}) => {
+    const {appTheme} = useContext(ThemeContext)
     return (
       <View style={{
           width: "100%",
-          paddingTop: theme.spacing.l,
-          paddingBottom: theme.spacing.xl,
-          paddingRight: theme.spacing.s,
+          paddingTop: appTheme.spacing.l,
+          paddingBottom: appTheme.spacing.xl,
+          paddingRight: appTheme.spacing.s,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
           height: 80,
+          backgroundColor: "white",
       }}>
           <View style={{
               position: "absolute",
-              left: theme.spacing.s,
-              top: theme.spacing.l,
+              left: appTheme.spacing.s,
+              top: appTheme.spacing.l,
           }}>
               {heading}
           </View>
-          {pageTitle}
+          <Text
+              style={{
+                  fontSize: appTheme.font.size.xl,
+                  fontWeight: "bold",
+              }}
+          >
+              {pageTitle}
+          </Text>
           <View style={{
               position: "absolute",
-              right: theme.spacing.s,
-              top: theme.spacing.l,
+              right: appTheme.spacing.s,
+              top: appTheme.spacing.l,
           }}>
               {trailling}
           </View>
@@ -33,4 +43,4 @@ const Header = ({pageTitle, heading, trailling}) => {
     );
 }
 
-export default Header;
+export default HeaderTitle;

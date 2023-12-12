@@ -2,14 +2,18 @@ import theme from "../../theme/theme";
 import LabeledInput from "../molecules/labeledInput";
 import ElevatedButton from "../atoms/elevatedButton";
 import {Text, View} from "react-native";
+import {useContext} from "react";
+import {ThemeContext} from "../../store/context/theme";
 
 
-const Forms = ({formsOptions}) => {
+const Forms = ({formsOptions, justifyContent, spacing}) => {
+    const {appTheme} = useContext(ThemeContext)
     return (
         <View
             style={{
-                gap: theme.spacing.xl,
+                gap: spacing ? spacing : appTheme.spacing.xl,
                 alignItems: "center",
+                justifyContent: justifyContent,
             }}
         >
             {formsOptions.map((value, index) => {
@@ -24,7 +28,8 @@ const Forms = ({formsOptions}) => {
                             style={{
                                 fontWeight: "800",
                             }}
-                            onPress={value.onClick}>
+                            onPress={value.onClick}
+                        >
                             {value.callToAction}
                         </Text>
                     </Text>)

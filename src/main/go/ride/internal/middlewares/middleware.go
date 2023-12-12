@@ -72,6 +72,6 @@ func addUserIDToURL(c *gin.Context, claims jwt.MapClaims) error {
 	if c.Request.URL.RawQuery != "" {
 		c.Request.URL.RawQuery += "&"
 	}
-	c.Request.URL.RawQuery = fmt.Sprintf("user_id=%v", userID)
+	c.Request.URL.RawQuery += fmt.Sprintf("user_id=%v", userID)
 	return nil
 }

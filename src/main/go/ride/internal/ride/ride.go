@@ -43,15 +43,15 @@ func (c Car) GetPath() string {
 }
 
 type Ride struct {
-	ID            string `json:"id""`
-	UserID        string `json:"user_id""`
-	CarID         string `json:"car_id" validate:"required"`
-	Seats         string `json:"seats" validate:"required"`
-	Date          string `json:"date" validate:"required"`
-	Time          string `json:"time" validate:"required"`
-	FromAddressID string `json:"from_address_id"`
-	ToAddressID   string `json:"to_address_id"`
-	Price         string `json:"price" validate:"required"`
+	ID          string `json:"id""`
+	UserID      string `json:"user_id""`
+	CarID       string `json:"car_id" validate:"required"`
+	Seats       string `json:"seats" validate:"required"`
+	Date        string `json:"date" validate:"required"`
+	Time        string `json:"time" validate:"required"`
+	FromAddress string `json:"from_address"`
+	ToAddress   string `json:"to_address"`
+	Price       string `json:"price" validate:"required"`
 }
 
 func (r Ride) Validate() error {
@@ -69,6 +69,11 @@ type Address struct {
 	Street   string `json:"street"`
 	Number   int    `json:"number"`
 	PostCode string `json:"post_code"`
+	District string `json:"district"`
+}
+
+func (a Address) GetPath() string {
+	return "address"
 }
 
 func (a Address) GetPath() string {
@@ -76,9 +81,7 @@ func (a Address) GetPath() string {
 }
 
 type CreateRideRequest struct {
-	Ride        Ride    `json:"ride" validate:"required"`
-	FromAddress Address `json:"from_address" validate:"required"`
-	ToAddress   Address `json:"to_address" validate:"required"`
+	Ride Ride `json:"ride" validate:"required"`
 }
 
 func (r CreateRideRequest) Validate() error {
@@ -109,10 +112,62 @@ func (r RideRequest) GetPath() string {
 	return "riderequest"
 }
 
+
+type RidePath struct {
+	ID        string `json:"id"`
+	RideID    string `json:"ride_id"`
+	ToAddress string `json:"to_address"`
+	From      string `json:"from"`
+	RideDate  string `json:"ride_date"`
+}
+
+func (r RidePath) GetPath() string {
+	return "ridepath"
+}
+
+
 type RideResponse struct {
 	ID      string `json:"id"`
 	UserID  string `json:"user_id"`
 	OwnerID string `json:"owner_id"`
+}
+
+
+type GetRideRequest struct {
+	To   string `json:"to"`
+	Date string `json:"date"`
+}
+
+type GetRideResponse struct {
+	Rides []Ride `json:"rides"`
+}
+
+type GetRideRequestRequest struct {
+	UserID string
+	RideID string
+}
+
+type User struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+func (u User) GetPath() string {
+	return "users"
+}
+
+type RideRequestComplete struct {
+	ID        string `json:"id"`
+	UserID    string `json:"user_id"`
+	RideID    string `json:"ride_id"`
+	AddressID string `json:"address_id"`
+	Status    string `json:"status"`
+	Driver    User   `json:"driver"`
+	Ride      Ride   `json:"ride"`
+}
+
+type GetRideRequestResponse struct {
+	RideRequests []RideRequestComplete `json:"ride_requests"`
 }
 
 type ValidationError struct {

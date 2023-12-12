@@ -1,19 +1,20 @@
-import React from "react";
-import {Text} from "react-native";
-import {BaseButton} from "react-native-gesture-handler";
-import theme from "../../theme/theme";
+import React, {useContext} from "react";
+import {Text, TouchableOpacity} from "react-native";
+import {ThemeContext} from "../../store/context/theme";
 
 const ElevatedButton = ({onClick, title}) => {
+    const {appTheme} = useContext(ThemeContext)
     return (
-        <BaseButton style={{
-            backgroundColor: theme.color.darkBackground,
-            paddingVertical: theme.spacing.s,
+        <TouchableOpacity style={{
+            backgroundColor: appTheme.color.darkBackground,
+            paddingVertical: appTheme.spacing.s,
             width: "100%",
             alignItems: "center",
-            borderRadius: theme.borderRadius.xll
+            borderRadius: 20,
+            paddingHorizontal: appTheme.spacing.m,
         }} onPress={onClick}>
-            <Text style={{color: "white", fontSize: theme.font.size.l, fontWeight: "800"}}>{title}</Text>
-        </BaseButton>
+            <Text style={{color: "white", fontSize: appTheme.font.size.l, fontWeight: "800"}}>{title}</Text>
+        </TouchableOpacity>
     )
 }
 
