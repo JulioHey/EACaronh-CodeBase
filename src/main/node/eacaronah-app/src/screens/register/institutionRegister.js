@@ -11,9 +11,17 @@ import { isEmpty } from "../../utils/validation";
 
 const InstitutionRegister = ({navigation}) => {
     const {setInstitutionInfo} = useContext(RegisterContext);
+
     const [institutionName, setInstitutionName] = useState("");
     const [institutionNumber, setInstitutionNumber] = useState("");
     const [position, setPosition] = useState("");
+
+    const [curso, setCurso] = useState("");
+    const [anoDeIngresso, setAnoDeIngresso] = useState("");
+    const [periodo, setPeriodo] = useState("");
+
+    const [departamento, setDepartamento] = useState("");
+
     const [invalid, setInvalid] = useState({institutionName: false, institutionNumber: false})
 
     const validateAndProceed = () => {
@@ -43,7 +51,12 @@ const InstitutionRegister = ({navigation}) => {
           name: institutionName,
           number: institutionNumber,
           position: position,
+          curso,
+          anoDeIngresso,
+          periodo,
+          departamento
         });
+        navigation.navigate("success");
       }
     }
 
@@ -87,10 +100,48 @@ const InstitutionRegister = ({navigation}) => {
                         title: "Posição",
                         value: position,
                         onSelect: (e) => setPosition(e),
-                        options: ["Aluno", "Professor", "Funcionário"]
+                        options: ["Aluno", "Funcionário"]
                     },
                 ]}
             />
+
+            { position === "Aluno" &&
+              <Forms
+                  formsOptions={[
+                      {
+                          type: "input",
+                          title: "Curso",
+                          value: curso,
+                          onChange: (e) => setCurso(e.target.value),
+                      },
+                      {
+                          type: "input",
+                          title: "Ano de Ingresso",
+                          value: anoDeIngresso,
+                          onChange: (e) => setAnoDeIngresso(e.target.value),
+                      },
+                      {
+                          type: "input",
+                          title: "Período",
+                          value: periodo,
+                          onChange: (e) => setPeriodo(e.target.value),
+                      },
+                  ]}
+              />
+            }
+            { position === "Funcionário" &&
+              <Forms
+                  formsOptions={[
+                      {
+                          type: "input",
+                          title: "Departamento",
+                          value: departamento,
+                          onChange: (e) => setDepartamento(e.target.value),
+                      },
+                  ]}
+              />
+            }
+
             <IconButton style={{
                 marginLeft: "auto",
                 marginTop: theme.spacing.xl,

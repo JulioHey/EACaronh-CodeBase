@@ -12,7 +12,8 @@ const Forms = ({formsOptions}) => {
         <View
             style={{
                 gap: theme.spacing.xl,
-                alignItems: "center",
+              alignItems: "center",
+              marginTop: theme.spacing.xl
             }}
         >
             {formsOptions.map((value, index) => {
