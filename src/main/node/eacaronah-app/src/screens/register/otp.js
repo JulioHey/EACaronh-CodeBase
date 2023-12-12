@@ -15,7 +15,7 @@ import {
 import {ThemeContext} from "../../store/context/theme";
 
 const OTPVerification = ({navigation}) => {
-    const {registerForm, checkOTPCode} = useContext(RegisterContext);
+    const {user, checkOTPCode, sendOTP} = useContext(RegisterContext);
     const [code, setCode] = useState("");
     const [invalid, setInvalid] = useState(false);
     const {appTheme} = useContext(ThemeContext);
@@ -48,7 +48,7 @@ const OTPVerification = ({navigation}) => {
                 pageTitle={"Cadastro"}
             />
 
-            <BackgroundText value={"Verificar número de telefone"}/>
+            <BackgroundText value={"Verificar email"}/>
 
             <Text style={{
               fontSize: appTheme.font.size.l,
@@ -56,8 +56,8 @@ const OTPVerification = ({navigation}) => {
               textAlign: "center",
               margin: appTheme.spacing.xl
             }}>
-              Enviamos um código de verificação temporária para {registerForm.phone}.
-              Insira o código para verificar esse número de telefone.
+              Enviamos um código de verificação temporária para {user.email}.
+              Insira o código para verificar esse email.
             </Text>
 
             <OTPInput onChange={setCode} invalid={invalid} title="Código de verificação:"/>
@@ -65,8 +65,7 @@ const OTPVerification = ({navigation}) => {
               marginVertical: appTheme.spacing.xl,
               justifyContent: "space-between"
             }}>
-              <TextButton title="Enviar um novo código." />
-              <TextButton title="Trocar de telefone." />
+              <TextButton title="Enviar um novo código." onClick={() => sendOTP()}/>
             </View>
 
             <IconButton style={{

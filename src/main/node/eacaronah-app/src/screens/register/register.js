@@ -13,7 +13,7 @@ import { isValidEmail, isEmpty } from "../../utils/validation";
 import {ThemeContext} from "../../store/context/theme";
 
 const UserRegister = ({navigation}) => {
-    const {setUserInfo} = useContext(RegisterContext);
+    const {setUserInfo, setVerifiedEmailToFalse, verifiedEmail, sendOTP} = useContext(RegisterContext);
     const {appTheme} = useContext(ThemeContext);
 
     const [name, setName] = useState("");
@@ -82,11 +82,17 @@ const UserRegister = ({navigation}) => {
         setUserInfo({
             name,
             email,
-            phone,
+            phoneNumber: phone,
             documentNumber,
             birthDate
         });
-        navigation.navigate("otp");
+        
+        if(verifiedEmail){
+          navigation.navigate("institutionRegister");
+        } else {
+          sendOTP();
+          navigation.navigate("otp");
+        }
       }
     }
 
@@ -122,7 +128,10 @@ const UserRegister = ({navigation}) => {
                         type: "input",
                         title: "Email",
                         value: email,
-                        onChange: (e) => setEmail(e.target.value),
+                        onChange: (e) => {
+                          setEmail(e.target.value);
+                          setVerifiedEmailToFalse();
+                        },
                         invalid: invalid.email
                     },
                     {

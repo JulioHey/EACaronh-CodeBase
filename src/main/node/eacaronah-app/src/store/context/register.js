@@ -1,36 +1,64 @@
 import {createContext, useCallback, useState} from "react";
 
+import {AuthService} from "../services/auth";
 export const RegisterContext = createContext({});
 
 export const RegisterProvider = ({children}) => {
-    const [registerForm, setRegisterForm] = useState({
-        name: "",
-        email: "",
-        birthDate: "",
-        documentNumber: "",
-        phone: "",
-        institution: {},
+    const [verifiedEmail, setVerifiedEmail] = useState(false);
+    const [user, setUser] = useState({
+      name: "",
+      email: "",
+      birthDate: "",
+      documentNumber: "",
+      phoneNumber: "",
     })
+    const [institutionUser, setInstitutionUser] = useState({})
 
     const setUserInfo = useCallback((userData) => {
-        setRegisterForm({
-            ...registerForm,
-            ...userData,
-        });
-    }, [registerForm]);
+      setUser({
+        ...userData
+      })
+    }, [user]);
 
     const setInstitutionInfo = useCallback((institutionData) => {
-        setRegisterForm({
-            ...registerForm,
-            institution: {...institutionData}
-        });
-    }, [registerForm]);
+      setInstitutionUser({
+        ...institutionData
+      })
+    }, [institutionUser]);
 
-  const checkOTPCode = useCallback((code) => {
-    // Vai mandar solicitacao para o Auth Service
+  const setVerifiedEmailToFalse = useCallback(() => {
+    setVerifiedEmail(false);
+  })
+
+  const sendOTP = useCallback(async () => {
+    const res = await AuthService.sendOTP(user.email);
   });
 
-    return (<RegisterContext.Provider value={{setUserInfo, registerForm, setInstitutionInfo, checkOTPCode}}>
+  const checkOTPCode = useCallback(async (code) => {
+    const res = await AuthService.checkOTP(user.email, code);
+    if (res.status !== 200) {
+        return {"error": "Codigo invalido"}
+    } else {
+      setVerifiedEmail(true);
+    }
+  });
+
+  const register = useCallback(async () => {
+    const res = await AuthService.register({
+      user, institutionUser
+    })
+  });
+
+    return (<RegisterContext.Provider value={{
+      user,
+      institutionUser,
+      setUserInfo,
+      setInstitutionInfo,
+      checkOTPCode,
+      sendOTP,
+      setVerifiedEmailToFalse,
+      register
+      }}>
         {children}
     </RegisterContext.Provider>)
 }
