@@ -1,3 +1,4 @@
+import {useContext} from "react";
 import { View } from "react-native";
 import PageContainer from "../../containers/pageContainer";
 import TextBox from "../../components/atoms/textBox";
@@ -5,9 +6,10 @@ import ElevatedButton from "../../components/atoms/elevatedButton";
 import Header from "../../components/molecules/header";
 import IconButton from "../../components/atoms/iconButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
 const SuccessScreen = ({ navigation }) => {
+  const {appTheme} = useContext(ThemeContext);
 
   return (
     <PageContainer
@@ -45,7 +47,7 @@ const SuccessScreen = ({ navigation }) => {
       }}>
         <ElevatedButton
           title={"Concluir"}
-          color={theme.color.darkBackground}
+          color={appTheme.color.darkBackground}
           onClick={ () => navigation.navigate("login") } />
       </View>
       </View>

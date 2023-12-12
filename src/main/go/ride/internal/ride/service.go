@@ -84,6 +84,7 @@ func (s *service) CreateRide(ride CreateRideRequest) (*Ride, error) {
 		From:      ride.Ride.FromAddress,
 		RideDate:  ride.Ride.Date,
 	})
+  
 	if err != nil {
 		return nil, err
 	}
@@ -96,6 +97,7 @@ func (s *service) CreateRideRequest(rideRequest *RequestRide) (*RideRequest, err
 	if err != nil {
 		return nil, NewValidationError(err)
 	}
+
 	//
 	//res, err := s.rideRequestRepo.Get([]repository.Query{
 	//	{
@@ -113,6 +115,7 @@ func (s *service) CreateRideRequest(rideRequest *RequestRide) (*RideRequest, err
 	if err != nil {
 		return nil, err
 	}
+
 
 	//if len(res) > 0 {
 	//	return nil, NewValidationError(errors.New("ride request already exists"))
@@ -438,6 +441,7 @@ func NewService() Service {
 			Client: api.NewHTTPClient(),
 			Entity: RideRequest{},
 		},
+
 		ridePathRepo: &base.Repository[RidePath]{
 			Url:    "http://localhost:8080",
 			Client: api.NewHTTPClient(),
