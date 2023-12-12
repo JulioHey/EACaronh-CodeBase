@@ -7,10 +7,15 @@ import {View} from "react-native";
 import Forms from "../../components/organism/forms";
 import {RegisterContext} from "../../store/context/register";
 import theme from "../../theme/theme";
-import { isEmpty } from "../../utils/validation";
+import {isEmpty} from "../../utils/validation";
+import {ThemeContext} from "../../store/context/theme";
+import {AuthService} from "../../store/services/auth";
+import {AuthContext} from "../../store/context/auth";
 
 const InstitutionRegister = ({navigation}) => {
-    const {setInstitutionInfo} = useContext(RegisterContext);
+    const {appTheme} = useContext(ThemeContext);
+    const {setInstitutionInfo, registerForm} = useContext(RegisterContext);
+    const {register} = useContext(AuthContext);
 
     const [institutionName, setInstitutionName] = useState("");
     const [institutionNumber, setInstitutionNumber] = useState("");
@@ -22,46 +27,59 @@ const InstitutionRegister = ({navigation}) => {
 
     const [departamento, setDepartamento] = useState("");
 
-    const [invalid, setInvalid] = useState({institutionName: false, institutionNumber: false})
+    const [invalid, setInvalid] = useState({
+        institutionName: false,
+        institutionNumber: false
+    })
 
     const validateAndProceed = () => {
-      const newInvalid = {...invalid};
-      let proceed = true;
+        const newInvalid = {...invalid};
+        let proceed = true;
 
-      if(isEmpty(institutionName)){
-        newInvalid.institutionName = true;
-        setInvalid(newInvalid);
-        proceed = false;
-      } else {
-        newInvalid.institutionName = false;
-        setInvalid(newInvalid);
-      }
+        if (isEmpty(institutionName)) {
+            newInvalid.institutionName = true;
+            setInvalid(newInvalid);
+            proceed = false;
+        } else {
+            newInvalid.institutionName = false;
+            setInvalid(newInvalid);
+        }
 
-      if(isEmpty(institutionNumber)){
-        newInvalid.institutionNumber = true;
-        setInvalid(newInvalid);
-        proceed = false;
-      } else {
-        newInvalid.institutionNumber = false;
-        setInvalid(newInvalid);
-      }
+        if (isEmpty(institutionNumber)) {
+            newInvalid.institutionNumber = true;
+            setInvalid(newInvalid);
+            proceed = false;
+        } else {
+            newInvalid.institutionNumber = false;
+            setInvalid(newInvalid);
+        }
 
-      if(proceed){
-        setInstitutionInfo(navigation, {
-          name: institutionName,
-          number: institutionNumber,
-          position: position,
-          curso,
-          anoDeIngresso,
-          periodo,
-          departamento
-        });
-        navigation.navigate("success");
-      }
+        if (proceed) {
+            setInstitutionInfo(navigation, {
+                name: institutionName,
+                number: institutionNumber,
+                position: position,
+                curso,
+                anoDeIngresso,
+                periodo,
+                departamento
+            });
+            register({
+                ...registerForm,
+                institution: {
+                    name: institutionName,
+                    registration_number: institutionNumber,
+                    period: periodo,
+                    ingress_year: anoDeIngresso
+                }
+            })
+        }
     }
 
     return (
-        <PageContainer>
+        <PageContainer
+            hasFooter={false}
+        >
             <Header
                 heading={(
                     <IconButton
@@ -105,46 +123,46 @@ const InstitutionRegister = ({navigation}) => {
                 ]}
             />
 
-            { position === "Aluno" &&
-              <Forms
-                  formsOptions={[
-                      {
-                          type: "input",
-                          title: "Curso",
-                          value: curso,
-                          onChange: (e) => setCurso(e.target.value),
-                      },
-                      {
-                          type: "input",
-                          title: "Ano de Ingresso",
-                          value: anoDeIngresso,
-                          onChange: (e) => setAnoDeIngresso(e.target.value),
-                      },
-                      {
-                          type: "input",
-                          title: "Período",
-                          value: periodo,
-                          onChange: (e) => setPeriodo(e.target.value),
-                      },
-                  ]}
-              />
+            {position === "Aluno" &&
+                <Forms
+                    formsOptions={[
+                        {
+                            type: "input",
+                            title: "Curso",
+                            value: curso,
+                            onChange: (e) => setCurso(e.target.value),
+                        },
+                        {
+                            type: "input",
+                            title: "Ano de Ingresso",
+                            value: anoDeIngresso,
+                            onChange: (e) => setAnoDeIngresso(e.target.value),
+                        },
+                        {
+                            type: "input",
+                            title: "Período",
+                            value: periodo,
+                            onChange: (e) => setPeriodo(e.target.value),
+                        },
+                    ]}
+                />
             }
-            { position === "Funcionário" &&
-              <Forms
-                  formsOptions={[
-                      {
-                          type: "input",
-                          title: "Departamento",
-                          value: departamento,
-                          onChange: (e) => setDepartamento(e.target.value),
-                      },
-                  ]}
-              />
+            {position === "Funcionário" &&
+                <Forms
+                    formsOptions={[
+                        {
+                            type: "input",
+                            title: "Departamento",
+                            value: departamento,
+                            onChange: (e) => setDepartamento(e.target.value),
+                        },
+                    ]}
+                />
             }
 
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }} onClick={() => {
                 validateAndProceed();
             }}>

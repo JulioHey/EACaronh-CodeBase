@@ -1,25 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import { StyleSheet, Text, TouchableOpacity, Modal, FlatList, View } from 'react-native';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
 const Dropdown = ({ data, onSelect, label }) => {
+  const {appTheme} = useContext(ThemeContext)
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(undefined);
   const DropdownButton = useRef();
   const [dropdownTop, setDropdownTop] = useState(0);
+  const styles = stylesTheme(appTheme);
 
-  const onItemPress = (item): void => {
+  const onItemPress = (item) => {
      setSelected(item);
      onSelect(item);
      setVisible(false);
    };
 
-  const toggleDropdown = (): void => {
+  const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
   };
 
-  const openDropdown = (): void => {
+  const openDropdown = () => {
     DropdownButton.current.measure((_fx, _fy, _w, h, _px, py) => {
       setDropdownTop(py + h);
     });
@@ -64,38 +66,37 @@ const Dropdown = ({ data, onSelect, label }) => {
       {renderDropdown()}
       <Text style={styles.buttonText}>{selected || label}</Text>
       <MaterialIcons name="keyboard-arrow-down"
-                              size={theme.font.size.xxl}
-                              color={theme.color.darkBackground}
-                              style={{
-                                  position: "absolute",
-                                  right: theme.spacing.m,
-                                  top: theme.spacing.m,
-                                  cursor: "pointer",
-                              }}/>
+          size={appTheme.font.size.xxl}
+          color={appTheme.color.darkBackground}
+          style={{
+              position: "absolute",
+              right: appTheme.spacing.m,
+              top: appTheme.spacing.m,
+              cursor: "pointer",
+          }}/>
     </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
+const stylesTheme = (appTheme) => StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: theme.borderRadius.s,
-    backgroundColor: theme.color.lightBackground,
-    paddingHorizontal: theme.spacing.xl,
-    height: theme.size.full,
-    width: theme.size.full,
+    borderRadius: appTheme.borderRadius.s,
+    backgroundColor: appTheme.color.lightBackground,
+    height: appTheme.size.full,
+    width: appTheme.size.full,
     paddingHorizontal: 10,
     zIndex: 1,
   },
   buttonText: {
     flex: 1,
     textAlign: 'center',
-    backgroundColor: theme.color.lightBackground,
-    paddingHorizontal: theme.spacing.xl,
-    borderRadius: theme.borderRadius.s,
-    fontSize: theme.font.size.xl,
-    lineHeight: theme.font.lineHeight.xl,
+    backgroundColor: appTheme.color.lightBackground,
+    paddingHorizontal: appTheme.spacing.xl,
+    borderRadius: appTheme.borderRadius.s,
+    fontSize: appTheme.font.size.xl,
+    lineHeight: appTheme.font.lineHeight.xl,
     width: "100%",
   },
   dropdown: {

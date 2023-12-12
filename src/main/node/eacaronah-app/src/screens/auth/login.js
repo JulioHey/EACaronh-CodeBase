@@ -12,8 +12,8 @@ import { isValidEmail, isEmpty } from "../../utils/validation";
 const LoginScreen = ({navigation}) => {
     const {login} = useContext(AuthContext);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("gustavo.jesus2806@usp.br");
+    const [password, setPassword] = useState("12345678");
     const [invalidEmail, setInvalidEmail] = useState(false);
     const [invalidPassword, setInvalidPassword] = useState(false);
 
@@ -24,11 +24,13 @@ const LoginScreen = ({navigation}) => {
       else if(isEmpty(password))
         setInvalidPassword(true);
       else
-        login();
+        login({email, password});
     }
 
     return (
-        <PageContainer>
+        <PageContainer
+            hasFooter={false}
+        >
             <Image
                 style={{
                         height: 200,

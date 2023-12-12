@@ -13,6 +13,11 @@ import (
 	"repository/internal/account/student"
 	"repository/internal/account/user"
 	"repository/internal/account/userpassword"
+	"repository/internal/ride/address"
+	"repository/internal/ride/car"
+	"repository/internal/ride/ride"
+	"repository/internal/ride/ridepath"
+	"repository/internal/ride/riderequest"
 )
 
 func main() {
@@ -36,6 +41,11 @@ func main() {
 	student.AutoMigrateStudent(db)
 	userpassword.AutoMigrateUserPassword(db)
 	otpcode.AutoMigrateOTPCode(db)
+	ride.AutoMigrateRide(db)
+	riderequest.AutoMigrateRideRequest(db)
+	address.AutoMigrateAddress(db)
+	car.AutoMigrateCar(db)
+	ridepath.AutoMigrateRidePath(db)
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -49,6 +59,11 @@ func main() {
 	studentServer := student.NewStudentServer(db)
 	userPasswordServer := userpassword.NewUserPasswordServer(db)
 	otpCodeServer := otpcode.NewOTPCodeServer(db)
+	rideServer := ride.NewRideServer(db)
+	rideRequestServer := riderequest.NewRideRequestServer(db)
+	carServer := car.NewCarServer(db)
+	addressServer := address.NewAddressServer(db)
+	ridepathServer := ridepath.NewRidePathServer(db)
 	// Echo instance
 	r := gin.Default()
 
@@ -62,6 +77,11 @@ func main() {
 	studentServer.BindStudentServer(r)
 	otpCodeServer.BindOTPCodeServer(r)
 	userPasswordServer.BindUserPasswordServer(r)
+	rideServer.BindRideServer(r)
+	rideRequestServer.BindRideRequestServer(r)
+	carServer.BindCarServer(r)
+	addressServer.BindAddressServer(r)
+	ridepathServer.BindRidePathServer(r)
 
 	// Start server
 	err = r.Run(":8080")

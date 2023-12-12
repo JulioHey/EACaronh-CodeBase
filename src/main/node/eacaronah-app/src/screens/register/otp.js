@@ -13,22 +13,30 @@ import {
     RegisterContext,
     RegisterProvider
 } from "../../store/context/register";
+import {ThemeContext} from "../../store/context/theme";
 
 const OTPVerification = ({navigation}) => {
+    const {appTheme} = useContext(ThemeContext);
     const {registerForm, checkOTPCode} = useContext(RegisterContext);
     const [code, setCode] = useState("");
     const [invalid, setInvalid] = useState(false);
 
-  const validateAndProceed = () => {
-    setInvalid(false);
-    console.log(registerForm);
-    checkOTPCode(code);
-    console.log(code);
-    navigation.navigate("institutionRegister");
-  }
+    const validateAndProceed = async () => {
+        setInvalid(false);
+        try {
+            const res = await checkOTPCode(code, registerForm.email);
+            navigation.navigate("institutionRegister");
+
+        } catch (e) {
+            navigation.navigate("institutionRegister");
+            setInvalid(true);
+        }
+    }
 
     return (
-        <PageContainer>
+        <PageContainer
+            hasFooter={false}
+        >
             <Header
                 heading={(
                     <IconButton
@@ -47,32 +55,34 @@ const OTPVerification = ({navigation}) => {
                 pageTitle={"Cadastro"}
             />
 
-            <BackgroundText value={"Verificar número de telefone"}/>
+            <BackgroundText value={"Verificar email"}/>
 
             <Text style={{
-              fontSize: theme.font.size.l,
-              fontWeight: theme.font.weight.m,
-              textAlign: "center",
-              margin: theme.spacing.xl
+                fontSize: appTheme.font.size.l,
+                fontWeight: appTheme.font.weight.m,
+                textAlign: "center",
+                margin: appTheme.spacing.xl
             }}>
-              Enviamos um código de verificação temporária para {registerForm.phone}.
-              Insira o código para verificar esse número de telefone.
+                Enviamos um código de verificação temporária
+                para {registerForm.email}.
+                Insira o código para verificar esse email.
             </Text>
 
-            <OTPInput onChange={setCode} invalid={invalid} title="Código de verificação:"/>
+            <OTPInput onChange={setCode} invalid={invalid}
+                      title="Código de verificação:"/>
             <View style={{
-              marginVertical: theme.spacing.xl,
-              justifyContent: "space-between"
+                marginVertical: appTheme.spacing.xl,
+                justifyContent: "space-between"
             }}>
-              <TextButton title="Enviar um novo código." />
-              <TextButton title="Trocar de telefone." />
+                <TextButton title="Enviar um novo código."/>
+                <TextButton title="Trocar de telefone."/>
             </View>
 
             <IconButton style={{
                 marginLeft: "auto",
-                marginTop: theme.spacing.xl,
+                marginTop: appTheme.spacing.xl,
             }} onClick={() => {
-              validateAndProceed();
+                validateAndProceed();
             }}>
                 <MaterialIcons name="navigate-next" size={30} color="white"/>
             </IconButton>

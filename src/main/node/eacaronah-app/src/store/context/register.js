@@ -1,4 +1,5 @@
 import {createContext, useCallback, useState} from "react";
+import {AuthService} from "../services/auth";
 
 export const RegisterContext = createContext({});
 
@@ -26,8 +27,13 @@ export const RegisterProvider = ({children}) => {
         });
     }, [registerForm]);
 
-  const checkOTPCode = useCallback((code) => {
-    // Vai mandar solicitacao para o Auth Service
+  const checkOTPCode = useCallback(async (code, email) => {
+    const res = await AuthService.checkOTP({code, email});
+    if (res.status === 200) {
+        return true
+    } else {
+        return false
+    }
   });
 
     return (<RegisterContext.Provider value={{setUserInfo, registerForm, setInstitutionInfo, checkOTPCode}}>

@@ -1,20 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {TextInput} from 'react-native';
 import theme from "../../theme/theme";
+import {ThemeContext} from "../../store/context/theme";
 
 const UniqueInput = React.forwardRef(({hide, value, onInputChange, onKeyPress, invalid}, ref) => {
+    const {appTheme} = useContext(ThemeContext)
+
     return (
         <TextInput
             style={{
-                backgroundColor: theme.color.lightBackground,
-                paddingHorizontal: theme.spacing.m,
-                paddingVertical: theme.spacing.s,
-                borderRadius: theme.borderRadius.s,
-                fontSize: theme.font.size.xl,
-                lineHeight: theme.font.lineHeight.xl,
-                borderColor: invalid ? theme.color.invalid : "",
-                borderWidth: invalid ? theme.borderWidth : "",
+                backgroundColor: appTheme.color.lightBackground,
+                paddingHorizontal: appTheme.spacing.m,
+                paddingVertical: appTheme.spacing.s,
+                borderRadius: appTheme.borderRadius.s,
+                fontSize: appTheme.font.size.xl,
+                lineHeight: appTheme.font.lineHeight.xl,
+                borderColor: invalid ? appTheme.color.invalid : "",
+                borderWidth: invalid ? appTheme.borderWidth : "",
                 width: "15%",
             }
             }

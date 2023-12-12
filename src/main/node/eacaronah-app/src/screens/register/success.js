@@ -10,7 +10,9 @@ import theme from "../../theme/theme";
 const SuccessScreen = ({ navigation }) => {
 
   return (
-    <PageContainer>
+    <PageContainer
+        hasFooter={false}
+    >
       <Header
           heading={(
               <IconButton
