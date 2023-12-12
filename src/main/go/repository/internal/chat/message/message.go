@@ -8,7 +8,6 @@ import (
 
 type Message struct {
 	repository.Base
-	ID                string                          `json:"id"`
 	SenderID          string                          `json:"sender_id"`
 	ReceiverID        string                          `json:"receiver_id"`
 	Content           string                          `json:"content"`

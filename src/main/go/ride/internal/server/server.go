@@ -29,6 +29,8 @@ func (s *server) CreateCar(c *gin.Context) {
 		return
 	}
 
+	userID := c.Query("user_id")
+  car.UserID = userID
 	newCar, err := s.service.CreateCar(&car)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

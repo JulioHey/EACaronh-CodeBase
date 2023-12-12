@@ -3,7 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-// 	"chat/internal/middlewares"
+	"chat/internal/middlewares"
 	"chat/internal/chat"
 )
 
@@ -24,7 +24,13 @@ func (s *server) SendMessage(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
+	userID := c.Query("user_id")
+	if userID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user id is required"})
+		return
+	}
 
+  msg.SenderID = userID
 	newMessage, err := s.service.SendMessage(&msg)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -41,6 +47,7 @@ func (s *server) RetrieveMessages(c *gin.Context) {
 		return
 	}
 
+  print(userID)
 	messages, err := s.service.RetrieveMessages(userID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -57,8 +64,8 @@ func NewServer() Server {
 }
 
 func (s *server) Bind(r *gin.Engine) {
-// 	r.POST("/chat", middlewares.TokenHandler(), s.SendMessage)
-// 	r.GET("/chat", middlewares.TokenHandler(), s.RetrieveMessages)
-	r.POST("/chat", s.SendMessage)
-	r.GET("/chat", s.RetrieveMessages)
+	r.POST("/chat", middlewares.TokenHandler(), s.SendMessage)
+	r.GET("/chat", middlewares.TokenHandler(), s.RetrieveMessages)
+	// r.POST("/chat", s.SendMessage)
+	// r.GET("/chat", s.RetrieveMessages)
 }
