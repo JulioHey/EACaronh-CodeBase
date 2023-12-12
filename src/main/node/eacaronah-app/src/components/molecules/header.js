@@ -1,4 +1,5 @@
-import {Text, View} from "react-native";
+import {View, Text} from "react-native";
+import theme from "../../theme/theme";
 import {useContext} from "react";
 import {ThemeContext} from "../../store/context/theme";
 

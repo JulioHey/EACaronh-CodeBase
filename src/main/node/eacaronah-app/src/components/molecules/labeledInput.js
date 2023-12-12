@@ -4,10 +4,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import Label from "../atoms/label";
 import Input from "../atoms/input";
+import MaskedInput from "../atoms/maskedInput";
 import theme from "../../theme/theme";
 import {ThemeContext} from "../../store/context/theme";
 
-const LabeledInput = ({title, value, onChange, placeholder}) => {
+const LabeledInput = ({title, value, onChange, invalid, mask, placeholder}) => {
     const [hide, setHide] = useState(title == "Password");
     const {appTheme} = useContext(ThemeContext)
 
@@ -16,7 +17,7 @@ const LabeledInput = ({title, value, onChange, placeholder}) => {
             alignItems: "flex-start", gap: appTheme.spacing.m, width: "100%",
         }}
     >
-        <Label text={title}/>
+        <Label text={title} invalid={invalid}/>
         {title == "Password" ?
             <View style={{
                 position: "relative",
@@ -34,9 +35,10 @@ const LabeledInput = ({title, value, onChange, placeholder}) => {
                                             top: appTheme.spacing.m,
                                             cursor: "pointer",
                                         }}/>
-                <Input hide={hide} value={value} onInputChange={onChange}/>
+                <Input invalid={invalid} hide={hide} value={value} onInputChange={onChange}/>
             </View>
-            : <Input placeholder={placeholder} value={value} onInputChange={onChange}/>
+            : mask ? <MaskedInput mask={mask} invalid={invalid} value={value} onInputChange={onChange}/>
+            : <Input invalid={invalid} placeholder={placeholder} value={value} onInputChange={onChange}/>
         }
     </View>)
 }

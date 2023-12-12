@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import {TextInput} from 'react-native';
 import {ThemeContext} from "../../store/context/theme";
 
-const MyInput = ({placeholder, hide, value, onInputChange, paddingLeft, style}) => {
+const MyInput = ({placeholder, hide, value, onInputChange, invalid, paddingLeft, style}) => {
     const {appTheme} = useContext(ThemeContext)
 
     return (
@@ -14,7 +14,7 @@ const MyInput = ({placeholder, hide, value, onInputChange, paddingLeft, style}) 
                 borderRadius: appTheme.borderRadius.s,
                 fontSize: appTheme.font.size.xl,
                 lineHeight: appTheme.font.lineHeight.xl,
-                borderColor: appTheme.color.darkBackground,
+                borderColor: invalid ? appTheme.color.invalid : appTheme.color.darkBackground,
                 borderStyle: "solid",
                 borderWidth: 1,
                 width: "100%",

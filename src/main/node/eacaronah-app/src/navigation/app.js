@@ -6,7 +6,11 @@ import {AuthContext} from "../store/context/auth";
 
 import Home from "../screens/home";
 import LoginScreen from "../screens/auth/login";
-import UserRegister from "../screens/auth/register";
+import OTPVerification from "../screens/register/otp";
+import InstitutionRegister from "../screens/register/institutionRegister";
+import SuccessScreen from "../screens/register/success";
+import {RegisterProvider} from "../store/context/register";
+import UserRegister from "../screens/register/register";
 import {AppProvider} from "../store/context/app";
 import RideRequestDetail from "../screens/ride/rideRequestDetail";
 import RegisterCarScreen from "../screens/car/register";
@@ -26,7 +30,7 @@ export const AppNavigation = () => {
             <NavigationContainer>
                 {!isLoggedIn ? (
                     <Stack.Navigator
-                        initialRouteName="login "
+                        initialRouteName="login"
                         screenOptions={{
                             headerShown: false,
 
@@ -34,6 +38,9 @@ export const AppNavigation = () => {
                         <Stack.Screen name="login" component={LoginScreen}/>
                         <Stack.Screen name="userRegister"
                                       component={UserRegister}/>
+                        <Stack.Screen name="otp" component={OTPVerification}/>
+                        <Stack.Screen name="institutionRegister" component={InstitutionRegister}/>
+                        <Stack.Screen name="success" component={SuccessScreen}/>
                     </Stack.Navigator>
                 ) : (
                     <Stack.Navigator
