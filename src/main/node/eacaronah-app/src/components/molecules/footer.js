@@ -15,7 +15,7 @@ const Footer = () => {
         <View
             style={{
                 display: "flex",
-                position: "absolute",
+                position: "fixed",
                 bottom: 0,
                 width: Dimensions.get('window').width,
                 backgroundColor: appTheme.color.darkBackground,

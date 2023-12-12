@@ -43,15 +43,15 @@ func (c Car) GetPath() string {
 }
 
 type Ride struct {
-	ID            string `json:"id""`
-	UserID        string `json:"user_id""`
-	CarID         string `json:"car_id" validate:"required"`
-	Seats         string `json:"seats" validate:"required"`
-	Date          string `json:"date" validate:"required"`
-	Time          string `json:"time" validate:"required"`
-	FromAddressID string `json:"from_address_id"`
-	ToAddressID   string `json:"to_address_id"`
-	Price         string `json:"price" validate:"required"`
+	ID          string `json:"id""`
+	UserID      string `json:"user_id""`
+	CarID       string `json:"car_id" validate:"required"`
+	Seats       string `json:"seats" validate:"required"`
+	Date        string `json:"date" validate:"required"`
+	Time        string `json:"time" validate:"required"`
+	FromAddress string `json:"from_address"`
+	ToAddress   string `json:"to_address"`
+	Price       string `json:"price" validate:"required"`
 }
 
 func (r Ride) Validate() error {
@@ -77,9 +77,7 @@ func (a Address) GetPath() string {
 }
 
 type CreateRideRequest struct {
-	Ride        Ride    `json:"ride" validate:"required"`
-	FromAddress Address `json:"from_address" validate:"required"`
-	ToAddress   Address `json:"to_address" validate:"required"`
+	Ride Ride `json:"ride" validate:"required"`
 }
 
 func (r CreateRideRequest) Validate() error {
@@ -142,8 +140,27 @@ type GetRideRequestRequest struct {
 	RideID string
 }
 
+type User struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+func (u User) GetPath() string {
+	return "users"
+}
+
+type RideRequestComplete struct {
+	ID        string `json:"id"`
+	UserID    string `json:"user_id"`
+	RideID    string `json:"ride_id"`
+	AddressID string `json:"address_id"`
+	Status    string `json:"status"`
+	Driver    User   `json:"driver"`
+	Ride      Ride   `json:"ride"`
+}
+
 type GetRideRequestResponse struct {
-	RideRequests []RideRequest `json:"ride_requests"`
+	RideRequests []RideRequestComplete `json:"ride_requests"`
 }
 
 type ValidationError struct {

@@ -7,7 +7,7 @@ import Input from "../atoms/input";
 import theme from "../../theme/theme";
 import {ThemeContext} from "../../store/context/theme";
 
-const LabeledInput = ({title, value, onChange}) => {
+const LabeledInput = ({title, value, onChange, placeholder}) => {
     const [hide, setHide] = useState(title == "Password");
     const {appTheme} = useContext(ThemeContext)
 
@@ -36,7 +36,7 @@ const LabeledInput = ({title, value, onChange}) => {
                                         }}/>
                 <Input hide={hide} value={value} onInputChange={onChange}/>
             </View>
-            : <Input value={value} onInputChange={onChange}/>
+            : <Input placeholder={placeholder} value={value} onInputChange={onChange}/>
         }
     </View>)
 }

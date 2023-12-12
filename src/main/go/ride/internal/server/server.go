@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"ride/internal/middlewares"
 	"ride/internal/ride"
@@ -16,6 +17,10 @@ type Server interface {
 	DeclineRideRequest(c *gin.Context)
 	GetRides(c *gin.Context)
 	GetRideRequests(c *gin.Context)
+	GetCarsFromUser(c *gin.Context)
+	GetRidesFromUser(c *gin.Context)
+	GetRideRequestsByRide(c *gin.Context)
+	GetParticipantsByRide(c *gin.Context)
 	Bind(r *gin.Engine)
 }
 
@@ -43,6 +48,7 @@ func (s *server) CreateRide(c *gin.Context) {
 	var ride ride.CreateRideRequest
 	err := c.BindJSON(&ride)
 	if err != nil {
+		log.Printf("Error while binding JSON: %v", err)
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
@@ -105,10 +111,10 @@ func (s *server) RenounceRideRequest(c *gin.Context) {
 }
 
 func (s *server) AcceptRideRequest(c *gin.Context) {
-	rideId := c.Param("id")
+	rideRequestID := c.Param("id")
 	userId := c.Query("user_id")
 
-	if rideId == "" {
+	if rideRequestID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ride id is required"})
 		return
 	}
@@ -118,7 +124,7 @@ func (s *server) AcceptRideRequest(c *gin.Context) {
 		return
 	}
 
-	err := s.service.AcceptRideRequest(userId, rideId)
+	err := s.service.AcceptRideRequest(userId, rideRequestID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -167,7 +173,6 @@ func (s *server) GetRides(c *gin.Context) {
 
 func (s *server) GetRideRequests(c *gin.Context) {
 	getRideRequestReq := &ride.GetRideRequestRequest{}
-	getRideRequestReq.RideID = c.Param("id")
 	getRideRequestReq.UserID = c.Query("user_id")
 
 	rideRequests, err := s.service.GetRideRequests(*getRideRequestReq)
@@ -176,7 +181,65 @@ func (s *server) GetRideRequests(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, rideRequests)
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"ride_requests": rideRequests,
+	})
+}
+
+func (s *server) GetCarsFromUser(c *gin.Context) {
+	userID := c.Query("user_id")
+
+	cars, err := s.service.GetCarsFromUser(userID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"cars": cars,
+	})
+}
+
+func (s *server) GetRidesFromUser(c *gin.Context) {
+	userID := c.Query("user_id")
+
+	rides, err := s.service.GetRidesFromUser(userID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"rides": rides,
+	})
+}
+
+func (s *server) GetRideRequestsByRide(c *gin.Context) {
+	rideId := c.Param("id")
+
+	rides, err := s.service.GetRideRequestsByRide(rideId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"ride_requests": rides,
+	})
+}
+
+func (s *server) GetParticipantsByRide(c *gin.Context) {
+	rideId := c.Param("id")
+
+	users, err := s.service.GetParticipantsByRide(rideId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"participants": users,
+	})
 }
 
 func NewServer() Server {
@@ -187,10 +250,15 @@ func NewServer() Server {
 
 func (s *server) Bind(r *gin.Engine) {
 	r.POST("/car", middlewares.TokenHandler(), s.CreateCar)
+	r.GET("/car", middlewares.TokenHandler(), s.GetCarsFromUser)
 	r.POST("/ride", middlewares.TokenHandler(), s.CreateRide)
 	r.GET("/ride", middlewares.TokenHandler(), s.GetRides)
-	r.GET("/ride/:id", middlewares.TokenHandler(), s.GetRideRequests)
+	r.GET("/ride/user", middlewares.TokenHandler(), s.GetRidesFromUser)
 	r.POST("/ride/:id", middlewares.TokenHandler(), s.CreateRideRequest)
+	r.GET("/ride/:id/participants", middlewares.TokenHandler(),
+		s.GetParticipantsByRide)
+	r.GET("/ride/:id/request", middlewares.TokenHandler(), s.GetRideRequestsByRide)
+	r.GET("/riderequest", middlewares.TokenHandler(), s.GetRideRequests)
 	r.PUT("/riderequest/:id/renounce", middlewares.TokenHandler(), s.RenounceRideRequest)
 	r.PUT("/riderequest/:id/accept", middlewares.TokenHandler(), s.AcceptRideRequest)
 	r.PUT("/riderequest/:id/decline", middlewares.TokenHandler(), s.DeclineRideRequest)

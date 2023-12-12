@@ -3,13 +3,13 @@ import MaterialCommunityIcons
     from "react-native-vector-icons/MaterialCommunityIcons";
 import theme from "../../theme/theme";
 import {View} from "react-native";
-import {BaseButton} from "react-native-gesture-handler";
+import {TouchableOpacity} from "react-native";
 import {ThemeContext} from "../../store/context/theme";
 
 const IconButton = ({children, style, onClick}) => {
     const {appTheme} = useContext(ThemeContext)
     return (
-        <BaseButton onPress={onClick}>
+        <TouchableOpacity onPress={onClick}>
             <View
                 style={
                     {
@@ -27,7 +27,7 @@ const IconButton = ({children, style, onClick}) => {
             >
                 {children}
             </View>
-        </BaseButton>);
+        </TouchableOpacity>);
 }
 
 export default IconButton;

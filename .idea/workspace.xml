@@ -4,19 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c39522df-4e47-4586-874b-2f603277164d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/sizedBox.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/iconInput.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideList.js" afterDir="false" />
+    <list default="true" id="6468aa4a-8e32-4019-9c98-72fb13a9a422" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/Paragraph.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/detailCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/modal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/chat/chat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/searchRide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/user/profile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/services/ride.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/date.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/loading.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/account/cmd/account/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/account/cmd/account/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/account/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/account/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/account/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/account/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/account/internal/middlewares/middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/account/internal/middlewares/middleware.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/account/internal/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/account/internal/server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/repository/internal/ride/ride/ride.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/repository/internal/ride/ride/ride.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/cmd/ride/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/cmd/ride/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/internal/ride/ride.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/internal/ride/ride.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/internal/ride/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/internal/ride/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/go/ride/internal/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/go/ride/internal/server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/elevatedButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/elevatedButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/iconButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/iconButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/iconButtonFlat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/iconButtonFlat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/textButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/atoms/textButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/iconInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/iconInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/labeledInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/labeledInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideRequestCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/molecules/rideRequestCard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/forms.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/forms.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/headerApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/headerApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideRequestList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/components/organism/rideRequestList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/containers/pageContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/containers/pageContainer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/navigation/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/navigation/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/auth/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/car/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/car/home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/rideDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/ride/rideDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/context/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/context/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/context/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/context/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/services/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/store/services/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/theme/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/theme/theme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/ride.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/ride.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/rideRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/node/eacaronah-app/src/utils/rideRequest.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +99,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/dmcard/ideaIU-2022.3.2/idea-IU-223.8617.56/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -74,7 +115,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c39522df-4e47-4586-874b-2f603277164d" name="Changes" comment="" />
+      <changelist id="6468aa4a-8e32-4019-9c98-72fb13a9a422" name="Changes" comment="" />
       <created>1701211002884</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -83,6 +124,12 @@
       <workItem from="1701464170420" duration="8817000" />
       <workItem from="1701693535429" duration="19000" />
       <workItem from="1701731144029" duration="9574000" />
+      <workItem from="1702143517380" duration="9383000" />
+      <workItem from="1702211952697" duration="5286000" />
+      <workItem from="1702228133739" duration="3333000" />
+      <workItem from="1702291895152" duration="2506000" />
+      <workItem from="1702302824904" duration="1218000" />
+      <workItem from="1702355919833" duration="11550000" />
     </task>
     <servers />
   </component>
@@ -102,6 +149,17 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/node/eacaronah-app/src/screens/chat/chat.js</url>
+          <line>40</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

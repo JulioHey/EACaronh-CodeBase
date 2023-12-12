@@ -4,18 +4,12 @@ import SizedBox from "../atoms/sizedBox";
 import theme from "../../theme/theme";
 import MaterialIcons from "react-native-vector-icons/FontAwesome5";
 import {useContext, useState} from "react";
-import {AppContext} from "../../store/context/app";
+import {AppContext, RIDE} from "../../store/context/app";
 import {ThemeContext} from "../../store/context/theme";
 
-const RideList = () => {
-    const [rides, setRides] = useState([
-        {
-            "title": "Carona",
-            "local": "São Paulo",
-            "time": "12:00",
-            "date": "12/12/2022"
-        }
-    ]);
+const RideList = ({rides = []}) => {
+    const {ride} = useContext(AppContext);
+
     const {appTheme} = useContext(ThemeContext)
 
     return (
@@ -59,7 +53,8 @@ const RideList = () => {
                                 Nenhuma carona encontrada
                             </Text>
                             <Text>
-                                Diga-nos para onde você quer ir
+                                {ride == RIDE ?"Diga - nos para onde você" +
+                                    " quer ir" : "Crie uma carona!"}
                             </Text>
                         </View>
                     </View>
@@ -72,7 +67,7 @@ const RideList = () => {
                             fontSize: 20,
                         }}
                     >
-                        Caronas Encontradas
+                        {ride == RIDE ? "Caronas Encontradas" : "Suas Caronas"}
                     </Text>
                     <SizedBox height={10} />
                     {rides.length == 0 ?

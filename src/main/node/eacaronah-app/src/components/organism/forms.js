@@ -28,7 +28,8 @@ const Forms = ({formsOptions, justifyContent, spacing}) => {
                             style={{
                                 fontWeight: "800",
                             }}
-                            onPress={value.onClick}>
+                            onPress={value.onClick}
+                        >
                             {value.callToAction}
                         </Text>
                     </Text>)

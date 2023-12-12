@@ -15,9 +15,14 @@ const PageContainer = ({children, hasHeader}) => {
                 justifyContent: "space-between",
                 flexDirection: "column",
                 display: "flex",
+                backgroundColor: "white"
             }}
         >
-            <View>
+            <View
+                style={{
+                    paddingBottom: 60,
+                }}
+            >
                 {hasHeader && <HeaderApp/>}
                 {children}
 

@@ -12,18 +12,6 @@ const IconInput = ({placeholder, trailling}) => {
             <View
                 style={{
                     position: "absolute",
-                    top: "10px",
-                    left: "10px",
-                }}
-            >
-                <MaterialIcons
-                    name="search"
-                    size={30}
-                />
-            </View>
-            <View
-                style={{
-                    position: "absolute",
                     top: "5px",
                     right: "10px",
                 }}

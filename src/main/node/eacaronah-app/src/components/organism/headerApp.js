@@ -10,7 +10,7 @@ import {useContext} from "react";
 import {ThemeContext} from "../../store/context/theme";
 
 const HeaderApp = () => {
-    const {ride, setRide} = useContext(AppContext);
+    const {isRide, setIsRide} = useContext(AppContext);
     const {appTheme} = useContext(ThemeContext)
 
     return (
@@ -31,7 +31,7 @@ const HeaderApp = () => {
 
                 <IconButtonFlat
                     onClick={() => {
-                        setRide(RIDE);
+                        setIsRide(RIDE);
                     }}
                     style={{
                         flexDirection: "row",
@@ -52,7 +52,7 @@ const HeaderApp = () => {
                 />
                 <IconButtonFlat
                     onClick={() => {
-                        setRide(CAR);
+                        setIsRide(CAR);
                     }}
                     style={{
                         flexDirection: "row",
@@ -78,14 +78,14 @@ const HeaderApp = () => {
                     style={{
                         width: "50%",
                         height: 2,
-                        backgroundColor: ride === RIDE ? appTheme.color.darkBackground : "transparent",
+                        backgroundColor: isRide === RIDE ? appTheme.color.darkBackground : "transparent",
                     }}
                 />
                 <View
                     style={{
                         height: 2,
                         width: "50%",
-                        backgroundColor: ride !== RIDE ? appTheme.color.darkBackground : "transparent",
+                        backgroundColor: isRide !== RIDE ? appTheme.color.darkBackground : "transparent",
                     }}
                 />
             </View>

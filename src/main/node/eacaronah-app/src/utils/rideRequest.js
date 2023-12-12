@@ -1,9 +1,8 @@
-export const RideRequestToMap = (user) => {
+export const RideRequestToMap = (rideRequest) => {
     return {
-        "Nome": user.name,
-        "Email": user.email,
-        "Telefone": user.phone,
-        "Instituto": user.institution,
-        "Curso": user.course,
+        "Motorista": rideRequest.driver.name,
+        "Local": rideRequest.ride.to,
+        "Preço": rideRequest.ride.price,
+        "Status": rideRequest.status,
     }
 }

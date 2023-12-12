@@ -10,14 +10,14 @@ import PageContainer from "../containers/pageContainer";
 
 const Home = ({navigation}) => {
     const {logout} = useContext(AuthContext);
-    const {ride, setNavigation} = useContext(AppContext);
+    const {isRide, setNavigation} = useContext(AppContext);
 
     useEffect(() => {
         setNavigation(navigation)
     }, [])
     return (
         <PageContainer hasHeader={true} >
-            {ride == RIDE ? <RideHome/> : <CarHome />}
+            {isRide == RIDE ? <RideHome/> : <CarHome />}
         </PageContainer>
     )
 }

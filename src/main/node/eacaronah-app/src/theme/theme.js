@@ -6,6 +6,7 @@ const theme = (ride) => {
         color: {
             darkBackground: ride === RIDE ? "#fa9e0d" : "#75B6C3",
             lightBackground: ride === RIDE ? "#fbf1d9" : "#DFEEF0",
+            lightBackgroundSecondary: "rgba(217, 217, 217, 0.15)",
         },
         spacing: {
             s: 8,

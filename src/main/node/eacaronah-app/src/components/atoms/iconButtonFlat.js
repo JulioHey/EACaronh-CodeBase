@@ -1,10 +1,9 @@
-import {BaseButton} from "react-native-gesture-handler";
-import MaterialIcons from "react-native-vector-icons/Ionicons";
+import {TouchableOpacity} from "react-native";
 import {Dimensions, Text} from "react-native";
 
 
 const IconButtonFlat = ({icon, name, onClick, color, style}) => {
-    return (<BaseButton
+    return (<TouchableOpacity
         onPress={onClick}
         style={{
             width: Dimensions.get('window').width / 3,
@@ -22,7 +21,7 @@ const IconButtonFlat = ({icon, name, onClick, color, style}) => {
         >
             {name}
         </Text>
-    </BaseButton>)
+    </TouchableOpacity>)
 }
 
 export default IconButtonFlat;

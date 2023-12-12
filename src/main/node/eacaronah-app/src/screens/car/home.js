@@ -1,15 +1,26 @@
 import {Text, View} from "react-native";
 import {AppContext} from "../../store/context/app";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {BaseButton} from "react-native-gesture-handler";
 import {ThemeContext} from "../../store/context/theme";
+import RideList from "../../components/organism/rideList";
+import {AuthContext} from "../../store/context/auth";
+import {AuthService} from "../../store/services/auth";
+import {RideService} from "../../store/services/ride";
 
 const CarHome = () => {
+    const {token} = useContext(AuthContext);
     const {cars, navigation} = useContext(AppContext);
     const {appTheme} = useContext(ThemeContext);
 
-    const [rides, setRides] = useState([
-    ]);
+    const [rides, setRides] = useState([]);
+
+    useEffect(() => {
+        RideService.GetRidesFromUser(token).then(res => {
+            console.log(res.data)
+            setRides(res.data.rides)
+        })
+    }, [])
 
     return (
         <View
@@ -53,42 +64,26 @@ const CarHome = () => {
                     </BaseButton>
                 </View> :
                 <View>
-                    {rides.length == 0 ?
-                        <View
+                        <RideList rides={rides} />
+                    <BaseButton
+                        onPress={() => navigation.navigate("registerRide")}
+                        style={{
+                            width: "100%",
+                            padding: 12,
+                            borderRadius: 100,
+                            backgroundColor: appTheme.color.darkBackground
+                        }}
+                    >
+                        <Text
                             style={{
-                                paddingTop: 100,
-                                gap: 20,
+                                color: "white",
+                                fontSize: 20,
+                                textAlign: "center",
                             }}
                         >
-                            <Text
-                                style={{
-                                    fontSize: 20,
-                                    textAlign: "center",
-                                }}
-                            >
-                                Parece que você não tem nenhuma carona registrado ainda gostaria de registrar?
-                            </Text>
-                            <BaseButton
-                                onPress={() => navigation.navigate("registerRide")}
-                                style={{
-                                    width: "100%",
-                                    padding: 12,
-                                    borderRadius: 100,
-                                    backgroundColor: appTheme.color.darkBackground
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        color: "white",
-                                        fontSize: 20,
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    Criar uma nova carona
-                                </Text>
-                            </BaseButton>
-                        </View> : null
-                    }
+                            Criar uma nova carona
+                        </Text>
+                    </BaseButton>
                 </View>
             }
         </View>

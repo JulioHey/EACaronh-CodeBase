@@ -3,20 +3,9 @@ import {Text, View} from "react-native";
 import RideRequestCard from "../molecules/rideRequestCard";
 import {ThemeContext} from "../../store/context/theme";
 
-const RideRequestList = () => {
+const RideRequestList = ({rideRequests}) => {
     const {appTheme} = useContext(ThemeContext)
 
-    const [rideRequests, setRidesRequest] = useState([
-        {
-            "title": "Carona",
-            "local": "São Paulo",
-            "time": "12:00",
-            "date": "12/12/2022",
-            "status": "PENDING",
-            "rideId": 1,
-            "riderName": "João",
-        }
-    ])
     return (
         <View
             style={{

@@ -10,8 +10,8 @@ import Header from "../../components/molecules/header";
 const LoginScreen = ({navigation}) => {
     const {login} = useContext(AuthContext);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("gustavo.jesus2806@usp.br");
+    const [password, setPassword] = useState("12345678");
 
     return (
         <PageContainer>
@@ -50,7 +50,10 @@ const LoginScreen = ({navigation}) => {
                         {
                             type: "elevetedButton",
                             title: "Entrar",
-                            onClick: () => login()
+                            onClick: () => login({
+                                email,
+                                password
+                            })
                         },
                         {
                             type: "elevetedButton",

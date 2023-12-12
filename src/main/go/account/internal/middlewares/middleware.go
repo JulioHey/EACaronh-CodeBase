@@ -20,6 +20,7 @@ func TokenHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		checkToken(c)
 		c.Next()
+
 	}
 }
 

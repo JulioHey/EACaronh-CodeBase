@@ -1,11 +1,9 @@
-export const RideToMap = (ride) => {
+
+
+export const ToMapCard = (ride) => {
     return {
-        "Local": ride.local,
-        "Destino": ride.destination,
+        "Local": ride.to_address,
         "Preço": ride.price,
-        "Hora": ride.time,
-        "Data": ride.date,
         "Espaços Livres": ride.seats,
     }
 }
-
