@@ -14,12 +14,7 @@ export const AppProvider = ({children}) => {
     const {token} = useContext(AuthContext)
 
     const [isRide, setIsRide] = useState(RIDE);
-    const [cars, setCars] = useState([
-        {
-        brand: "Chevrolet",
-        model: "Celta",
-        }
-    ]);
+    const [cars, setCars] = useState([]);
 
     const [navigation, setNavigation] = useState({});
 
@@ -32,15 +27,20 @@ export const AppProvider = ({children}) => {
 
     }, [isRide])
 
-    const onAppStart = async () => {
+    const fetchCars = async () => {
         const res = await RideService.GetCar(token)
-        console.log(res.data.cars)
         setCars(res.data.cars)
+    }
+
+    const onAppStart = async () => {
+        if (token !== "") {
+            await fetchCars()
+        }
     }
 
     return (
         <AppContext.Provider
-            value={{cars, setCars, isRide, setIsRide, setNavigation,navigation}}
+            value={{cars, setCars, isRide, setIsRide, setNavigation,navigation, fetchCars}}
         >
             {children}
         </AppContext.Provider>

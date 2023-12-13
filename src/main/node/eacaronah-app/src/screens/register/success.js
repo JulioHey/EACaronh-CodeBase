@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import { View } from "react-native";
 import PageContainer from "../../containers/pageContainer";
 import TextBox from "../../components/atoms/textBox";
@@ -7,9 +7,14 @@ import Header from "../../components/molecules/header";
 import IconButton from "../../components/atoms/iconButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {ThemeContext} from "../../store/context/theme";
+import {AuthContext} from "../../store/context/auth";
+import LabeledInput from "../../components/molecules/labeledInput";
+import Paragraph from "../../components/atoms/Paragraph";
 
 const SuccessScreen = ({ navigation }) => {
   const {appTheme} = useContext(ThemeContext);
+  const {updatePassword} = useContext(AuthContext);
+  const [password, setPassword] = useState("");
 
   return (
     <PageContainer
@@ -36,9 +41,19 @@ const SuccessScreen = ({ navigation }) => {
         flexDirection: "column",
         alignItems: "center",
         marginVertical: "20vh",
+          paddingHorizontal: 20,
+          gap: 20,
       }}>
-      <TextBox
-        text="Seu cadastro foi concluído com sucesso, clique em concluir para ser redirecionado a página de login"/>
+          <Paragraph type={'h3'} styles={{
+              textAlign: "center",
+          }}>
+              Seu cadastro foi concluído com sucesso, crie uma senha para sua conta e clique em concluir para começar a usar o aplicativo
+          </Paragraph>
+          <LabeledInput
+          title={"Digite sua nova senha"}
+            value={password}
+              onChange={(e) => setPassword(e.target.value)}
+          />
       <View style={{
         alignItems: "center",
         justifyContent: "center",
@@ -48,7 +63,7 @@ const SuccessScreen = ({ navigation }) => {
         <ElevatedButton
           title={"Concluir"}
           color={appTheme.color.darkBackground}
-          onClick={ () => navigation.navigate("login") } />
+          onClick={ () => updatePassword({password}) } />
       </View>
       </View>
     </PageContainer>

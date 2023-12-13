@@ -102,73 +102,80 @@ const UserRegister = ({navigation}) => {
         <PageContainer
             hasFooter={false}
         >
-            <Header
-                heading={(
-                    <IconButton
-                        onClick={() => navigation.navigate("login")}
-                    >
-                        <View style={{
-                            position: "absolute",
-                            left: "10px"
-                        }}>
-                            <MaterialIcons name="arrow-back-ios" size={30}
-                                           color="white"/>
-                        </View>
+            <View
+                style={{
+                    paddingHorizontal: 20,
+                }}
+            >
+                <Header
+                    heading={(
+                        <IconButton
+                            onClick={() => navigation.navigate("login")}
+                        >
+                            <View style={{
+                                position: "absolute",
+                                left: "10px"
+                            }}>
+                                <MaterialIcons name="arrow-back-ios" size={30}
+                                               color="white"/>
+                            </View>
 
-                    </IconButton>
-                )}
-                pageTitle={"Cadastro"}
-            />
-            <Forms
-                formsOptions={[
-                    {
-                        type: "input",
-                        title: "Nome completo",
-                        value: name,
-                        onChange: (e) => setName(e.target.value),
-                        invalid: invalid.name
-                    },
-                    {
-                        type: "input",
-                        title: "Email",
-                        value: email,
-                        onChange: (e) => setEmail(e.target.value),
-                        invalid: invalid.email
-                    },
-                    {
-                        type: "input",
-                        title: "Data de nascimento",
-                        value: birthDate,
-                        onChange: (e) => setBirthDate(e.target.value),
-                        invalid: invalid.birthDate,
-                        mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
-                    },
-                    {
-                        type: "input",
-                        title: "CPF",
-                        value: documentNumber,
-                        onChange: (e) => setDocumentNumber(e.target.value),
-                        invalid: invalid.documentNumber,
-                        mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
-                    },
-                    {
-                        type: "input",
-                        title: "Telefone",
-                        value: phone,
-                        onChange: (e) => setPhone(e.target.value),
-                        invalid: invalid.phone,
-                        mask: ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
-                    }
-                ]}
-            />
-            <IconButton style={{
-                marginLeft: "auto",
-                marginTop: appTheme.spacing.xl,
-            }} onClick={() => {
-                validateAndProceed();
-            }}>
-                <MaterialIcons name="navigate-next" size={30} color="white"/>
-            </IconButton>
+                        </IconButton>
+                    )}
+                    pageTitle={"Cadastro"}
+                />
+                <Forms
+                    formsOptions={[
+                        {
+                            type: "input",
+                            title: "Nome completo",
+                            value: name,
+                            onChange: (e) => setName(e.target.value),
+                            invalid: invalid.name
+                        },
+                        {
+                            type: "input",
+                            title: "Email",
+                            value: email,
+                            onChange: (e) => setEmail(e.target.value),
+                            invalid: invalid.email
+                        },
+                        {
+                            type: "input",
+                            title: "Data de nascimento",
+                            value: birthDate,
+                            onChange: (e) => setBirthDate(e.target.value),
+                            invalid: invalid.birthDate,
+                            mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+                        },
+                        {
+                            type: "input",
+                            title: "CPF",
+                            value: documentNumber,
+                            onChange: (e) => setDocumentNumber(e.target.value),
+                            invalid: invalid.documentNumber,
+                            mask: [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
+                        },
+                        {
+                            type: "input",
+                            title: "Telefone",
+                            value: phone,
+                            onChange: (e) => setPhone(e.target.value),
+                            invalid: invalid.phone,
+                            mask: ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+                        }
+                    ]}
+                />
+                <IconButton style={{
+                    marginLeft: "auto",
+                    marginTop: appTheme.spacing.xl,
+                }} onClick={() => {
+                    validateAndProceed();
+                }}>
+                    <MaterialIcons name="navigate-next" size={30} color="white"/>
+                </IconButton>
+            </View>
+
         </PageContainer>
     )
 }

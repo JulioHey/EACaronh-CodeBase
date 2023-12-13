@@ -31,46 +31,53 @@ const LoginScreen = ({navigation}) => {
         <PageContainer
             hasFooter={false}
         >
-            <Image
+            <View
                 style={{
-                        height: 200,
+                    paddingHorizontal: 20,
                 }}
-                source={require("../../assets/images/logo.png")}
-            />
-            <Forms
-                formsOptions={[
-                    {
-                        type: "input",
-                        title: "Email",
-                        value: email,
-                        onChange: (e) => setEmail(e.target.value),
-                        invalid: invalidEmail
-                    },
-                    {
-                        type: "input",
-                        title: "Password",
-                        value: password,
-                        onChange: (e) => setPassword(e.target.value),
-                        invalid: invalidPassword
-                    },
-                    {
-                        type: "elevetedButton",
-                        title: "Entrar",
-                        onClick: () => validateAndLogin()
-                    },
-                    {
-                        type: "elevetedButton",
-                        title: "Esqueci minha senha",
-                        onClick: () => console.log("Esqueci minha senha")
-                    },
-                    {
-                        type: "spanTextButton",
-                        text: "Não tem uma conta?",
-                        callToAction: "Cadastre-se aqui",
-                        onClick: () => navigation.navigate("userRegister")
-                    },
-                ]}
-            />
+            >
+                <Image
+                    style={{
+                        height: 200,
+                    }}
+                    source={require("../../assets/images/logo.png")}
+                />
+                <Forms
+                    formsOptions={[
+                        {
+                            type: "input",
+                            title: "Email",
+                            value: email,
+                            onChange: (e) => setEmail(e.target.value),
+                            invalid: invalidEmail
+                        },
+                        {
+                            type: "input",
+                            title: "Senha",
+                            value: password,
+                            onChange: (e) => setPassword(e.target.value),
+                            invalid: invalidPassword
+                        },
+                        {
+                            type: "elevetedButton",
+                            title: "Entrar",
+                            onClick: () => validateAndLogin()
+                        },
+                        {
+                            type: "elevetedButton",
+                            title: "Esqueci minha senha",
+                            onClick: () => console.log("Esqueci minha senha")
+                        },
+                        {
+                            type: "spanTextButton",
+                            text: "Não tem uma conta?",
+                            callToAction: "Cadastre-se aqui",
+                            onClick: () => navigation.navigate("userRegister")
+                        },
+                    ]}
+                />
+            </View>
+
         </PageContainer>
 
     )

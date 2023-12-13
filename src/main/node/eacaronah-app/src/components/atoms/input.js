@@ -9,14 +9,13 @@ const MyInput = ({hide, value, onInputChange, invalid}) => {
   return (
     <TextInput
       style={{
-          backgroundColor: appTheme.color.lightBackground,
           paddingHorizontal: appTheme.spacing.m,
           paddingVertical: appTheme.spacing.s,
           borderRadius: appTheme.borderRadius.s,
           fontSize: appTheme.font.size.xl,
           lineHeight: appTheme.font.lineHeight.xl,
-          borderColor: invalid ? appTheme.color.invalid : "",
-          borderWidth: invalid ? appTheme.borderWidth : 0,
+          borderColor: invalid ? appTheme.color.invalid : appTheme.color.darkBackground,
+          borderWidth: invalid ? appTheme.borderWidth : 1,
           width: "100%",
       }
       }

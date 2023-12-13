@@ -61,5 +61,16 @@ export const AuthService = {
                 "Accept": "*/*",
             }
         })
+    },
+    updatePassword: function ({token, password}) {
+        return axios.post(`${url}/user/update-password`, {
+            password
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
+            }
+        })
     }
 }

@@ -12,7 +12,7 @@ import {ThemeContext} from "../../store/context/theme";
 
 const LabeledInput = ({title, value, onChange, invalid, mask}) => {
     const {appTheme} = useContext(ThemeContext);
-    const [hide, setHide] = useState(title == "Password");
+    const [hide, setHide] = useState(title == "Senha" || title == "Digite sua nova senha");
 
     return (<View
         style={{
@@ -20,7 +20,7 @@ const LabeledInput = ({title, value, onChange, invalid, mask}) => {
         }}
     >
         <Label text={title} invalid={invalid}/>
-        {title == "Password" ?
+        {title == "Senha" || title == "Digite sua nova senha" ?
             <View style={{
                 position: "relative",
                 width: "100%",

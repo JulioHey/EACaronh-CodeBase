@@ -32,7 +32,7 @@ const InstitutionRegister = ({navigation}) => {
         institutionNumber: false
     })
 
-    const validateAndProceed = () => {
+    const validateAndProceed = async () => {
         const newInvalid = {...invalid};
         let proceed = true;
 
@@ -64,7 +64,7 @@ const InstitutionRegister = ({navigation}) => {
                 periodo,
                 departamento
             });
-            register({
+            const res = await register({
                 ...registerForm,
                 institution: {
                     name: institutionName,
@@ -73,6 +73,10 @@ const InstitutionRegister = ({navigation}) => {
                     ingress_year: anoDeIngresso
                 }
             })
+
+            if (res != "Error") {
+                navigation.navigate("success")
+            }
         }
     }
 
@@ -80,94 +84,101 @@ const InstitutionRegister = ({navigation}) => {
         <PageContainer
             hasFooter={false}
         >
-            <Header
-                heading={(
-                    <IconButton
-                        onClick={() => navigation.navigate("userRegister")}
-                    >
-                        <View style={{
-                            position: "absolute",
-                            left: "10px"
-                        }}>
-                            <MaterialIcons name="arrow-back-ios" size={30}
-                                           color="white"/>
-                        </View>
+            <View
+                style={{
+                    paddingHorizontal: 20,
+                }}
+            >
+                <Header
+                    heading={(
+                        <IconButton
+                            onClick={() => navigation.navigate("userRegister")}
+                        >
+                            <View style={{
+                                position: "absolute",
+                                left: "10px"
+                            }}>
+                                <MaterialIcons name="arrow-back-ios" size={30}
+                                               color="white"/>
+                            </View>
 
-                    </IconButton>
-                )}
-                pageTitle={"Cadastro Institucional"}
-            />
-            <Forms
-                formsOptions={[
-                    {
-                        type: "input",
-                        title: "Nome da instituição",
-                        value: institutionName,
-                        onChange: (e) => setInstitutionName(e.target.value),
-                        invalid: invalid.institutionName
-                    },
-                    {
-                        type: "input",
-                        title: "Número USP",
-                        value: institutionNumber,
-                        onChange: (e) => setInstitutionNumber(e.target.value),
-                        invalid: invalid.institutionNumber
-                    },
-                    {
-                        type: "selectDropdown",
-                        title: "Posição",
-                        value: position,
-                        onSelect: (e) => setPosition(e),
-                        options: ["Aluno", "Funcionário"]
-                    },
-                ]}
-            />
-
-            {position === "Aluno" &&
+                        </IconButton>
+                    )}
+                    pageTitle={"Cadastro Institucional"}
+                />
                 <Forms
                     formsOptions={[
                         {
                             type: "input",
-                            title: "Curso",
-                            value: curso,
-                            onChange: (e) => setCurso(e.target.value),
+                            title: "Nome da instituição",
+                            value: institutionName,
+                            onChange: (e) => setInstitutionName(e.target.value),
+                            invalid: invalid.institutionName
                         },
                         {
                             type: "input",
-                            title: "Ano de Ingresso",
-                            value: anoDeIngresso,
-                            onChange: (e) => setAnoDeIngresso(e.target.value),
+                            title: "Número USP",
+                            value: institutionNumber,
+                            onChange: (e) => setInstitutionNumber(e.target.value),
+                            invalid: invalid.institutionNumber
                         },
                         {
-                            type: "input",
-                            title: "Período",
-                            value: periodo,
-                            onChange: (e) => setPeriodo(e.target.value),
+                            type: "selectDropdown",
+                            title: "Posição",
+                            value: position,
+                            onSelect: (e) => setPosition(e),
+                            options: ["Aluno", "Funcionário"]
                         },
                     ]}
                 />
-            }
-            {position === "Funcionário" &&
-                <Forms
-                    formsOptions={[
-                        {
-                            type: "input",
-                            title: "Departamento",
-                            value: departamento,
-                            onChange: (e) => setDepartamento(e.target.value),
-                        },
-                    ]}
-                />
-            }
 
-            <IconButton style={{
-                marginLeft: "auto",
-                marginTop: appTheme.spacing.xl,
-            }} onClick={() => {
-                validateAndProceed();
-            }}>
-                <MaterialIcons name="navigate-next" size={30} color="white"/>
-            </IconButton>
+                {position === "Aluno" &&
+                    <Forms
+                        formsOptions={[
+                            {
+                                type: "input",
+                                title: "Curso",
+                                value: curso,
+                                onChange: (e) => setCurso(e.target.value),
+                            },
+                            {
+                                type: "input",
+                                title: "Ano de Ingresso",
+                                value: anoDeIngresso,
+                                onChange: (e) => setAnoDeIngresso(e.target.value),
+                            },
+                            {
+                                type: "input",
+                                title: "Período",
+                                value: periodo,
+                                onChange: (e) => setPeriodo(e.target.value),
+                            },
+                        ]}
+                    />
+                }
+                {position === "Funcionário" &&
+                    <Forms
+                        formsOptions={[
+                            {
+                                type: "input",
+                                title: "Departamento",
+                                value: departamento,
+                                onChange: (e) => setDepartamento(e.target.value),
+                            },
+                        ]}
+                    />
+                }
+
+                <IconButton style={{
+                    marginLeft: "auto",
+                    marginTop: appTheme.spacing.xl,
+                }} onClick={() => {
+                    validateAndProceed();
+                }}>
+                    <MaterialIcons name="navigate-next" size={30} color="white"/>
+                </IconButton>
+            </View>
+
         </PageContainer>
     )
 }
