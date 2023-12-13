@@ -6,7 +6,7 @@ import RideRequestList from "../../components/organism/rideRequestList";
 import {useContext, useEffect, useState} from "react";
 import {RideService} from "../../store/services/ride";
 import {AuthContext} from "../../store/context/auth";
-import {TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {AppContext} from "../../store/context/app";
 
 const RideHome = () => {
@@ -26,10 +26,12 @@ const RideHome = () => {
         })
     }, [])
 
-    console.log(requests)
-
     return (
-        <>
+        <View
+            style={{
+                paddingHorizontal: 20
+            }}
+        >
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("searchRide")
@@ -59,7 +61,7 @@ const RideHome = () => {
             <RideRequestList
                 rideRequests={requests}
             />
-        </>
+        </View>
 
     );
 }

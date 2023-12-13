@@ -6,11 +6,13 @@ import Label from "../atoms/label";
 import Input from "../atoms/input";
 import MaskedInput from "../atoms/maskedInput";
 import theme from "../../theme/theme";
+
+import { isEmpty } from "../../utils/validation";
 import {ThemeContext} from "../../store/context/theme";
 
-const LabeledInput = ({title, value, onChange, invalid, mask, placeholder}) => {
-    const [hide, setHide] = useState(title == "Password");
-    const {appTheme} = useContext(ThemeContext)
+const LabeledInput = ({title, value, onChange, invalid, mask}) => {
+    const {appTheme} = useContext(ThemeContext);
+    const [hide, setHide] = useState(title == "Senha" || title == "Digite sua nova senha");
 
     return (<View
         style={{
@@ -18,7 +20,7 @@ const LabeledInput = ({title, value, onChange, invalid, mask, placeholder}) => {
         }}
     >
         <Label text={title} invalid={invalid}/>
-        {title == "Password" ?
+        {title == "Senha" || title == "Digite sua nova senha" ?
             <View style={{
                 position: "relative",
                 width: "100%",
@@ -38,7 +40,7 @@ const LabeledInput = ({title, value, onChange, invalid, mask, placeholder}) => {
                 <Input invalid={invalid} hide={hide} value={value} onInputChange={onChange}/>
             </View>
             : mask ? <MaskedInput mask={mask} invalid={invalid} value={value} onInputChange={onChange}/>
-            : <Input invalid={invalid} placeholder={placeholder} value={value} onInputChange={onChange}/>
+            : <Input invalid={invalid} value={value} onInputChange={onChange}/>
         }
     </View>)
 }

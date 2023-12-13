@@ -5,13 +5,12 @@ import {RegisterProvider} from "./src/store/context/register";
 import {MyThemeProvider} from "./src/store/context/theme";
 
 export default function App() {
-
     return (
         <AuthProvider>
             <MyThemeProvider>
-            <RegisterProvider>
-                <AppNavigation/>
-            </RegisterProvider>
+                <RegisterProvider>
+                    <AppNavigation/>
+                </RegisterProvider>
             </MyThemeProvider>
         </AuthProvider>
     );

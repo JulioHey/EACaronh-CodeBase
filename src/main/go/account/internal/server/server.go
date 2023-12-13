@@ -73,7 +73,10 @@ func (s *server) UserRegister(c *gin.Context) {
 			return
 		}
 	}
-
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS,GET,PUT")
 	c.JSON(http.StatusOK, res)
 	return
 }
@@ -94,6 +97,10 @@ func (s *server) UpdatePassword(c *gin.Context) {
 			Error()})
 		return
 	}
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS,GET,PUT")
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
@@ -107,13 +114,18 @@ func (s *server) SendOTP(c *gin.Context) {
 		return
 	}
 	log.Printf("request body: %v", req)
-
 	err = s.service.SendOTP(req)
 	if err != nil {
+		log.Printf("Sended error: %v", req)
 		c.JSON(http.StatusBadRequest, gin.H{"Internal service error": err.
 			Error()})
 		return
 	}
+	log.Printf("Sended email: %v", req)
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS,GET,PUT")
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
@@ -135,6 +147,10 @@ func (s *server) CheckOTP(c *gin.Context) {
 			Error()})
 		return
 	}
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS,GET,PUT")
 
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }

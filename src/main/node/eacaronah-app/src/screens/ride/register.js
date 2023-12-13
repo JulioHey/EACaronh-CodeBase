@@ -18,15 +18,16 @@ const RegisterRideScreen = () => {
     const {appTheme} = useContext(ThemeContext);
     const {cars, navigation} = useContext(AppContext)
 
-    const [toDistrict, setToDistrict] = useState("");
-    const [fromDistrict, setFromDistrict] = useState("");
-    const [seats, setSeats] = useState("");
-    const [price, setPrice] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const [toDistrict, setToDistrict] = useState("Tatuapé");
+    const [fromDistrict, setFromDistrict] = useState("EACH");
+    const [seats, setSeats] = useState("4");
+    const [price, setPrice] = useState("5.00");
+    const [date, setDate] = useState("25/10/2023");
+    const [time, setTime] = useState("09:00");
     const [car, setCar] = useState(cars[0]);
 
     const registerRide = () => {
+        console.log(car)
         const res = RideService.CreateRide({
             car_id: car.id,
             to_address: toDistrict,
@@ -37,7 +38,6 @@ const RegisterRideScreen = () => {
             price,
         }, token)
 
-        console.log(res.data)
     }
 
 

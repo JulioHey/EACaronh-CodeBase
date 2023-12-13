@@ -1,11 +1,12 @@
 import React, {useContext} from 'react';
 
 import {View, TextInput} from 'react-native';
-import {ThemeContext} from "../../store/context/theme";
+import theme from "../../theme/theme";
 import MaskInput from 'react-native-mask-input';
+import {ThemeContext} from "../../store/context/theme";
 
 const MaskedInput = ({hide, value, onInputChange, invalid, mask}) => {
-  const {appTheme} = useContext(ThemeContext);
+    const {appTheme} = useContext(ThemeContext)
   return (
     <View
         style={{

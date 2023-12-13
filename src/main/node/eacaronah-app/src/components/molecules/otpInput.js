@@ -6,12 +6,13 @@ import MaterialCommunityIcons
 import Label from "../atoms/label";
 import UniqueInput from "../atoms/uniqueInput";
 import TextButton from "../atoms/textButton"
+import theme from "../../theme/theme";
 import {ThemeContext} from "../../store/context/theme";
 
 const OTPInput = ({title, value, onChange, invalid}) => {
+    const {appTheme} = useContext(ThemeContext);
     const [code, setCode] = useState(['', '', '', '']);
     const inputs = [];
-    const {appTheme} = useContext(ThemeContext);
 
     const handleCode = (value, index) => {
         const newCode = [...code];

@@ -12,6 +12,15 @@ export const RideService = {
             }
         })
     },
+    RegisterCar: ({car, token}) => {
+        return axios.post(`${url}/car`, car, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+    },
     GetRidesFromUser : (token) => {
         return axios.get(`${url}/ride/user`, {
             headers: {

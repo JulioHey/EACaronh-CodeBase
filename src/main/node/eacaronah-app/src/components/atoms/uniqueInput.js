@@ -1,10 +1,12 @@
 import React, {useContext} from 'react';
 
 import {TextInput} from 'react-native';
+import theme from "../../theme/theme";
 import {ThemeContext} from "../../store/context/theme";
 
 const UniqueInput = React.forwardRef(({hide, value, onInputChange, onKeyPress, invalid}, ref) => {
-    const {appTheme} = useContext(ThemeContext);
+    const {appTheme} = useContext(ThemeContext)
+
     return (
         <TextInput
             style={{

@@ -1,10 +1,10 @@
 import {Text} from "react-native";
 import theme from "../../theme/theme";
-import {useContext} from "react";
 import {ThemeContext} from "../../store/context/theme";
+import {useContext} from "react";
 
 const Label = ({text, style, invalid}) => {
-    const {appTheme} = useContext(ThemeContext);
+    const {appTheme} = useContext(ThemeContext)
     return (
         <Text style={
             style ?? {

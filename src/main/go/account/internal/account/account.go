@@ -66,7 +66,7 @@ type EmployeeUser struct {
 type User struct {
 	ID             string `json:"id"`
 	Name           string `json:"name"`
-	BirthDate      string `json:"birth_date" validate:"date"`
+	BirthDate      string `json:"birth_date"`
 	PhoneNumber    string `json:"phone_number"`
 	DocumentNumber string `json:"document_number"`
 	Email          string `json:"email" validate:"email"`

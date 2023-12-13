@@ -101,16 +101,19 @@ func (s *service) UpdatePassword(req UpdatePasswordRequest) error {
 	}
 	userPasswords, err := s.userPassword.Get(query)
 	if err != nil {
+		log.Printf("error: %v", err)
 		return err
 	}
+	log.Printf("userPasswords: %v", userPasswords)
+	log.Printf("len(userPasswords): %v", len(userPasswords))
 	if len(userPasswords) == 0 {
-		log.Printf("DALE DELE")
 		_, err = s.userPassword.Create(&UpdatePasswordRequest{
 			UserID:   req.UserID,
 			Password: req.Password,
 		})
 
 		if err != nil {
+			log.Printf("error: %v", err)
 			return err
 		}
 		return nil
@@ -118,6 +121,7 @@ func (s *service) UpdatePassword(req UpdatePasswordRequest) error {
 		userPasswords[0].Password = req.Password
 		_, err = s.userPassword.Update(userPasswords[0].ID, userPasswords[0])
 		if err != nil {
+			log.Printf("error: %v", err)
 			return err
 		}
 		return nil
@@ -161,23 +165,26 @@ func (s *service) SendOTP(req SendOTPRequest) error {
 	if err != nil {
 		return err
 	}
+	go func() {
+		err = email.SentOTPEmail(req.Email, otpCode.Code)
+		if err != nil {
+			log.Printf("Error while sending OTP: %v", err)
+		}
+	}()
 
-	err = email.SentOTPEmail(req.Email, otpCode.Code)
-	if err != nil {
-		return err
-	}
 	MyTimer := time.NewTimer(300 * time.Second)
-
 	go func() {
 		// Notification recived when timer gets in-activated.
 		<-MyTimer.C
 		otpCodePointer, err := s.otpCode.GetByID(otpCode.ID)
 		if err != nil {
 			log.Printf("Error while deleting OTP: %v", err)
+			return
 		}
 		err = s.otpCode.Delete((*otpCodePointer).ID)
 		if err != nil {
 			log.Printf("Error while deleting OTP: %v", err)
+			return
 		}
 	}()
 	return nil

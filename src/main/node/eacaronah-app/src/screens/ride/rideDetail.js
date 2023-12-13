@@ -100,6 +100,7 @@ const RideDetailRiderScreen = ({route}) => {
     }
 
     const acceptRequest = (requestID) => {
+        console.log("PORRA")
         setIsModalOpen(true)
         setModal(loadingModal)
         RideService.AcceptRequest(requestID, token).then(res => {

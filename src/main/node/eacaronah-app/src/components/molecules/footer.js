@@ -1,14 +1,15 @@
 import {Dimensions, Text, View} from "react-native";
-import MaterialIcons from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import theme from "../../theme/theme";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import IconButtonFlat from "../atoms/iconButtonFlat";
 import {useContext} from "react";
 import {AppContext} from "../../store/context/app";
 import {ThemeContext} from "../../store/context/theme";
+import {AuthContext} from "../../store/context/auth";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Footer = () => {
     const {navigation} = useContext(AppContext)
+    const {logout} = useContext(AuthContext)
     const {appTheme} = useContext(ThemeContext)
 
     return (
@@ -29,7 +30,7 @@ const Footer = () => {
                 }}
             >
                 <IconButtonFlat
-                    icon={<MaterialIcons
+                    icon={<Ionicons
                         name="home"
                         color="white"
                         size={25}
@@ -38,7 +39,7 @@ const Footer = () => {
                     onClick={() => navigation.navigate("home")}
                 />
                 <IconButtonFlat
-                    icon={<MaterialIcons
+                    icon={<Ionicons
                         name="keypad"
                         color="white"
                         size={25}
@@ -46,14 +47,15 @@ const Footer = () => {
                     name={"Serviços"}
                 />
                 <IconButtonFlat
+                    onClick={logout}
                     style={{
                     }}
-                    icon={<FontAwesome
-                        name="user"
+                    icon={<MaterialIcons
+                        name="logout"
                         color="white"
                         size={25}
                     />}
-                    name={"Conta"}
+                    name={"Sair"}
                 />
             </View>
 

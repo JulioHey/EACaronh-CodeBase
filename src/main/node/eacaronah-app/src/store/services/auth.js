@@ -11,7 +11,8 @@ export const AuthService = {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
-            }})
+            }
+        })
     },
     sendOTP: function ({email}) {
         return axios.post(`${url}/user/send-otp`, {
@@ -20,24 +21,56 @@ export const AuthService = {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
-            }})
+            }
+        })
     },
     checkOTP: function ({email, code}) {
         return axios.post(`${url}/user/check-otp`, {
-            email, code
+            email,
+            code
         }, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
-            }})
+            }
+        })
     },
-    register: function ({user, institutionUser}) {
+    register: function ({name, email, birthDate, documentNumber, phone, institution}) {
         return axios.post(`${url}/user/register`, {
-          user, institutionUser
+            "user": {
+                name,
+                email,
+                birth_date: birthDate,
+                document_number: documentNumber,
+                phone_number: phone,
+            },
+            institution_user: {
+                "institution_name": "USP",
+                "registration_number": institution.registration_number,
+                "role": "STUDENT",
+                "student_user": {
+                    "period": institution.period,
+                    "program_type": "GRADUATION",
+                    "ingress_year": institution.ingress_year,
+                    "course": institution.course
+                }
+            }
         }, {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
-            }})
+            }
+        })
+    },
+    updatePassword: function ({token, password}) {
+        return axios.post(`${url}/user/update-password`, {
+            password
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
+            }
+        })
     }
 }

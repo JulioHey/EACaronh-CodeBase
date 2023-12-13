@@ -1,10 +1,9 @@
-import {useContext} from "react";
 import {Text, View} from "react-native";
-import theme from "../../theme/theme";
+import {useContext} from "react";
 import {ThemeContext} from "../../store/context/theme";
 
 const TextBox = ({text, style}) => {
-    const {appTheme} = useContext(ThemeContext);
+    const {appTheme} = useContext(ThemeContext)
     return (
       <View style={{
         backgroundColor: appTheme.color.darkBackground,

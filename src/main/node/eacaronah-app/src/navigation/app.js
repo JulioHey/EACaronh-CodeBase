@@ -6,11 +6,6 @@ import {AuthContext} from "../store/context/auth";
 
 import Home from "../screens/home";
 import LoginScreen from "../screens/auth/login";
-import OTPVerification from "../screens/register/otp";
-import InstitutionRegister from "../screens/register/institutionRegister";
-import SuccessScreen from "../screens/register/success";
-import {RegisterProvider} from "../store/context/register";
-import UserRegister from "../screens/register/register";
 import {AppProvider} from "../store/context/app";
 import RideRequestDetail from "../screens/ride/rideRequestDetail";
 import RegisterCarScreen from "../screens/car/register";
@@ -18,6 +13,10 @@ import RegisterRideScreen from "../screens/ride/register";
 import RideDetailRiderScreen from "../screens/ride/rideDetail";
 import ChatScreen from "../screens/chat/chat";
 import SearchRideScreen from "../screens/ride/searchRide";
+import UserRegister from "../screens/register/register";
+import Otp from "../screens/register/otp";
+import InstitutionRegister from "../screens/register/institutionRegister";
+import SuccessScreen from "../screens/register/success";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +37,8 @@ export const AppNavigation = () => {
                         <Stack.Screen name="login" component={LoginScreen}/>
                         <Stack.Screen name="userRegister"
                                       component={UserRegister}/>
-                        <Stack.Screen name="otp" component={OTPVerification}/>
+                        <Stack.Screen name="otp"
+                                      component={Otp}/>
                         <Stack.Screen name="institutionRegister" component={InstitutionRegister}/>
                         <Stack.Screen name="success" component={SuccessScreen}/>
                     </Stack.Navigator>

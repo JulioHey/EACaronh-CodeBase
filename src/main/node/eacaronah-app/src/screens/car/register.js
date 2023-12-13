@@ -9,23 +9,79 @@ import Forms from "../../components/organism/forms";
 import {Text, View} from "react-native";
 import IconButton from "../../components/atoms/iconButton";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import {AuthContext} from "../../store/context/auth";
+import {RideService} from "../../store/services/ride";
+import Modal from "../../components/molecules/modal";
 
 const RegisterCarScreen = () => {
     const {appTheme} = useContext(ThemeContext);
-    const {navigation} = useContext(AppContext);
+    const {user, token} = useContext(AuthContext);
+    const {navigation, fetchCars} = useContext(AppContext);
 
-    const [model, setModel] = useState("");
-    const [color, setColor] = useState("");
-    const [plate, setPlate] = useState("");
-    const [brand, setBrand] = useState("");
-    const [document, setDocument] = useState("");
-    const [year, setYear] = useState("");
+    const [model, setModel] = useState("Uno");
+    const [color, setColor] = useState("Vermelho");
+    const [plate, setPlate] = useState("FPP-1789");
+    const [brand, setBrand] = useState("Fiat");
+    const [document, setDocument] = useState("63438532217");
+    const [year, setYear] = useState("2000");
 
-    const registerCar = useCallback(() => {
+    const [showModal, setShowModal] = useState(false);
+    const [modal, setModal] = useState({});
 
-    }, [model, color, plate, brand, document, year])
+    const registerCar = async () => {
+        const car = {
+            "user_id": user.user_id,
+            color,
+            brand,
+            model,
+            year,
+            "license_plate": plate,
+        }
+        try {
+            const res = await RideService.RegisterCar({car, token})
+            console.log(res)
+            if (res.status === 200) {
+                setShowModal(true)
+                setModal({
+                    title: "Sucesso",
+                    subtitle: "Carro cadastrado com sucesso!",
+                    buttonText: "Fechar",
+                    onPress: async () => {
+                        await fetchCars();
+                        navigation.navigate("home")
+                    }
+                })
+            } else {
+                setShowModal(true)
+                setModal({
+                    title: "Erro",
+                    subtitle: "Erro ao cadastrar carro tente novamente!",
+                    buttonText: "Fechar",
+                    onPress: async () => {
+                        setShowModal(false)
+                    }
+                })
+            }
+
+        } catch (err) {
+            setShowModal(true)
+            setModal({
+                title: "Erro",
+                subtitle: "Erro ao cadastrar carro tente novamente!",
+                buttonText: "Fechar",
+                onPress: async () => {
+                    setShowModal(false)
+                }
+            })
+        }
+    }
 
     return <PageContainer>
+        {showModal && (
+            <Modal
+                {...modal}
+            />
+        )}
         <Header
             heading={(
                 <IconButtonFlat
@@ -43,11 +99,11 @@ const RegisterCarScreen = () => {
             pageTitle="Registro de carro"
         />
         <View
-        style={{
-            paddingVertical: 20,
-            paddingHorizontal: 20,
-            justifyContent: "space-between",
-        }}
+            style={{
+                paddingVertical: 20,
+                paddingHorizontal: 20,
+                justifyContent: "space-between",
+            }}
         >
 
             <Forms

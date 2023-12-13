@@ -7,7 +7,7 @@ import CarHome from "../screens/car/home";
 import Footer from "../components/molecules/footer";
 
 
-const PageContainer = ({children, hasHeader}) => {
+const PageContainer = ({children, hasHeader, hasFooter = true}) => {
     return (
         <View
             style={{
@@ -27,7 +27,7 @@ const PageContainer = ({children, hasHeader}) => {
                 {children}
 
             </View>
-            <Footer />
+            {hasFooter && <Footer/>}
         </View>
     )
 }

@@ -1,5 +1,5 @@
-import {View, Text} from "react-native";
 import theme from "../../theme/theme";
+import {Text, View} from "react-native";
 import {useContext} from "react";
 import {ThemeContext} from "../../store/context/theme";
 
@@ -8,6 +8,7 @@ const HeaderTitle = ({pageTitle, heading, trailling}) => {
     return (
       <View style={{
           width: "100%",
+          marginBottom: appTheme.spacing.xl,
           paddingTop: appTheme.spacing.l,
           paddingBottom: appTheme.spacing.xl,
           paddingRight: appTheme.spacing.s,
@@ -25,13 +26,11 @@ const HeaderTitle = ({pageTitle, heading, trailling}) => {
           }}>
               {heading}
           </View>
-          <Text
-              style={{
-                  fontSize: appTheme.font.size.xl,
-                  fontWeight: "bold",
-              }}
-          >
-              {pageTitle}
+          <Text style={{
+            fontSize: appTheme.font.size.xl,
+            fontWeight: appTheme.font.weight.b
+          }}>
+            {pageTitle}
           </Text>
           <View style={{
               position: "absolute",

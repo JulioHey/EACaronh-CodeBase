@@ -25,12 +25,37 @@ export const AuthProvider = (props) => {
         }
     }, [])
 
+    const register = useCallback(async (input) => {
+        try {
+            const res = await AuthService.register(input)
+            const decoded = jwtDecode(res.data.token);
+            setUser(decoded)
+            setToken(res.data.token)
+        } catch (err) {
+            return "Error"
+        }
+
+    }, [])
+
+    const updatePassword = useCallback(({password}) => {
+        try {
+            const res = AuthService.updatePassword({token, password})
+            setIsLoggedIn(true)
+        } catch (err) {
+            console.log(err)
+            return {"error": "Falha ao atualizar a senha"}
+        }
+
+    }, [token])
+
     const logout = useCallback(() => {
         setIsLoggedIn(false)
+        setUser({})
+        setToken("")
     }, [])
 
     return (
-        <AuthContext.Provider value={{token, isLoggedIn, user, login, logout}}>
+        <AuthContext.Provider value={{token, isLoggedIn, user, login, logout, register, updatePassword}}>
             {props.children}
         </AuthContext.Provider>
     )

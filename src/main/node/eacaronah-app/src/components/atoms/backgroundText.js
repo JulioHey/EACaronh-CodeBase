@@ -1,10 +1,11 @@
 import React, {useContext} from 'react';
 
 import {Text} from 'react-native';
+import theme from "../../theme/theme";
 import {ThemeContext} from "../../store/context/theme";
 
 const BackgroundText = ({value}) => {
-    const {appTheme} = useContext(ThemeContext);
+    const {appTheme} = useContext(ThemeContext)
     return (
         <Text
             style={{

@@ -33,10 +33,10 @@ type service struct {
 }
 
 func (s *service) CreateCar(car *Car) (*Car, error) {
-	err := car.Validate()
-	if err != nil {
-		return nil, NewValidationError(err)
-	}
+	//err := car.Validate()
+	//if err != nil {
+	//	return nil, NewValidationError(err)
+	//}
 
 	newCar, err := s.carRepo.Create(*car)
 	if err != nil {
@@ -84,7 +84,7 @@ func (s *service) CreateRide(ride CreateRideRequest) (*Ride, error) {
 		From:      ride.Ride.FromAddress,
 		RideDate:  ride.Ride.Date,
 	})
-  
+
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,6 @@ func (s *service) CreateRideRequest(rideRequest *RequestRide) (*RideRequest, err
 	if err != nil {
 		return nil, err
 	}
-
 
 	//if len(res) > 0 {
 	//	return nil, NewValidationError(errors.New("ride request already exists"))
@@ -271,6 +270,8 @@ func (s *service) GetRides(request GetRideRequest) (*GetRideResponse, error) {
 		},
 	})
 
+	log.Printf("ridePaths: %v", ridePaths)
+
 	if err != nil {
 		log.Printf("Error getting ride paths: %v", err)
 		return nil, err
@@ -286,6 +287,8 @@ func (s *service) GetRides(request GetRideRequest) (*GetRideResponse, error) {
 		rideIds = append(rideIds, ridePath.RideID)
 	}
 
+	log.Printf("rideIds: %v", rideIds)
+
 	rides, err := s.rideRepo.Get([]repository.Query{
 		{
 			Field:     "id",
@@ -293,6 +296,8 @@ func (s *service) GetRides(request GetRideRequest) (*GetRideResponse, error) {
 			Targets:   rideIds,
 		},
 	})
+
+	log.Printf("rides: %v", rides)
 
 	if err != nil {
 		log.Printf("Error getting rides: %v", err)

@@ -22,8 +22,8 @@ func main() {
 	config.AllowAllOrigins = true
 	config.AllowCredentials = true
 	config.AddAllowHeaders("Authorization")
-	newServer.Bind(r)
 	r.Use(cors.New(config))
+	newServer.Bind(r)
 	err := r.Run(":9000")
 	if err != nil {
 		log.Printf("failed to start server: %v", err)
