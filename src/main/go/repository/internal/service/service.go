@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"repository/internal/repository"
 )
 
@@ -28,6 +29,7 @@ func (s *BaseService[T]) Get(queries []repository.Query) ([]T, error) {
 			}
 		}
 		if !hasColumn {
+			log.Printf("Column %s not found", q.Field)
 			return nil, repository.NewColumnNotFoundErr(q.Field)
 		}
 	}

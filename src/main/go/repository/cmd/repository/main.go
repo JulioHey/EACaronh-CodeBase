@@ -9,9 +9,16 @@ import (
 	"repository/internal/account/employee"
 	"repository/internal/account/institution"
 	"repository/internal/account/institutionuser"
+	"repository/internal/account/otpcode"
 	"repository/internal/account/student"
 	"repository/internal/account/user"
 	"repository/internal/account/userpassword"
+	"repository/internal/ride/address"
+	"repository/internal/ride/car"
+	"repository/internal/ride/ride"
+	"repository/internal/ride/ridepath"
+	"repository/internal/ride/riderequest"
+	"repository/internal/chat/message"
 )
 
 func main() {
@@ -34,6 +41,14 @@ func main() {
 	employee.AutoMigrateEmployee(db)
 	student.AutoMigrateStudent(db)
 	userpassword.AutoMigrateUserPassword(db)
+	otpcode.AutoMigrateOTPCode(db)
+	ride.AutoMigrateRide(db)
+	riderequest.AutoMigrateRideRequest(db)
+	address.AutoMigrateAddress(db)
+	car.AutoMigrateCar(db)
+	ridepath.AutoMigrateRidePath(db)
+  message.AutoMigrateMessage(db)
+
 	if err != nil {
 		panic("failed to migrate database")
 	}
@@ -46,6 +61,14 @@ func main() {
 	employeeServer := employee.NewEmployeeServer(db)
 	studentServer := student.NewStudentServer(db)
 	userPasswordServer := userpassword.NewUserPasswordServer(db)
+	otpCodeServer := otpcode.NewOTPCodeServer(db)
+	rideServer := ride.NewRideServer(db)
+	rideRequestServer := riderequest.NewRideRequestServer(db)
+	carServer := car.NewCarServer(db)
+	addressServer := address.NewAddressServer(db)
+	ridepathServer := ridepath.NewRidePathServer(db)
+	messageServer := message.NewMessageServer(db)
+
 	// Echo instance
 	r := gin.Default()
 
@@ -57,7 +80,14 @@ func main() {
 	institutionUserServer.BindInstitutionUserServer(r)
 	employeeServer.BindEmployeeServer(r)
 	studentServer.BindStudentServer(r)
+	otpCodeServer.BindOTPCodeServer(r)
 	userPasswordServer.BindUserPasswordServer(r)
+	rideServer.BindRideServer(r)
+	rideRequestServer.BindRideRequestServer(r)
+	carServer.BindCarServer(r)
+	addressServer.BindAddressServer(r)
+	ridepathServer.BindRidePathServer(r)
+	messageServer.BindMessageServer(r)
 
 	// Start server
 	err = r.Run(":8080")
